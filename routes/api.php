@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Middleware\OnlyAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,7 @@ Route::prefix("v1")->group(function () {
             Route::get("devices", "devices")->name("auth.devices");
             Route::post("logout", 'logout');
             Route::post("logout-all", 'logoutAll');
-            Route::post("register", "register")->name("auth.register");
+            Route::post("register", "register")->name("auth.register")->middleware(OnlyAdmin::class);
         });
     });
 
