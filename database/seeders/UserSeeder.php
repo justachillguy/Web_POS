@@ -29,5 +29,7 @@ class UserSeeder extends Seeder
             "password" => Hash::make("thepassword"),
 
         ]);
+
+        User::factory()->count(3)->create();
     }
 }
