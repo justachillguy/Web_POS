@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
             $table->string('customer')->default('unknown');
-            $table->integer('phone')->default(0);
+            $table->string('phone', 20);
             $table->string('voucher_number');
             $table->integer('total');
             $table->integer('tax');

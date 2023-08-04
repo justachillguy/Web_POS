@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\VoucherRecord;
 use App\Models\Stock;
 use App\Policies\ProductPolicy;
 use Illuminate\Database\Seeder;
@@ -26,6 +27,8 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             ProductSeeder::class,
             StockSeeder::class,
+            VoucherSeeder::class,
+            VoucherRecordSeeder::class,
         ]);
     }
 }
