@@ -18,10 +18,11 @@ class BrandFactory extends Factory
     public function definition(): array
     {
         return [
-            "name" => fake()->sentence(3),
+            "name" => fake()->domainWord(),
             "company" => fake()->word(),
             "information" => fake()->sentence(10),
-            "user_id" => rand(1,5),
+            "user_id" => rand(1,2),
+            "photo" => fake()->sentence(),
         ];
     }
 }
