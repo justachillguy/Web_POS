@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
+use GuzzleHttp\Psr7\Request;
 
 class BrandController extends Controller
 {
@@ -13,7 +14,10 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::paginate(4);
+        return response()->json([
+            "brands" => $brands
+        ]);
     }
 
     /**
@@ -21,7 +25,16 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        $brand = Brand::create([
+            "name" => $request->name,
+            "company" => $request->company,
+            "information" => $request->information,
+            "user_id" => auth()->id(),
+        ]);
+
+        return response()->json([
+            "brand" => $brand
+        ]);
     }
 
     /**
@@ -47,4 +60,6 @@ class BrandController extends Controller
     {
         //
     }
+
+
 }

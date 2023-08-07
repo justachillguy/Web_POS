@@ -13,4 +13,6 @@ class Brand extends Model
     // {
     //     return $this->hasManyThrough(Stock::class, Product::class);
     // }
+
+    protected $fillable = ["name", "company", "information", "user_id", "photo"];
 }

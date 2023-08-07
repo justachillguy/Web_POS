@@ -13,7 +13,10 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stocks = Stock::where("")
+        ->paginate(4);
+
+
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Stock;
 
 class ProductController extends Controller
 {
@@ -13,7 +14,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // $prod = Product::latest("name")->first();
+        // $prodStocks = $prod->stocks;
+        // return response()->json([
+        //     "product_stock" => $prodStocks
+        // ]);
     }
 
     /**
@@ -21,7 +26,31 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create(
+            [
+            "name" => $request->name,
+            "brand_id" => $request->brand_id,
+            "actual_price" =>$request->actual_price,
+            "sale_price" =>$request->sale_price,
+            "total_stock" =>$request->total_stock,
+            "unit" =>$request->unit,
+            "more_information" =>$request->more_information,
+            "user_id" => auth()->id(),
+            ]
+            );
+
+        Stock::create(
+            [
+                "user_id" => auth()->id(),
+                "product_id" => $product->id,
+                "quantity" => $product->total_stock,
+                "more" => $product->more_information,
+            ]
+            );
+
+        return response()->json([
+            "message" => $product
+        ]);
     }
 
     /**
@@ -37,7 +66,51 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        if (!is_null($product)) {
+            return response()->json([
+                "message" => "product not found"
+            ]);
+        }
+
+        if($request->has('name')){
+            $product->name = $request->name;
+        }
+
+        if($request->has('brand_id')){
+            $product->brand_id = $request->brand_id;
+        }
+
+        if($request->has('actual_price')){
+            $product->actual_price = $request->actual_price;
+        }
+
+        if($request->has('sale_price')){
+            $product->sale_price = $request->sale_price;
+        }
+
+        if($request->has('total_stock')){
+            $product->total_stock = $request->total_stock;
+        }
+
+        if($request->has('unit')){
+            $product->unit = $request->unit;
+        }
+
+        if($request->has('more_information')){
+            $product->more_information = $request->more_information;
+        }
+
+        if($request->has('user_id')){
+            $product->user_id = $request->user_id;
+        }
+
+        if($request->has('photo')){
+            $product->photo = $request->photo;
+        }
+
+        $product->update();
+
+        
     }
 
     /**
