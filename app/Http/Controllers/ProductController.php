@@ -165,7 +165,5 @@ class ProductController extends Controller
             [],204
         );
 
-        return response()->json([],204);
-
     }
 }
