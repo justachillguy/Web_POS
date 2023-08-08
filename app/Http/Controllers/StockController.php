@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Stock;
 use App\Http\Requests\StoreStockRequest;
 use App\Http\Requests\UpdateStockRequest;
+use App\Http\Resources\StockDetailResource;
 use App\Http\Resources\StockResource;
 use App\Models\Product;
 use GuzzleHttp\Handler\Proxy;
@@ -28,10 +29,10 @@ class StockController extends Controller
         ->paginate(4)
         ->withQueryString();
 
-        return response()->json([
-            "message" => $stocks
-        ]);
-        // return StockResource::collection($stocks);
+        // return response()->json([
+        //     "message" => $stocks
+        // ]);
+        return StockResource::collection($stocks);
     }
 
     /**
@@ -65,15 +66,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        if (is_null($stock)) {
-            return response()->json([
-                "message" => "product not found"
-            ], 404);
-        }
-
-        return response()->json([
-            "message" => $stock
-        ]);
+        return new StockDetailResource($stock);
     }
 
     /**

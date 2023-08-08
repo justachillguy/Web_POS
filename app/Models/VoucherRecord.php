@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VoucherRecord extends Model
 {
     use HasFactory;
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
