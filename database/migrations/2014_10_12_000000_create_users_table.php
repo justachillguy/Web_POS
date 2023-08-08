@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('role', ['admin', 'staff'])->default('staff');
             $table->string('user_photo')->nullable();
             $table->rememberToken();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

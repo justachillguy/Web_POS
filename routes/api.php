@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StockController;
 use App\Http\Middleware\OnlyAdmin;
 use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +38,9 @@ Route::prefix("v1")->group(function () {
             Route::post("register", "register")->name("auth.register")->middleware(OnlyAdmin::class);
         });
 
-        // Route::apiResource("brand", BrandController::class);
+        Route::apiResource("brand", BrandController::class);
+        Route::apiResource("product", ProductController::class);
+        Route::apiResource("stock", StockController::class);
     });
 
 
