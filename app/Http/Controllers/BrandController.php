@@ -97,12 +97,12 @@ class BrandController extends Controller
         if (is_null($brand)) {
             return response()->json([
                 "message" => "product not found"
-            ], 404);
+            ], 204);
         }
 
         $brand->delete();
 
-        return response()->json([], 403);
+        return response()->json([], 204);
     }
 
 
