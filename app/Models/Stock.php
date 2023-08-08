@@ -17,11 +17,6 @@ class Stock extends Model
         "more"
     ];
 
-    public function productBrand()
-    {
-        return $this->belongsTo(Brand::class, Product::class);
-    }
-
     public function product()
     {
         return $this->belongsTo(Product::class);

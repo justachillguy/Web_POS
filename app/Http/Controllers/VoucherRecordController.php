@@ -13,7 +13,13 @@ class VoucherRecordController extends Controller
      */
     public function index()
     {
-        //
+        $vRs = VoucherRecord::paginate(4)->withQueryString();
+        return response()->json(
+            [
+                "message" => $vRs,
+            ]
+        );
+
     }
 
     /**
@@ -29,7 +35,11 @@ class VoucherRecordController extends Controller
      */
     public function show(VoucherRecord $voucherRecord)
     {
-        //
+        return response()->json(
+            [
+                
+            ]
+        );
     }
 
     /**
