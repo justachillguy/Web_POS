@@ -171,6 +171,31 @@
   http://127.0.0.1:8000/api/v1/stock/{id}
 ```
 
+#### Store Stock (POST)
+
+```http
+  http://127.0.0.1:8000/api/v1/stock
+```
+| Arguments        | Type    | Description                     |
+| :-----------     | :------ | :-----------------------------  |
+| product_id       | integer | **Required** 2                  |
+| quantity         | integer | **Required** 20                 |
+| more             | string  | **Required** blah blah blah     |
+
+##### Note : After storing a stock, the amount of that stored quantity is added to the total stock of a respective product.
+
+#### Update Stock (Patch)
+
+```http
+  http://127.0.0.1:8000/api/v1/stock/{id}
+```
+| Arguments        | Type    | Description                     |
+| :-----------     | :------ | :-----------------------------  |
+| product_id       | integer | **Required** 2                  |
+| quantity         | integer | **Required** 20                 |
+| more             | string  | **Required** blah blah blah     |
+
+
 #### Delete Stock (Delete)
 
 ```http
