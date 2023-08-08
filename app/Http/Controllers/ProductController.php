@@ -91,7 +91,7 @@ class ProductController extends Controller
         //         "message" => "product not found"
         //     ]);
         // }
-        $oldTotalStock = $product->total_stock;
+        // $oldTotalStock = $product->total_stock;
 
 
         if($request->has('name')){
@@ -111,8 +111,7 @@ class ProductController extends Controller
         }
 
         if($request->has('total_stock')){
-            $newTotalStock = $request->total_stock;
-            $product->total_stock = $newTotalStock;
+            $product->total_stock = $request->total_stock;
         }
 
         if($request->has('unit')){
@@ -133,26 +132,20 @@ class ProductController extends Controller
 
         $product->update();
 
-        $quantity = $newTotalStock - $oldTotalStock;
+        // $quantity = $newTotalStock - $oldTotalStock;
 
-        Stock::create(
-            [
-                "user_id" => auth()->id(),
-                "product_id" => $product->id,
-                "quantity" => $quantity,
-                "more" => $product->more_information,
-            ]
-            );
+        // Stock::create(
+        //     [
+        //         "user_id" => auth()->id(),
+        //         "product_id" => $product->id,
+        //         "quantity" => $quantity,
+        //         "more" => $product->more_information,
+        //     ]
+        //     );
 
-        return response()->json(
-            [
-                "message" => $product
-            ]
-        );
-
+        return response()->json(["message" => "Success"]);
 
     }
-
     /**
      * Remove the specified resource from storage.
      */

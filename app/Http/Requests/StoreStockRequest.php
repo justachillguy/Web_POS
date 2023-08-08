@@ -22,7 +22,10 @@ class StoreStockRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "user_id" => ["exists:users,id"],
+            "product_id" => ["exists:products,id"],
+            "quantity" => ["required", "numeric", "min:1"],
+            "more" => ["required", "string", "max:225"],
         ];
     }
 }
