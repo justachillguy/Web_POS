@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
+            $table->string('customer')->default('unknown');
+            $table->string('phone', 20);
+            $table->string('voucher_number');
+            $table->integer('total');
+            $table->integer('tax');
+            $table->integer('net_total');
             $table->foreignId('user_id');
-            $table->foreignId('product_id');
-            $table->integer('quantity');
-            $table->text('more');
+            // $table->softDeletes();
+
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('vouchers');
     }
 };

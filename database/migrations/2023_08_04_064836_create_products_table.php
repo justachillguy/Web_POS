@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('more_information');
             $table->foreignId('user_id');
             $table->string('photo')->nullable();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

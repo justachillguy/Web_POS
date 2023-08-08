@@ -40,6 +40,7 @@ Route::prefix("v1")->group(function () {
 
         Route::apiResource("brand", BrandController::class);
         Route::apiResource("product", ProductController::class);
+        Route::apiResource("stock", StockController::class);
     });
 
 

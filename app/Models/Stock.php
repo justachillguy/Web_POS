@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Stock extends Model
 {
@@ -15,6 +16,11 @@ class Stock extends Model
         "quantity",
         "more"
     ];
+
+    public function productBrand()
+    {
+        return $this->belongsTo(Brand::class, Product::class);
+    }
 
     public function product()
     {

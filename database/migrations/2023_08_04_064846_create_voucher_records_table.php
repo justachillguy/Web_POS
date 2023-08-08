@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('product_id');
             $table->integer('quantity');
             $table->integer('cost');
+            // $table->softDeletes();
+
             $table->timestamps();
         });
     }
