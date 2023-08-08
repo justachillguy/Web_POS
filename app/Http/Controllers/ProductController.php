@@ -160,8 +160,6 @@ class ProductController extends Controller
     {
         // $this->authorize("delete");
         $product->delete();
-        return response()->json(
-            [],403
-        );
+        return response()->json([],204);
     }
 }

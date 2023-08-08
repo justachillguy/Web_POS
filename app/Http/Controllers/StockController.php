@@ -76,6 +76,6 @@ class StockController extends Controller
             ], 404);
         }
         $stock->delete();
-        return response()->json([], 403);
+        return response()->json([], 204);
     }
 }

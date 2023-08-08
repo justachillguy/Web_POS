@@ -102,7 +102,7 @@ class BrandController extends Controller
 
         $brand->delete();
 
-        return response()->json([], 403);
+        return response()->json([], 204);
     }
 
 
