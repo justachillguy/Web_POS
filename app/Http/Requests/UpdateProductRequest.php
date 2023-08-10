@@ -26,7 +26,6 @@ class UpdateProductRequest extends FormRequest
             "brand_id" => ["nullable", "exists:brands,id"],
             "actual_price" => ["nullable", "integer"],
             "sale_price" => ["nullable", "integer"],
-            "total_stock" => ["nullable", "integer"],
             "unit" => ["nullable", "string"],
             "more_information" => ["nullable", "string", "max:225"],
             "user_id" => ["nullable", "exists:users,id"],

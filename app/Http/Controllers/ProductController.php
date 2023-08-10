@@ -36,28 +36,31 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        // $this->authorize("create");
+        $this->authorize("create", App\Models\Product::class);
         $product = Product::create(
             [
             "name" => $request->name,
             "brand_id" => $request->brand_id,
             "actual_price" =>$request->actual_price,
             "sale_price" =>$request->sale_price,
-            "total_stock" =>$request->total_stock,
             "unit" =>$request->unit,
             "more_information" =>$request->more_information,
             "user_id" => auth()->id(),
             ]
             );
 
-        Stock::create(
-            [
-                "user_id" => auth()->id(),
-                "product_id" => $product->id,
-                "quantity" => $product->total_stock,
-                "more" => $product->more_information,
-            ]
-            );
+        //     if($request->has("total_stock")){
+
+        //     }
+
+        // Stock::create(
+        //     [
+        //         "user_id" => auth()->id(),
+        //         "product_id" => $product->id,
+        //         "quantity" => $product->total_stock,
+        //         "more" => $product->more_information,
+        //     ]
+        //     );
 
         return response()->json([
             "message" => $product
@@ -69,12 +72,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        if (is_null($product)) {
-            return response()->json([
-                "message" => "product not found"
-            ], 404);
-        }
-
         return new ProductDetailResource($product);
     }
 
@@ -83,7 +80,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request,Product $product)
     {
-        // $this->authorize("update");
+        $this->authorize("update", $product);
         // $product = Product::findOrFail($id);
 
         // if (!is_null($product)) {
@@ -108,10 +105,6 @@ class ProductController extends Controller
 
         if($request->has('sale_price')){
             $product->sale_price = $request->sale_price;
-        }
-
-        if($request->has('total_stock')){
-            $product->total_stock = $request->total_stock;
         }
 
         if($request->has('unit')){
@@ -151,7 +144,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // $this->authorize("delete");
+        $this->authorize("delete", $product);
         $product->delete();
 
         return response()->json(
