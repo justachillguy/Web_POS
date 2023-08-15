@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->foreignId("user_id");
             $table->string('url');
             // $table->softDeletes();
-
             $table->timestamps();
         });
     }

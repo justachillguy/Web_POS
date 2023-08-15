@@ -95,13 +95,19 @@ class StockController extends Controller
 
         $product = Product::findOrFail($stock->product_id);
 
-        if ($newValue > $oldValue) {
-            $addition = $newValue - $oldValue;
-            $product->total_stock = $product->total_stock + $addition;
-        } else {
-            $toSubtract = $oldValue - $newValue;
-            $product->total_stock = $product->total_stock - $toSubtract;
-        }
+        // if ($newValue > $oldValue) {
+        //     $addition = $newValue - $oldValue;
+        //     $product->total_stock = $product->total_stock + $addition;
+        // } else {
+        //     $toSubtract = $oldValue - $newValue;
+        //     $product->total_stock = $product->total_stock - $toSubtract;
+        // }
+
+        $addition = $newValue - $oldValue;
+        $toSubtract = $oldValue - $newValue;
+
+        // $newValue > $oldValue ? $product->total_stock = $product->total_stock + $addition : $product->total_stock = $product->total_stock - $toSubtract;
+        $product->total_stock = $newValue > $oldValue ? $product->total_stock + $addition : $product->total_stock - $toSubtract;
         $product->update();
 
         return response()->json(
@@ -118,12 +124,6 @@ class StockController extends Controller
      */
     public function destroy(Stock $stock)
     {
-        // $this->authorize("before");
-        if (is_null($stock)) {
-            return response()->json([
-                "message" => "product not found"
-            ], 404);
-        }
         $stock->delete();
         return response()->json([], 204);
     }

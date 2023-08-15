@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
+use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -63,7 +64,7 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBrandRequest $request, Brand $brand)
+    public function update(UpdateBrandRequest $request, Brand $brand, User $user)
     {
         if (is_null($brand)) {
             return response()->json([
