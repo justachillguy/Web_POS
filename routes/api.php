@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherRecordController;
 use App\Http\Middleware\OnlyAdmin;
 use App\Models\Brand;
@@ -34,15 +35,16 @@ Route::prefix("v1")->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::controller(AuthController::class)->group(function () {
             Route::get("devices", "devices")->name("auth.devices");
-            Route::post("logout", 'logout');
-            Route::post("logout-all", 'logoutAll');
+            Route::post("logout", 'logout')->name("auth.logout");
+            Route::post("logout-all", 'logoutAll')->name("auth.logoutAll");
             Route::post("register", "register")->name("auth.register")->middleware(OnlyAdmin::class);
         });
 
-        Route::apiResource("brand", BrandController::class);
-        Route::apiResource("product", ProductController::class);
-        Route::apiResource("stock", StockController::class);
-        Route::apiResource("voucher-record", VoucherRecordController::class);
+
+        // Route::apiResource("brand", BrandController::class);
+        // Route::apiResource("product", ProductController::class);
+        // Route::apiResource("stock", StockController::class);
+        // Route::apiResource("voucher-record", VoucherRecordController::class);
     });
 
 
