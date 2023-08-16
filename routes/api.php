@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherRecordController;
@@ -39,16 +40,30 @@ Route::prefix("v1")->group(function () {
             Route::post("logout", 'logout')->name("auth.logout");
             Route::post("logout-all", 'logoutAll')->name("auth.logoutAll");
             Route::post("register", "register")->name("auth.register")->middleware(OnlyAdmin::class);
+
         });
+
+        Route::controller(ProfileController::class)->group(function(){
+            Route::post('profile','update')->name('profile.update');
+            Route::post('change-password','chgPassword')->name('profile.chgPassword');
+        });
+
 
         Route::apiResource("photos", PhotoController::class);
         Route::post("multiple-delete-photos", [PhotoController::class, "multipleDelete"]);
+      
+        Route::controller(UserController::class)->group(function () {
+            Route::get("users", "list")->name("user.list");
+            Route::post("users", "create")->name("user.create");
+            Route::put("users/{id}", "updateRole")->name("user.updateRole");
+        });
 
-        // Route::apiResource("brand", BrandController::class);
-        // Route::apiResource("product", ProductController::class);
-        // Route::apiResource("stock", StockController::class);
-        // Route::apiResource("voucher-record", VoucherRecordController::class);
+        Route::apiResource("brand", BrandController::class);
+        Route::apiResource("product", ProductController::class);
+        Route::apiResource("stock", StockController::class);
+        Route::apiResource("voucher-record", VoucherRecordController::class);
     });
 
 
 });
+
