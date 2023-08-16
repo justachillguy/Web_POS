@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->foreignId("user_id");
             $table->string('url');
+            $table->string("ext");
             // $table->softDeletes();
             $table->timestamps();
         });
