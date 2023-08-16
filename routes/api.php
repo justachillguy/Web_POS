@@ -40,6 +40,11 @@ Route::prefix("v1")->group(function () {
             Route::post("register", "register")->name("auth.register")->middleware(OnlyAdmin::class);
         });
 
+        Route::controller(UserController::class)->group(function () {
+            Route::get("users", "list")->name("user.list");
+            Route::post("users", "create")->name("user.create");
+            Route::put("users/{id}", "updateRole")->name("user.updateRole");
+        });
 
         // Route::apiResource("brand", BrandController::class);
         // Route::apiResource("product", ProductController::class);
