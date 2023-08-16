@@ -35,7 +35,9 @@ class PhotoController extends Controller
         Checking if files are passed along with request
         */
         if ($request->hasFile('photos')) {
+            // return $request->file("photos");
             $photos = $request->file('photos');
+
             $savedPhotos = [];
             foreach ($photos as $photo) {
 
@@ -62,6 +64,7 @@ class PhotoController extends Controller
                     "updated_at" => now()
                 ];
                 // $savedPhotos[] = $savedPhoto;
+
             }
             /*
             Using insert method of Eloquent ORM to create multiple models at one time.
@@ -107,16 +110,14 @@ class PhotoController extends Controller
         /*
         Checking if the given file's path exists in the storage.
         */
-        if (!Storage::exists($path)) {
-            return response()->json([
-                "message" => "File does not exist in storage folder.",
-            ]);
+        if (Storage::exists($path)) {
+            Storage::delete($path);
         }
 
         /*
         Also delete the file in the storage as well as the one in the database.
         */
-        Storage::delete($path);
+
         $photo->delete();
         return response()->json([
             "message" => "A photo has been deleted",
@@ -129,7 +130,9 @@ class PhotoController extends Controller
     */
     public function multipleDelete(Request $request)
     {
-
+        /*
+        Checking if passed id is array
+        */
         if (!is_array($request->id)) {
             return response()->json([
                 "message" => "sth wrong"
@@ -138,13 +141,24 @@ class PhotoController extends Controller
         $idsToDelete = $request->id;
         $photos = Photo::where("user_id", auth()->id())->whereIn("id", $idsToDelete)->get();
         $filePathsToDelete = [];
-        foreach ($photos as $photo) {
-            $filePathsToDelete[] = $photo->url;
-        }
-        // if (Storage::exists($filePathsToDelete)) {
 
-        //     return $filePathsToDelete;
-        // }
+        /*
+        Keeping existing file's paths by looping.
+        */
+        foreach ($photos as $photo) {
+            if (Storage::exists($photo->url)) {
+                $filePathsToDelete[] = $photo->url;
+            }
+        }
+
+        /*
+        I don't want Storage::delete() to perform if any of file's paths doesn't exist.
+        */
+        if (!empty($filePathsToDelete)) {
+            Storage::delete($filePathsToDelete);
+        }
+        Photo::destroy(collect($idsToDelete));
+
         return response()->json([
             "message" => "successful"
         ]);
