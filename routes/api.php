@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
@@ -40,6 +41,8 @@ Route::prefix("v1")->group(function () {
             Route::post("register", "register")->name("auth.register")->middleware(OnlyAdmin::class);
         });
 
+        Route::apiResource("photos", PhotoController::class);
+        Route::post("multiple-delete-photos", [PhotoController::class, "multipleDelete"]);
 
         // Route::apiResource("brand", BrandController::class);
         // Route::apiResource("product", ProductController::class);
