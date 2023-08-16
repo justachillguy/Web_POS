@@ -36,13 +36,13 @@ class ProfileController extends Controller
         ]);
     }
 
-    // public function update(Request $request, User $user)
-    // {
-    //     if($request->has('photo')){
-    //         $user->photo = $request->photo;
-    //     }
-    //     $user->update();
+    public function update(Request $request, User $user)
+    {
+        if($request->has('photo')){
+            $user->photo = $request->photo;
+        }
+        $user->update();
 
-    //     return response()->json(['message'=>"user's profile photo is updated"]);
-    // }
+        return response()->json(['message'=>"user's profile photo is updated"]);
+    }
 }

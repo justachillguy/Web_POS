@@ -43,8 +43,9 @@ Route::prefix("v1")->group(function () {
         });
 
         Route::controller(ProfileController::class)->group(function(){
-            Route::post('update-profile','update')->name('profile.update');
-            Route::post('change-password','chgPassword')->name('profile.chgPassword')->middleware('auth:sanctum');
+            Route::post('profile','update')->name('profile.update');
+            Route::post('change-password','chgPassword')->name('profile.chgPassword');
+        });
 
         Route::controller(UserController::class)->group(function () {
             Route::get("users", "list")->name("user.list");
@@ -61,3 +62,4 @@ Route::prefix("v1")->group(function () {
 
 
 });
+
