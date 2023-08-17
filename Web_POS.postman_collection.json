@@ -1,0 +1,1079 @@
+{
+	"info": {
+		"_postman_id": "107f5581-1ff5-4fbf-9f41-bec63eca0d4e",
+		"name": "Web_POS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25185410",
+		"_collection_link": "https://universal-shuttle-710332.postman.co/workspace/Web_POS~f0251dbb-2748-4a50-b5d8-b51db193b491/collection/25185410-107f5581-1ff5-4fbf-9f41-bec63eca0d4e?action=share&source=collection_link&creator=25185410"
+	},
+	"item": [
+		{
+			"name": "New Folder",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "devices",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{basic_url}}/devices",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{basic_url}}/logout",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logoutAll",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/logout-all",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"logout-all"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Brand",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/brand",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"brand"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Good Morning",
+											"type": "text"
+										},
+										{
+											"key": "company",
+											"value": "Forrest",
+											"type": "text"
+										},
+										{
+											"key": "information",
+											"value": "paremuser_iduser_iduser_iduser_iduser_iduser_iduser_iduser_iduser_iduser_iduser_id",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/brand",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"brand"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/brand/21",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"brand",
+										"21"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "good night",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/brand/21",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"brand",
+										"21"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/brand/1",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"brand",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/product",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Bread",
+											"type": "text"
+										},
+										{
+											"key": "brand_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "actual_price",
+											"value": "450",
+											"type": "text"
+										},
+										{
+											"key": "sale_price",
+											"value": "500",
+											"type": "text"
+										},
+										{
+											"key": "total_stock",
+											"value": "30",
+											"type": "text"
+										},
+										{
+											"key": "unit",
+											"value": "pack",
+											"type": "text"
+										},
+										{
+											"key": "more_information",
+											"value": "Be cautious of being allegic with dairy products",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/product",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/product/1",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"product",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Bread",
+											"type": "text"
+										},
+										{
+											"key": "actual_price",
+											"value": "500",
+											"type": "text"
+										},
+										{
+											"key": "sale_price",
+											"value": "550",
+											"type": "text"
+										},
+										{
+											"key": "total_stock",
+											"value": "50",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/product/20",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"product",
+										"20"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/product/21",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"product",
+										"21"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Stock",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/stock",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"stock"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "product_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "20",
+											"type": "text"
+										},
+										{
+											"key": "more",
+											"value": "ba bal ha ba ",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/stock",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"stock"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/stock/19",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"stock",
+										"19"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "quantity",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/stock/21",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"stock",
+										"21"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/stock/2",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"stock",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Voucher Record",
+					"item": [
+						{
+							"name": "store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "product_id",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/voucher-record/22",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher-record",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/voucher-record/22",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher-record",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "voucher_id",
+											"value": "21",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "product_id",
+											"value": "3",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "quantity",
+											"value": "4",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/voucher-record/22",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher-record",
+										"22"
+									],
+									"query": [
+										{
+											"key": "voucher_id",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/voucher-record/",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher-record",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Voucher",
+					"item": [
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/voucher",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{basic_url}}/voucher",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/voucher/22",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/voucher/",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/voucher/",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"voucher",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Ms. Cashier",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "cashier@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "thepassword",
+											"type": "text"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "thepassword",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-role",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "position",
+											"value": "admin",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/users/2",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Media",
+					"item": [
+						{
+							"name": "store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "url",
+											"value": "in newyork i really rock hide it in my sock and i shoot that opp du dud udu ud u",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{basic_url}}/photos",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"photos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "index",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/photos/2",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"photos",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "multiple-delete",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/photos/",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"photos",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{api_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "zwe@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "thepassword",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{basic_url}}/login",
+					"host": [
+						"{{basic_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

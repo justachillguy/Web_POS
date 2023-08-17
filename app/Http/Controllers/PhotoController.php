@@ -40,7 +40,7 @@ class PhotoController extends Controller
 
             $savedPhotos = [];
             foreach ($photos as $photo) {
-
+                $size = $photo->getSize();
                 /*
                 store the file in the storage first
                 */
@@ -60,6 +60,7 @@ class PhotoController extends Controller
                     "user_id" => auth()->id(),
                     "url" => $savedPhoto,
                     "ext" => $extension,
+                    "size" => $size,
                     "created_at" => now(),
                     "updated_at" => now()
                 ];
