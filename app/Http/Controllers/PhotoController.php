@@ -140,19 +140,26 @@ class PhotoController extends Controller
         }
         $idsToDelete = $request->id;
         $photos = Photo::where("user_id", auth()->id())->whereIn("id", $idsToDelete)->get();
-        $filePathsToDelete = [];
 
+        $filePaths = [];
         /*
-        Keeping existing file's paths by looping.
+        Collecting the paths of the files about to be deleted.
         */
         foreach ($photos as $photo) {
-            if (Storage::exists($photo->url)) {
-                $filePathsToDelete[] = $photo->url;
-            }
+            // if (Storage::exists($photo->url)) {
+                // }
+                $filePaths[] = $photo->url;
         }
 
         /*
-        I don't want Storage::delete() to perform if any of file's paths doesn't exist.
+        Filtering only the existing file's paths.
+        */
+        $filePathsToDelete = array_filter($filePaths, function ($f) {
+            return Storage::exists($f);
+        });
+
+        /*
+        I don't want Storage::delete() to operate if any of file's paths doesn't exist.
         */
         if (!empty($filePathsToDelete)) {
             Storage::delete($filePathsToDelete);
