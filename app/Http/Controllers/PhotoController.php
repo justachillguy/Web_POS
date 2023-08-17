@@ -28,7 +28,7 @@ class PhotoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePhotoRequest $request)
     {
 
         /*
@@ -40,7 +40,14 @@ class PhotoController extends Controller
 
             $savedPhotos = [];
             foreach ($photos as $photo) {
-                $size = $photo->getSize();
+                /*
+                Get size of file and convert into kilobytes.
+                */
+                $bytes = $photo->getSize();
+                $kilobytes = $bytes / 1024;
+                $kilobytesRounded = round($kilobytes, 2);
+                $size = $kilobytesRounded . " KB";
+
                 /*
                 store the file in the storage first
                 */
