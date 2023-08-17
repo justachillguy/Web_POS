@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('photo')->nullable();
+            $table->string('photo')->default("public/media/blank-profile-picture-973460_1280.webp");
             $table->rememberToken();
             // $table->softDeletes();
             $table->timestamps();
