@@ -36,9 +36,13 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        
+        $user = User::findOrFail($id);
+        // $request->validate([
+        //     "photo" => ["nullable", "string"],
+        // ]);
+        // return $request->photo;
         if($request->has('photo')){
             $user->photo = $request->photo;
         }
