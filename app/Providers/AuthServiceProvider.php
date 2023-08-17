@@ -30,8 +30,8 @@ class AuthServiceProvider extends ServiceProvider
             return $user->position === "admin";
         });
 
-        Gate::define("chgPw", function (User $user) {
-            return $user->
-        });
+        // Gate::define("chgPw", function (User $user) {
+        //     return $user->
+        // });
     }
 }

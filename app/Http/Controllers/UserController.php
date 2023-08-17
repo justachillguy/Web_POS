@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -16,10 +17,12 @@ class UserController extends Controller
         ->paginate(4)
         ->withQueryString();
 
-        return response()->json([
-            "users" => $users,
-        ]);
+        // return response()->json([
+        //     "users" => $users,
+        // ]);
+        return UserResource::collection($users);
     }
+
 
 
     public function create(Request $request){
