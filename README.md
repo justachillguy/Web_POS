@@ -11,7 +11,7 @@
 | Arguments | Type   | Description                  |
 | :-------- | :----- | :--------------------------- |
 | email     | sting  | **Required** admin@gmail.com |
-| password  | string | **Required** adfdafda        |
+| password  | string | **Required** thepassword     |
 
 #### Logout (POST)
 
