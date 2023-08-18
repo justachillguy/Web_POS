@@ -37,17 +37,32 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $this->authorize("create", App\Models\Product::class);
-        $product = Product::create(
-            [
-            "name" => $request->name,
-            "brand_id" => $request->brand_id,
-            "actual_price" =>$request->actual_price,
-            "sale_price" =>$request->sale_price,
-            "unit" =>$request->unit,
-            "more_information" =>$request->more_information,
-            "user_id" => auth()->id(),
-            ]
-            );
+
+
+            if ($request->has("information")) {
+                $product = Product::create(
+                    [
+                    "name" => $request->name,
+                    "brand_id" => $request->brand_id,
+                    "actual_price" =>$request->actual_price,
+                    "sale_price" =>$request->sale_price,
+                    "unit" =>$request->unit,
+                    "more_information" =>$request->more_information,
+                    "user_id" => auth()->id(),
+                    ]
+                    );
+            } else {
+                $product = Product::create(
+                    [
+                    "name" => $request->name,
+                    "brand_id" => $request->brand_id,
+                    "actual_price" =>$request->actual_price,
+                    "sale_price" =>$request->sale_price,
+                    "unit" =>$request->unit,
+                    "user_id" => auth()->id(),
+                    ]
+                    );
+            }
 
         //     if($request->has("total_stock")){
 
@@ -62,9 +77,7 @@ class ProductController extends Controller
         //     ]
         //     );
 
-        return response()->json([
-            "message" => $product
-        ]);
+        return new ProductDetailResource($product);
     }
 
     /**

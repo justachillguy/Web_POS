@@ -21,8 +21,10 @@ class BrandFactory extends Factory
             "name" => fake()->domainWord(),
             "company" => fake()->word(),
             "information" => fake()->sentence(10),
-            "user_id" => rand(1,2),
-            "photo" => fake()->sentence(),
+            "agent" => fake()->name(),
+            "phone_number" => fake()->phoneNumber(),
+            "user_id" => 1,
+            // "photo" => fake()->sentence(),
         ];
     }
 }

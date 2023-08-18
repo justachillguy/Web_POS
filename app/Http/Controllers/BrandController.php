@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
+use App\Http\Resources\BrandDetailResource;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,12 +36,24 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        $brand = Brand::create([
-            "name" => $request->name,
-            "company" => $request->company,
-            "information" => $request->information,
-            "user_id" => auth()->id(),
-        ]);
+        if ($request->has("information")) {
+            $brand = Brand::create([
+                "name" => $request->name,
+                "company" => $request->company,
+                "agent" => $request->agent,
+                "phone_number" => $request->phone_number,
+                "information" => $request->information,
+                "user_id" => auth()->id(),
+            ]);
+        } else {
+            $brand = Brand::create([
+                "name" => $request->name,
+                "company" => $request->company,
+                "agent" => $request->agent,
+                "phone_number" => $request->phone_number,
+                "user_id" => auth()->id(),
+            ]);
+        }
 
         return response()->json([
             "brand" => $brand
@@ -58,13 +71,13 @@ class BrandController extends Controller
             ], 404);
         }
 
-        return ;
+        return new BrandDetailResource($brand);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBrandRequest $request, Brand $brand, User $user)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
         if (is_null($brand)) {
             return response()->json([
@@ -98,7 +111,7 @@ class BrandController extends Controller
         if (is_null($brand)) {
             return response()->json([
                 "message" => "product not found"
-            ], 204);
+            ], 404);
         }
 
         $brand->delete();
