@@ -44,14 +44,14 @@ Route::prefix("v1")->group(function () {
         });
 
         Route::controller(ProfileController::class)->group(function(){
-            Route::post('profile','update')->name('profile.update');
+            Route::put('profile/{id}','update')->name('profile.update');
             Route::post('change-password','chgPassword')->name('profile.chgPassword');
         });
 
 
         Route::apiResource("photos", PhotoController::class);
         Route::post("multiple-delete-photos", [PhotoController::class, "multipleDelete"]);
-      
+
         Route::controller(UserController::class)->group(function () {
             Route::get("users", "list")->name("user.list");
             Route::post("users", "create")->name("user.create");

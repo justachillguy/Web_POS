@@ -1,5 +1,7 @@
 # API Documentation
+
 ## Authentication
+
 #### Login (POST)
 
 ```http
@@ -10,22 +12,6 @@
 | :-------- | :----- | :--------------------------- |
 | email     | sting  | **Required** admin@gmail.com |
 | password  | string | **Required** adfdafda        |
-
-#### Register (POST)
-
-```http
-  http://127.0.0.1:8000/api/v1/register
-```
-
-| Arguments             | Type   | Description                  |
-| :-------------------- | :----- | :--------------------------- |
-| name                  | string | **Required** Joy             |
-| email                 | sting  | **Required** admin@gmail.com |
-| password              | string | **Required** adfdafda        |
-| password_confirmation | string | **Required** adfdafda        |
-
----
-## User Profile
 
 #### Logout (POST)
 
@@ -39,12 +25,56 @@
   http://127.0.0.1:8000/api/v1/logout-all
 ```
 
-#### Get Devices (GET)
+#### Get All Devices (GET)
 
 ```http
   http://127.0.0.1:8000/api/v1/devices
 ```
+
 ---
+
+## User Management
+
+#### Get All Users (GET)
+
+```http
+  http://127.0.0.1:8000/api/v1/users
+```
+
+#### Create Users (Register) (POST)
+
+```http
+  http://127.0.0.1:8000/api/v1/register
+```
+
+| Arguments             | Type     | Description                  |
+| :-------------------- | :------- | :--------------------------- |
+| name                  | string   | **Required** Joy             |
+| phone_number          | string   | **Requried** 092544411       |
+| date_of_birth         | date     | **Required** 12.5.2005       |
+| gender                | enum     | **Required** male            |
+| position              | enum     | **Required** admin           |
+| address               | longText | **Required** yangon          |
+| email                 | string   | **Required** admin@gmail.com |
+| password              | string   | **Required** adfdafda        |
+| password_confirmation | string   | **Required** adfdafda        |
+
+##### Note : Only Admin can register and manage users.
+
+#### Update User's Role (PUT)
+
+```http
+  http://127.0.0.1:8000/api/v1/users/{id}
+```
+
+| Arguments | Type | Description        |
+| :-------- | :--- | :----------------- |
+| position  | enum | **Required** admin |
+
+###### Note : Only Admin can change user's role.
+
+---
+
 ## Products
 
 #### Get All Products (GET)
@@ -52,7 +82,6 @@
 ```http
   http://127.0.0.1:8000/api/v1/product
 ```
-
 
 #### Show A Particular Product (GET)
 
@@ -67,7 +96,7 @@
 ```
 
 | Arguments        | Type    | Description                     |
-| :-----------     | :------ | :-----------------------------  |
+| :--------------- | :------ | :------------------------------ |
 | name             | string  | **Required** Juice              |
 | brand_id         | integer | **Required** 1                  |
 | actual_price     | integer | **Required** 3000               |
@@ -86,7 +115,7 @@
 ```
 
 | Arguments        | Type    | Description                     |
-| :-----------     | :------ | :-----------------------------  |
+| :--------------- | :------ | :------------------------------ |
 | name             | string  | **Required** Juice              |
 | brand_id         | integer | **Required** 1                  |
 | actual_price     | integer | **Required** 3000               |
@@ -114,7 +143,6 @@
   http://127.0.0.1:8000/api/v1/brand
 ```
 
-
 #### Show A Particular Brand (GET)
 
 ```http
@@ -127,12 +155,12 @@
   http://127.0.0.1:8000/api/v1/brand
 ```
 
-| Arguments        | Type    | Description                     |
-| :-----------     | :------ | :-----------------------------  |
-| name             | string  | **Required** Good Morning       |
-| company          | string  | **Required** Fresh Food         |
-| information      | string  | **Required** Founded in 1999    |
-| photo            | string  | **Nullable** user.png           |
+| Arguments   | Type   | Description                  |
+| :---------- | :----- | :--------------------------- |
+| name        | string | **Required** Good Morning    |
+| company     | string | **Required** Fresh Food      |
+| information | string | **Required** Founded in 1999 |
+| photo       | string | **Nullable** user.png        |
 
 #### Update Brand (Patch)
 
@@ -140,13 +168,12 @@
   http://127.0.0.1:8000/api/v1/brand/{id}
 ```
 
-| Arguments        | Type    | Description                     |
-| :-----------     | :------ | :-----------------------------  |
-| name             | string  | **Required** Good Morning       |
-| company          | string  | **Required** Fresh Food         |
-| information      | string  | **Required** Founded in 1999    |
-| photo            | string  | **Nullable** user.png           |
-
+| Arguments   | Type   | Description                  |
+| :---------- | :----- | :--------------------------- |
+| name        | string | **Required** Good Morning    |
+| company     | string | **Required** Fresh Food      |
+| information | string | **Required** Founded in 1999 |
+| photo       | string | **Nullable** user.png        |
 
 #### Delete Brand (Delete)
 
@@ -164,7 +191,6 @@
   http://127.0.0.1:8000/api/v1/stock
 ```
 
-
 #### Show A Particular Stock (GET)
 
 ```http
@@ -176,11 +202,12 @@
 ```http
   http://127.0.0.1:8000/api/v1/stock
 ```
-| Arguments        | Type    | Description                     |
-| :-----------     | :------ | :-----------------------------  |
-| product_id       | integer | **Required** 2                  |
-| quantity         | integer | **Required** 20                 |
-| more             | string  | **Required** blah blah blah     |
+
+| Arguments  | Type    | Description                 |
+| :--------- | :------ | :-------------------------- |
+| product_id | integer | **Required** 2              |
+| quantity   | integer | **Required** 20             |
+| more       | string  | **Required** blah blah blah |
 
 ##### Note : After storing a stock, the amount of that stored quantity is added to the total stock of a respective product.
 
@@ -189,12 +216,12 @@
 ```http
   http://127.0.0.1:8000/api/v1/stock/{id}
 ```
-| Arguments        | Type    | Description                     |
-| :-----------     | :------ | :-----------------------------  |
-| product_id       | integer | **Required** 2                  |
-| quantity         | integer | **Required** 20                 |
-| more             | string  | **Required** blah blah blah     |
 
+| Arguments  | Type    | Description                 |
+| :--------- | :------ | :-------------------------- |
+| product_id | integer | **Required** 2              |
+| quantity   | integer | **Required** 20             |
+| more       | string  | **Required** blah blah blah |
 
 #### Delete Stock (Delete)
 
@@ -202,6 +229,70 @@
   http://127.0.0.1:8000/api/v1/stock/{id}
 ```
 
+## Media
+
+#### Get All Media (GET)
+
+```http
+  http://127.0.0.1:8000/api/v1/photos
+```
+
+#### Store Photo (POST)
+
+```http
+  http://127.0.0.1:8000/api/v1/photo
+```
+
+| Arguments | Type   | Description                           |
+| :-------- | :----- | :------------------------------------ |
+| url       | string | **Required** public/media/example.png |
+| name      | string | **Required** apple                    |
+| extension | string | **Required** png                      |
+
+#### Delete Photo (Delete)
+
+```http
+  http://127.0.0.1:8000/api/v1/photo/{id}
+```
+
+### Multiple Delete Photos (Multi Delete Photos)
+
+```http
+  http://127.0.0.1:8000/api/v1/multiple-delete-photos
+```
+
+###### Note: Photo's ids have to be passed as an array
+
+## Profile
+
+### Change Password (POST)
+
+```http
+  http://127.0.0.1:8000/api/v1/change-password
+```
+
+| Arguments        | Type   | Description             |
+| :--------------- | :----- | :---------------------- |
+| current_password | string | **Required** asdffdsa   |
+| new_password     | string | **Required** helloworld |
+| confirm_password | string | **Required** helloworld |
+
+#### User's info Update (PUT)
+
+```http
+  http://127.0.0.1:8000/api/v1/profile/{id}
+```
+
+| Arguments             | Type     | Description                  |
+| :-------------------- | :------- | :--------------------------- |
+| name                  | string   | **Required** Joy             |
+| phone_number          | string   | **Requried** 092544411       |
+| date_of_birth         | date     | **Required** 12.5.2005       |
+| gender                | enum     | **Required** male            |
+| position              | enum     | **Required** admin           |
+| address               | longText | **Required** yangon          |
+| email                 | string   | **Required** admin@gmail.com |
+| password              | string   | **Required** adfdafda        |
+| password_confirmation | string   | **Required** adfdafda        |
+
 ---
-
-

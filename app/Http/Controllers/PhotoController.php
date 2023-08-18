@@ -31,12 +31,14 @@ class PhotoController extends Controller
     public function store(Request $request)
     {
 
+        // return $request->photos;
         /*
         Checking if files are passed along with request
         */
         if ($request->hasFile('photos')) {
             // return $request->file("photos");
             $photos = $request->file('photos');
+            // return $photos;
 
             $savedPhotos = [];
             foreach ($photos as $photo) {
@@ -45,6 +47,7 @@ class PhotoController extends Controller
                 store the file in the storage first
                 */
                 $savedPhoto = $photo->store("public/media");
+                // return $savedPhoto;
 
                 /*
                 Using php built-in method, pathinfo()
