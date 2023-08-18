@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function list()
     {
-        Gate::authorize("admin-only", App\Models\User::class);
+        // Gate::authorize("admin-only", App\Models\User::class);
         $users = User::latest("id")
         ->paginate(4)
         ->withQueryString();
@@ -26,7 +26,7 @@ class UserController extends Controller
 
 
     public function create(Request $request){
-        Gate::authorize("admin-only", App\Models\User::class);
+        // Gate::authorize("admin-only", App\Models\User::class);
 
         $request->validate([
             "name" => ["required", "min:3"],
@@ -62,7 +62,7 @@ class UserController extends Controller
 
     public function updateRole(Request $request, $id)
     {
-        Gate::authorize("admin-only", App\Models\User::class);
+        // Gate::authorize("admin-only", App\Models\User::class);
         $user = User::findOrFail($id);
 
         $request->validate([
@@ -92,6 +92,18 @@ class UserController extends Controller
         return response()->json(
             [
                 "message" => "You have been banned for being a really bad boy"
+            ]
+        );
+
+    }
+
+    public function unban(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->unban();
+        return response()->json(
+            [
+                "message" => "You have been unbanned.Be a good boy now."
             ]
         );
 

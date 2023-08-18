@@ -31,11 +31,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix("v1")->group(function () {
 
+    Route::controller(AuthController::class)->group(function () {
+        Route::post("login", "login")->name("auth.login");
+    });
+    
     Route::middleware("auth.banned")->group(function () {
 
-        Route::controller(AuthController::class)->group(function () {
-            Route::post("login", "login")->name("auth.login");
-        });
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::controller(AuthController::class)->group(function () {
@@ -53,11 +54,12 @@ Route::prefix("v1")->group(function () {
             Route::apiResource("photos", PhotoController::class);
             Route::post("multiple-delete-photos", [PhotoController::class, "multipleDelete"]);
 
-            Route::controller(UserController::class)->group(function () {
+            Route::middleware("adminOnly")->controller(UserController::class)->group(function () {
                 Route::get("users", "list")->name("user.list");
                 Route::post("users", "create")->name("user.create"); /* register route only admin can register */
                 Route::put("users/{id}", "updateRole")->name("user.updateRole"); /* promotion route only admin access */
                 Route::post("ban-user", "ban")->name("user.ban");
+                Route::post("unban-user", "unban")->name("user.unban");
             });
 
             // Route::apiResource("brand", BrandController::class);

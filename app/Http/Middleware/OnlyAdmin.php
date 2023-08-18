@@ -15,8 +15,8 @@ class OnlyAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->role != "admin") {
-            return abort(403);
+        if ($request->user()->position !== "admin") {
+            return abort(403, "This action is not allowed.");
         }
         return $next($request);
     }
