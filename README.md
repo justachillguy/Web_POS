@@ -240,7 +240,7 @@
 #### Store Photo (POST)
 
 ```http
-  http://127.0.0.1:8000/api/v1/photo
+  http://127.0.0.1:8000/api/v1/photos
 ```
 
 | Arguments | Type   | Description                           |
@@ -252,7 +252,7 @@
 #### Delete Photo (Delete)
 
 ```http
-  http://127.0.0.1:8000/api/v1/photo/{id}
+  http://127.0.0.1:8000/api/v1/photos/{id}
 ```
 
 ### Multiple Delete Photos (Multi Delete Photos)
@@ -263,7 +263,7 @@
 
 ###### Note: Photo's ids have to be passed as an array
 
-## Profile
+## User's Profile
 
 ### Change Password (POST)
 
@@ -283,16 +283,13 @@
   http://127.0.0.1:8000/api/v1/profile/{id}
 ```
 
-| Arguments             | Type     | Description                  |
-| :-------------------- | :------- | :--------------------------- |
-| name                  | string   | **Required** Joy             |
-| phone_number          | string   | **Requried** 092544411       |
-| date_of_birth         | date     | **Required** 12.5.2005       |
-| gender                | enum     | **Required** male            |
-| position              | enum     | **Required** admin           |
-| address               | longText | **Required** yangon          |
-| email                 | string   | **Required** admin@gmail.com |
-| password              | string   | **Required** adfdafda        |
-| password_confirmation | string   | **Required** adfdafda        |
+| Arguments     | Type     | Description                          |
+| :------------ | :------- | :----------------------------------- |
+| name          | string   | **Nullable** Joy                     |
+| phone_number  | string   | **Nullable** 092544411               |
+| date_of_birth | date     | **Nullable** 12.5.2005               |
+| gender        | enum     | **Nullable** male                    |
+| address       | longText | **Nullable** yangon                  |
+| photo         | string   | **Nullable** public/media/flower.png |
 
 ---
