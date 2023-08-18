@@ -84,4 +84,16 @@ class UserController extends Controller
             ]
         );
     }
+
+    public function ban(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->ban();
+        return response()->json(
+            [
+                "message" => "You have been banned for being a really bad boy"
+            ]
+        );
+
+    }
 }
