@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class PhotoResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +18,9 @@ class PhotoResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "user_name" => $this->user->name,
-            "url" => asset(Storage::url($this->url)),
-            "user_id" => $this->user_id,
+            "position" => $this->position,
+            "photo" => asset(Storage::url($this->photo)),
+            // "photo" => $this->photo,
         ];
     }
 }

@@ -39,8 +39,6 @@ Route::prefix("v1")->group(function () {
             Route::get("devices", "devices")->name("auth.devices");
             Route::post("logout", 'logout')->name("auth.logout");
             Route::post("logout-all", 'logoutAll')->name("auth.logoutAll");
-            Route::post("register", "register")->name("auth.register")->middleware(OnlyAdmin::class);
-
         });
 
         Route::controller(ProfileController::class)->group(function(){
@@ -54,14 +52,14 @@ Route::prefix("v1")->group(function () {
 
         Route::controller(UserController::class)->group(function () {
             Route::get("users", "list")->name("user.list");
-            Route::post("users", "create")->name("user.create");
-            Route::put("users/{id}", "updateRole")->name("user.updateRole");
+            Route::post("users", "create")->name("user.create"); /* register route only admin can register */
+            Route::put("users/{id}", "updateRole")->name("user.updateRole"); /* promotion route only admin access */
         });
 
-        Route::apiResource("brand", BrandController::class);
-        Route::apiResource("product", ProductController::class);
-        Route::apiResource("stock", StockController::class);
-        Route::apiResource("voucher-record", VoucherRecordController::class);
+        // Route::apiResource("brand", BrandController::class);
+        // Route::apiResource("product", ProductController::class);
+        // Route::apiResource("stock", StockController::class);
+        // Route::apiResource("voucher-record", VoucherRecordController::class);
     });
 
 

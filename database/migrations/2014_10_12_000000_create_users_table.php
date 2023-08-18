@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string("phone_number")->nullable();
+            $table->string("phone_number");
             $table->date("date_of_birth");
             $table->enum("gender", ["male", "female"]);
             $table->longText("address");
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('photo')->nullable();
+            $table->string('photo')->default("public/media/blank-profile-picture-973460_1280.webp");
             $table->rememberToken();
             // $table->softDeletes();
             $table->timestamps();

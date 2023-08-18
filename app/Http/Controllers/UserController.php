@@ -2,28 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function list()
     {
+        Gate::authorize("admin-only", App\Models\User::class);
         $users = User::latest("id")
         ->paginate(4)
         ->withQueryString();
 
-        return response()->json([
-            "users" => $users,
-        ]);
+        // return response()->json([
+        //     "users" => $users,
+        // ]);
+        return UserResource::collection($users);
     }
 
 
+
     public function create(Request $request){
+        Gate::authorize("admin-only", App\Models\User::class);
+
         $request->validate([
             "name" => ["required", "min:3"],
-            "phone_number" => ["string"],
+            "phone_number" => ["string", "required"],
             "date_of_birth" => ["required", "date"],
             "gender" => ["required", "in:male,female"],
             "position" => ["required", "in:admin,staff"],
@@ -55,6 +62,7 @@ class UserController extends Controller
 
     public function updateRole(Request $request, $id)
     {
+        Gate::authorize("admin-only", App\Models\User::class);
         $user = User::findOrFail($id);
 
         $request->validate([
