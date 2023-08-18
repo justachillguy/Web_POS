@@ -4,8 +4,8 @@
 
 #### Login (POST)
 
-```http
-  http://127.0.0.1:8000/api/v1/login
+```
+  https://f.mmsdev.site/api/v1/login
 ```
 
 | Arguments | Type   | Description                  |
@@ -16,19 +16,19 @@
 #### Logout (POST)
 
 ```http
-  http://127.0.0.1:8000/api/v1/logout
+  https://f.mmsdev.site/api/v1/logout
 ```
 
 #### Logout from all devices(POST)
 
 ```http
-  http://127.0.0.1:8000/api/v1/logout-all
+  https://f.mmsdev.site/api/v1/logout-all
 ```
 
 #### Get All Devices (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/devices
+  https://f.mmsdev.site/api/v1/devices
 ```
 
 ---
@@ -38,13 +38,13 @@
 #### Get All Users (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/users
+  https://f.mmsdev.site/api/v1/users
 ```
 
 #### Create Users (Register) (POST)
 
 ```http
-  http://127.0.0.1:8000/api/v1/register
+  https://f.mmsdev.site/api/v1/register
 ```
 
 | Arguments             | Type     | Description                  |
@@ -64,7 +64,7 @@
 #### Update User's Role (PUT)
 
 ```http
-  http://127.0.0.1:8000/api/v1/users/{id}
+  https://f.mmsdev.site/api/v1/users/{id}
 ```
 
 | Arguments | Type | Description        |
@@ -80,19 +80,19 @@
 #### Get All Products (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/product
+  https://f.mmsdev.site/api/v1/product
 ```
 
 #### Show A Particular Product (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/product/{id}
+  https://f.mmsdev.site/api/v1/product/{id}
 ```
 
 #### Store Product (Post)
 
 ```http
-  http://127.0.0.1:8000/api/v1/product
+  https://f.mmsdev.site/api/v1/product
 ```
 
 | Arguments        | Type    | Description                     |
@@ -111,7 +111,7 @@
 #### Update product (Patch)
 
 ```http
-  http://127.0.0.1:8000/api/v1/product/{id}
+  https://f.mmsdev.site/api/v1/product/{id}
 ```
 
 | Arguments        | Type    | Description                     |
@@ -130,7 +130,7 @@
 #### Delete product (Delete)
 
 ```http
-  http://127.0.0.1:8000/api/v1/product/{id}
+  https://f.mmsdev.site/api/v1/product/{id}
 ```
 
 ---
@@ -140,19 +140,19 @@
 #### Get All Brands (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/brand
+  https://f.mmsdev.site/api/v1/brand
 ```
 
 #### Show A Particular Brand (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/brand/{id}
+  https://f.mmsdev.site/api/v1/brand/{id}
 ```
 
 #### Store Brand (Post)
 
 ```http
-  http://127.0.0.1:8000/api/v1/brand
+  https://f.mmsdev.site/api/v1/brand
 ```
 
 | Arguments   | Type   | Description                  |
@@ -165,7 +165,7 @@
 #### Update Brand (Patch)
 
 ```http
-  http://127.0.0.1:8000/api/v1/brand/{id}
+  https://f.mmsdev.site/api/v1/brand/{id}
 ```
 
 | Arguments   | Type   | Description                  |
@@ -178,7 +178,7 @@
 #### Delete Brand (Delete)
 
 ```http
-  http://127.0.0.1:8000/api/v1/brand/{id}
+  https://f.mmsdev.site/api/v1/brand/{id}
 ```
 
 ---
@@ -188,19 +188,19 @@
 #### Get All Stocks (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/stock
+  https://f.mmsdev.site/api/v1/stock
 ```
 
 #### Show A Particular Stock (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/stock/{id}
+  https://f.mmsdev.site/api/v1/stock/{id}
 ```
 
 #### Store Stock (POST)
 
 ```http
-  http://127.0.0.1:8000/api/v1/stock
+  https://f.mmsdev.site/api/v1/stock
 ```
 
 | Arguments  | Type    | Description                 |
@@ -214,7 +214,7 @@
 #### Update Stock (Patch)
 
 ```http
-  http://127.0.0.1:8000/api/v1/stock/{id}
+  https://f.mmsdev.site/api/v1/stock/{id}
 ```
 
 | Arguments  | Type    | Description                 |
@@ -226,7 +226,7 @@
 #### Delete Stock (Delete)
 
 ```http
-  http://127.0.0.1:8000/api/v1/stock/{id}
+  https://f.mmsdev.site/api/v1/stock/{id}
 ```
 
 ## Media
@@ -234,13 +234,13 @@
 #### Get All Media (GET)
 
 ```http
-  http://127.0.0.1:8000/api/v1/photos
+  https://f.mmsdev.site/api/v1/photos
 ```
 
 #### Store Photo (POST)
 
 ```http
-  http://127.0.0.1:8000/api/v1/photos
+  https://f.mmsdev.site/api/v1/photos
 ```
 
 | Arguments | Type   | Description                           |
@@ -252,13 +252,13 @@
 #### Delete Photo (Delete)
 
 ```http
-  http://127.0.0.1:8000/api/v1/photos/{id}
+  https://f.mmsdev.site/api/v1/photos/{id}
 ```
 
 ### Multiple Delete Photos (Multi Delete Photos)
 
 ```http
-  http://127.0.0.1:8000/api/v1/multiple-delete-photos
+  https://f.mmsdev.site/api/v1/multiple-delete-photos
 ```
 
 ###### Note: Photo's ids have to be passed as an array
@@ -268,7 +268,7 @@
 ### Change Password (POST)
 
 ```http
-  http://127.0.0.1:8000/api/v1/change-password
+  https://f.mmsdev.site/api/v1/change-password
 ```
 
 | Arguments        | Type   | Description             |
@@ -280,7 +280,7 @@
 #### User's info Update (PUT)
 
 ```http
-  http://127.0.0.1:8000/api/v1/profile/{id}
+  https://f.mmsdev.site/api/v1/profile/{id}
 ```
 
 | Arguments     | Type     | Description                          |
