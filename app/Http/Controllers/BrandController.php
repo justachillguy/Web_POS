@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Resources\BrandDetailResource;
+use App\Http\Resources\BrandResource;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,7 +29,7 @@ class BrandController extends Controller
         ->paginate(4)
         ->withQueryString();
 
-        return $brands;
+        return BrandResource::collection($brands);
     }
 
     /**
@@ -91,6 +92,14 @@ class BrandController extends Controller
 
         if($request->has('company')){
             $brand->company = $request->company;
+        }
+
+        if($request->has('agent')){
+            $brand->agent = $request->agent;
+        }
+
+        if($request->has('phone_number')){
+            $brand->phone_number = $request->phone_number;
         }
 
         if($request->has('information')){
