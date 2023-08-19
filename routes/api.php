@@ -56,9 +56,9 @@ Route::prefix("v1")->group(function () {
             Route::put("users/{id}", "updateRole")->name("user.updateRole"); /* promotion route only admin access */
         });
 
-        // Route::apiResource("brand", BrandController::class);
-        // Route::apiResource("product", ProductController::class);
-        // Route::apiResource("stock", StockController::class);
+        Route::apiResource("brand", BrandController::class);
+        Route::apiResource("product", ProductController::class);
+        Route::apiResource("stock", StockController::class);
         // Route::apiResource("voucher-record", VoucherRecordController::class);
     });
 
