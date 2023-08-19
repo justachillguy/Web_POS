@@ -18,10 +18,13 @@ class ProductDetailResource extends JsonResource
         return [
             "name" => $this->name,
             "brand_name" => $this->brand->name,
-            "price" => $this->sale_price,
+            "actual_price" => $this->actual_price,
+            "sale_price" => $this->sale_price,
             "stocks" => $this->total_stock,
-            "note" => $this->more_information,
+            "unit" => $this->unit,
+            "more_information" => $this->more_information,
             "photo" => asset(Storage::url($this->photo)),
+            "stock_history" => $this->stocks,
         ];
     }
 }
