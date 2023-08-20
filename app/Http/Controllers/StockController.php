@@ -29,6 +29,12 @@ class StockController extends Controller
         ->paginate(4)
         ->withQueryString();
 
+        if ($stocks->isEmpty()) {
+            return response()->json([
+                "message" => "There is no stock records yet."
+            ]);
+        }
+
         // return response()->json([
         //     "message" => $stocks
         // ]);

@@ -17,6 +17,12 @@ class UserController extends Controller
         ->paginate(4)
         ->withQueryString();
 
+        if ($users->isEmpty()) {
+            return response()->json([
+                "message" => "There is no user records yet."
+            ]);
+        }
+
         // return response()->json([
         //     "users" => $users,
         // ]);

@@ -71,15 +71,7 @@ class ProfileController extends Controller
         if($request->has('address')){
             $user->address = $request->address;
         }
-
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        // $request->validate([
-        //     "photo" => ["nullable", "string"],
-        // ]);
-        // return $request->photo;
-
+    
         if($request->has('photo')){
             $user->photo = $request->photo;
         }

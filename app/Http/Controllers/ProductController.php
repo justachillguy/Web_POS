@@ -28,6 +28,12 @@ class ProductController extends Controller
         ->paginate(4)
         ->withQueryString();
 
+        if ($products->isEmpty()) {
+            return response()->json([
+                "message" => "There is no product records yet."
+            ]);
+        }
+
         return ProductResource::collection($products);
     }
 

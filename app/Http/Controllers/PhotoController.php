@@ -19,9 +19,18 @@ class PhotoController extends Controller
     public function index()
     {
         $photos = Photo::latest("id")
-        ->paginate(5)
-        ->withQueryString();
+            ->paginate(5)
+            ->withQueryString();
 
+        // Checking if there are stored files or not.
+        // If not, this message will be returned.
+        if ($photos->isEmpty()) {
+            return response()->json([
+                "message" => "There is no file yet."
+            ]);
+        }
+
+        // If there is, resource will be returned.
         return PhotoResource::collection($photos);
     }
 
@@ -30,8 +39,6 @@ class PhotoController extends Controller
      */
     public function store(StorePhotoRequest $request)
     {
-
-        // return $request->photos;
         /*
         Checking if files are passed along with request
         */
@@ -74,8 +81,6 @@ class PhotoController extends Controller
                     "created_at" => now(),
                     "updated_at" => now()
                 ];
-                // $savedPhotos[] = $savedPhoto;
-
             }
             /*
             Using insert method of Eloquent ORM to create multiple models at one time.
@@ -114,7 +119,7 @@ class PhotoController extends Controller
     public function destroy(Photo $photo)
     {
         /*
-        Get the file's path in the storage.
+        Get the file's path to the storage.
         */
         $path = $photo->url;
 
@@ -142,7 +147,7 @@ class PhotoController extends Controller
     public function multipleDelete(Request $request)
     {
         /*
-        Checking if passed id is array
+        Checking if passed id is an array
         */
         if (!is_array($request->id)) {
             return response()->json([
@@ -158,8 +163,8 @@ class PhotoController extends Controller
         */
         foreach ($photos as $photo) {
             // if (Storage::exists($photo->url)) {
-                // }
-                $filePaths[] = $photo->url;
+            // }
+            $filePaths[] = $photo->url;
         }
 
         /*
@@ -180,6 +185,5 @@ class PhotoController extends Controller
         return response()->json([
             "message" => "successful"
         ]);
-
     }
 }
