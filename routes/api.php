@@ -25,16 +25,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::prefix("v1")->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::post("login", "login")->name("auth.login");
     });
-    
+
     Route::middleware("auth.banned")->group(function () {
 
         Route::middleware('auth:sanctum')->group(function () {
@@ -46,52 +46,27 @@ Route::prefix("v1")->group(function () {
 
             Route::controller(ProfileController::class)->group(function(){
                 Route::put('profile/{id}','update')->name('profile.update');
-                Route::post('change-password','chgPassword')->name('profile.chgPassword');
+                Route::post('profile/change-password','chgPassword')->name('profile.chgPassword');
             });
 
 
-            Route::apiResource("photos", PhotoController::class);
-            Route::post("multiple-delete-photos", [PhotoController::class, "multipleDelete"]);
+            Route::apiResource("photo", PhotoController::class);
+            Route::post("photo/multiple-delete", [PhotoController::class, "multipleDelete"])->name("photo.multiDel");
 
             Route::middleware("adminOnly")->controller(UserController::class)->group(function () {
-                Route::get("users", "list")->name("user.list");
-                Route::post("users", "create")->name("user.create"); /* register route only admin can register */
-                Route::put("users/{id}", "updateRole")->name("user.updateRole"); /* promotion route only admin access */
-                Route::post("ban-user", "ban")->name("user.ban");
-                Route::post("unban-user", "unban")->name("user.unban");
+                Route::get("user", "list")->name("user.list");
+                Route::post("register", "create")->name("user.register"); /* register route only admin can register */
+                Route::put("user/update-position/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
+                Route::post("user/ban", "ban")->name("user.ban");
+                Route::post("user/unban", "unban")->name("user.unban");
             });
 
-            // Route::apiResource("brand", BrandController::class);
-            // Route::apiResource("product", ProductController::class);
-            // Route::apiResource("stock", StockController::class);
+            Route::apiResource("brand", BrandController::class);
+            Route::apiResource("product", ProductController::class);
+            Route::apiResource("stock", StockController::class);
             // Route::apiResource("voucher-record", VoucherRecordController::class);
         });
 
-
-        Route::controller(ProfileController::class)->group(function(){
-            Route::put('profile/{id}','update')->name('profile.update');
-            Route::post('profile/change-password','chgPassword')->name('profile.chgPassword');
-        });
-
-
-        Route::apiResource("photo", PhotoController::class);
-        Route::post("multiple-delete-photo", [PhotoController::class, "multipleDelete"]);
-
-        Route::controller(UserController::class)->group(function () {
-            Route::get("user", "list")->name("user.list");
-            Route::post("user", "create")->name("user.create"); /* register route only admin can register */
-            Route::put("user/update-position/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
-        });
-
-        Route::apiResource("brand", BrandController::class);
-        Route::apiResource("product", ProductController::class);
-        Route::apiResource("stock", StockController::class);
-        // Route::apiResource("voucher-record", VoucherRecordController::class);
-
     });
 
-
-
-
 });
-
