@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class ProductDetailResource extends JsonResource
+class BrandDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,15 +17,13 @@ class ProductDetailResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "name" => $this->name,
-            "brand_name" => $this->brand->name,
-            "actual_price" => $this->actual_price,
-            "sale_price" => $this->sale_price,
-            "stocks" => $this->total_stock,
-            "unit" => $this->unit,
-            "more_information" => $this->more_information,
+            "brand_name" => $this->name,
+            "company" => $this->company,
+            "agent" => $this->agent,
+            "contact" => $this->phone_number,
             "photo" => asset(Storage::url($this->photo)),
-            "stock_history" => $this->stocks,
+            "created_at" => $this->created_at->format("d-m-Y"),
+            "updated_at" => $this->updated_at->format("d-m-Y"),
         ];
     }
 }

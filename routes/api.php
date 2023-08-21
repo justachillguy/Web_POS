@@ -37,7 +37,6 @@ Route::prefix("v1")->group(function () {
     
     Route::middleware("auth.banned")->group(function () {
 
-
         Route::middleware('auth:sanctum')->group(function () {
             Route::controller(AuthController::class)->group(function () {
                 Route::get("devices", "devices")->name("auth.devices");
@@ -67,6 +66,27 @@ Route::prefix("v1")->group(function () {
             // Route::apiResource("stock", StockController::class);
             // Route::apiResource("voucher-record", VoucherRecordController::class);
         });
+
+
+        Route::controller(ProfileController::class)->group(function(){
+            Route::put('profile/{id}','update')->name('profile.update');
+            Route::post('profile/change-password','chgPassword')->name('profile.chgPassword');
+        });
+
+
+        Route::apiResource("photo", PhotoController::class);
+        Route::post("multiple-delete-photo", [PhotoController::class, "multipleDelete"]);
+
+        Route::controller(UserController::class)->group(function () {
+            Route::get("user", "list")->name("user.list");
+            Route::post("user", "create")->name("user.create"); /* register route only admin can register */
+            Route::put("user/update-position/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
+        });
+
+        Route::apiResource("brand", BrandController::class);
+        Route::apiResource("product", ProductController::class);
+        Route::apiResource("stock", StockController::class);
+        // Route::apiResource("voucher-record", VoucherRecordController::class);
 
     });
 

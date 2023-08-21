@@ -18,6 +18,12 @@ class UserController extends Controller
         ->paginate(4)
         ->withQueryString();
 
+        if ($users->isEmpty()) {
+            return response()->json([
+                "message" => "There is no user records yet."
+            ]);
+        }
+
         // return response()->json([
         //     "users" => $users,
         // ]);
@@ -61,7 +67,7 @@ class UserController extends Controller
 
     }
 
-    public function updateRole(Request $request, $id)
+    public function updatePosition(Request $request, $id)
     {
         // Gate::authorize("admin-only", App\Models\User::class);
         $user = User::findOrFail($id);

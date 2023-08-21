@@ -29,6 +29,12 @@ class StockController extends Controller
         ->paginate(4)
         ->withQueryString();
 
+        if ($stocks->isEmpty()) {
+            return response()->json([
+                "message" => "There is no stock records yet."
+            ]);
+        }
+
         // return response()->json([
         //     "message" => $stocks
         // ]);
@@ -40,15 +46,22 @@ class StockController extends Controller
      */
     public function store(StoreStockRequest $request)
     {
-        $stock = Stock::create([
+        if ($request->has("more")) {
+            $stock = Stock::create([
                 "user_id" => auth()->id(),
                 "product_id" => $request->product_id,
                 "quantity" => $request->quantity,
                 "more" => $request->more,
             ]);
+        } else {
+            $stock = Stock::create([
+                "user_id" => auth()->id(),
+                "product_id" => $request->product_id,
+                "quantity" => $request->quantity,
+            ]);
+        }
 
         $product = Product::findOrFail($request->product_id);
-
 
         $product->total_stock = $product->total_stock + $request->quantity;
         $product->update();
@@ -74,9 +87,7 @@ class StockController extends Controller
      */
     public function update(UpdateStockRequest $request, Stock $stock)
     {
-
         $oldValue = $stock->quantity;
-
 
         if($request->has('product_id')){
             $stock->product_id = $request->product_id;
