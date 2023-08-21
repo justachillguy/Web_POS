@@ -22,7 +22,11 @@ class AuthController extends Controller
             ]);
         }
         // dd($request);
-
+        if ($request->user()->isBanned()) {
+            return response()->json([
+                "message" => "You have been banned. Could not login at the moment."
+            ]);
+        }
         // if ($isBanned) {
         //     return response()->json([
         //         "You have been banned"
