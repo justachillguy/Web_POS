@@ -38,7 +38,7 @@
 #### Get All Users (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/users
+  https://f.mmsdev.site/api/v1/user
 ```
 
 #### Create Users (Register) (POST)
@@ -61,20 +61,49 @@
 
 ##### Note : Only Admin can register and manage users.
 
-#### Update User's Role (PUT)
+#### Update User's Position (PUT)
 
 ```http
-  https://f.mmsdev.site/api/v1/users/{id}
+  https://f.mmsdev.site/api/v1/user/position-management/{id}
 ```
 
-| Arguments | Type | Description        |
-| :-------- | :--- | :----------------- |
-| position  | enum | **Required** admin |
+| Arguments | Type   | Description        |
+| :-------- | :---   | :----------------- |
+| position  | string | **Required** admin |
 
 ###### Note : Only Admin can change user's role.
 
 ---
+## User's Profile
 
+### Change Password (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/profile/change-password
+```
+
+| Arguments        | Type   | Description             |
+| :--------------- | :----- | :---------------------- |
+| current_password | string | **Required** asdffdsa   |
+| new_password     | string | **Required** helloworld |
+| confirm_password | string | **Required** helloworld |
+
+#### User's info Update (PUT)
+
+```http
+  https://f.mmsdev.site/api/v1/profile/{id}
+```
+
+| Arguments     | Type     | Description                          |
+| :------------ | :------- | :----------------------------------- |
+| name          | string   | **Nullable** Joy                     |
+| phone_number  | string   | **Nullable** 092544411               |
+| date_of_birth | date     | **Nullable** 12.5.2005               |
+| gender        | enum     | **Nullable** male                    |
+| address       | longText | **Nullable** yangon                  |
+| photo         | string   | **Nullable** public/media/flower.png |
+
+---
 ## Products
 
 #### Get All Products (GET)
@@ -263,33 +292,4 @@
 
 ###### Note: Photo's ids have to be passed as an array
 
-## User's Profile
 
-### Change Password (POST)
-
-```http
-  https://f.mmsdev.site/api/v1/change-password
-```
-
-| Arguments        | Type   | Description             |
-| :--------------- | :----- | :---------------------- |
-| current_password | string | **Required** asdffdsa   |
-| new_password     | string | **Required** helloworld |
-| confirm_password | string | **Required** helloworld |
-
-#### User's info Update (PUT)
-
-```http
-  https://f.mmsdev.site/api/v1/profile/{id}
-```
-
-| Arguments     | Type     | Description                          |
-| :------------ | :------- | :----------------------------------- |
-| name          | string   | **Nullable** Joy                     |
-| phone_number  | string   | **Nullable** 092544411               |
-| date_of_birth | date     | **Nullable** 12.5.2005               |
-| gender        | enum     | **Nullable** male                    |
-| address       | longText | **Nullable** yangon                  |
-| photo         | string   | **Nullable** public/media/flower.png |
-
----
