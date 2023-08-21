@@ -60,7 +60,7 @@
 | password              | string   | **Required** adfdafda        |
 | password_confirmation | string   | **Required** adfdafda        |
 
-##### Note : Only Admin can register and manage users.
+###### Note : Only Admin can register and manage users.
 
 #### UPDATE USER'S POSITION (PUT)
 
@@ -164,20 +164,20 @@
 
 ## Inventory
 
-## Brands
-#### Brand List (GET)
+## BRAND
+#### BRAND LIST (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/brand
 ```
 
-#### Show A Particular Brand (GET)
+#### SHOW A PARTICULAR BRAND (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/brand/{id}
 ```
 
-#### Store Brand (or) Create A Brand (POST) 
+#### STORE (or) CREATE A BRAND (POST) 
 
 ```http
   https://f.mmsdev.site/api/v1/brand
@@ -192,7 +192,7 @@
 | information  | string | **Required** Founded in 1999 |
 | photo        | file   | **Nullable** brand.png       |
 
-#### Update Brand (PATCH)
+#### UPDATE BRAND (PATCH)
 
 ```http
   https://f.mmsdev.site/api/v1/brand/{id}
@@ -207,13 +207,13 @@
 | information  | string | **Required** Founded in 1999 |
 | photo        | file   | **Nullable** brand.png       |
 
-#### Delete Brand (DELETE)
+#### DELETE BRAND (DELETE)
 
 ```http
   https://f.mmsdev.site/api/v1/brand/{id}
 ```
 ---
-## Product
+## PRODUCT
 
 #### PRODUCT LIST (GET)
 
@@ -244,7 +244,7 @@
 | more_information | string  | **Required** Do not press on it |
 | photo            | string  | **Nullable** product.png        |
 
-##### Note : As soon as a product is created and total stocks of it is defined, a new row in stocks table is added automatically as a stock record of that product.
+###### Note : As soon as a product is created and total stocks of it is defined, a new row in stocks table is added automatically as a stock record of that product.
 
 #### UPDATE PRODUCT (PATCH)
 
@@ -263,7 +263,7 @@
 | more_information | string  | **Required** Do not press on it |
 | photo            | string  | **Nullable** user.png           |
 
-##### Note : After updating total stocks of a product, the increased stock amount of that product is stored as a new stock record of that product in stock tables.
+###### Note : After updating total stocks of a product, the increased stock amount of that product is stored as a new stock record of that product in stock tables.
 
 #### DELETE PRODUCT (Delete)
 
@@ -298,7 +298,7 @@
 | quantity   | integer | **Required** 20             |
 | more       | string  | **Required** blah blah blah |
 
-##### Note : After storing a stock, the amount of that stored quantity is added to the total stock of a respective product.
+###### Note : After storing a stock, the amount of that stored quantity is added to the total stock of a respective product.
 
 #### UPDATE STOCK (PATCH)
 
