@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
-class ProductResource extends JsonResource
+class BrandResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +16,10 @@ class ProductResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "name" => $this->name,
-            "brand_name" => $this->brand->name,
-            "price" => $this->sale_price,
-            "stocks" => $this->total_stock,
-            "photo" => asset(Storage::url($this->photo)),
+            "brand_name" => $this->name,
+            "company" => $this->company,
+            "agent" => $this->agent,
+            "phone_number" => $this->phone_number,
         ];
     }
 }

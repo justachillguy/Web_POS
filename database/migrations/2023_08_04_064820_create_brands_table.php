@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('company');
-            $table->string('information');
+            $table->string("agent");
+            $table->string("phone_number");
+            $table->string('information')->nullable();
             $table->foreignId('user_id');
-            $table->string("photo")->nullable();
-            // $table->softDeletes();
-
+            $table->string("photo")->default("public/media/download.png");
             $table->timestamps();
         });
     }
