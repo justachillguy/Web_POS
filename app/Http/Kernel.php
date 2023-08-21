@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\OnlyAdmin;
 use App\Http\Middleware\SetAppJsonAceeptHeader;
 use Illuminate\Foundation\Bootstrap\SetRequestForConsole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        "adminOnly" => OnlyAdmin::class,
     ];
 }

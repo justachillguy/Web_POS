@@ -21,6 +21,18 @@ class AuthController extends Controller
                 "message" => "Invalid login details",
             ]);
         }
+        // dd($request);
+        if ($request->user()->isBanned()) {
+            return response()->json([
+                "message" => "You have been banned. Could not login at the moment."
+            ]);
+        }
+        // if ($isBanned) {
+        //     return response()->json([
+        //         "You have been banned"
+        //     ]);
+        // }
+        // // return auth()->user();
 
         return Auth::user()->createToken($request->has("device") ? $request->device : "unknown");
 
