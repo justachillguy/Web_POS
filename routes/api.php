@@ -43,17 +43,17 @@ Route::prefix("v1")->group(function () {
 
         Route::controller(ProfileController::class)->group(function(){
             Route::put('profile/{id}','update')->name('profile.update');
-            Route::post('change-password','chgPassword')->name('profile.chgPassword');
+            Route::post('profile/change-password','chgPassword')->name('profile.chgPassword');
         });
 
 
-        Route::apiResource("photos", PhotoController::class);
-        Route::post("multiple-delete-photos", [PhotoController::class, "multipleDelete"]);
+        Route::apiResource("photo", PhotoController::class);
+        Route::post("multiple-delete-photo", [PhotoController::class, "multipleDelete"]);
 
         Route::controller(UserController::class)->group(function () {
-            Route::get("users", "list")->name("user.list");
-            Route::post("users", "create")->name("user.create"); /* register route only admin can register */
-            Route::put("users/{id}", "updateRole")->name("user.updateRole"); /* promotion route only admin access */
+            Route::get("user", "list")->name("user.list");
+            Route::post("user", "create")->name("user.create"); /* register route only admin can register */
+            Route::put("user/update-position/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
         });
 
         Route::apiResource("brand", BrandController::class);

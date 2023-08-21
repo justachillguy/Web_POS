@@ -66,7 +66,7 @@ class UserController extends Controller
 
     }
 
-    public function updateRole(Request $request, $id)
+    public function updatePosition(Request $request, $id)
     {
         Gate::authorize("admin-only", App\Models\User::class);
         $user = User::findOrFail($id);
