@@ -45,20 +45,20 @@
 #### CREATE USER (REGISTER) (POST)
 
 ```http
-  https://f.mmsdev.site/api/v1/register
+  https://f.mmsdev.site/api/v1/user/register
 ```
 
 | Arguments             | Type     | Description                  |
 | :-------------------- | :------- | :--------------------------- |
 | name                  | string   | **Required** Joy             |
 | phone_number          | string   | **Requried** 092544411       |
-| date_of_birth         | date     | **Required** 12.5.2005       |
+| date_of_birth         | date     | **Required** 12.5.2000       |
 | gender                | enum     | **Required** male            |
 | position              | enum     | **Required** admin           |
 | address               | longText | **Required** yangon          |
 | email                 | string   | **Required** admin@gmail.com |
-| password              | string   | **Required** adfdafda        |
-| password_confirmation | string   | **Required** adfdafda        |
+| password              | string   | **Required** thepassword     |
+| password_confirmation | string   | **Required** thepassword     |
 
 ###### Note : Only Admin can register and manage users.
 
