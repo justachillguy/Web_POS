@@ -1,8 +1,8 @@
-# API Documentation
+# API DOCUMENTAION
 
-## Authentication
+## AUTHENTICATION
 
-#### Login (POST)
+#### LOGIN (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/login
@@ -13,35 +13,36 @@
 | email     | sting  | **Required** admin@gmail.com |
 | password  | string | **Required** thepassword     |
 
-#### Logout (POST)
+##### Note : Tokens will be returned if login process is successful. But tokens will not be returned if a user is banned.
+
+#### LOGOUT (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/logout
 ```
 
-#### Logout from all devices(POST)
+#### LOGOUT ALL DEVICES (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/logout-all
 ```
 
-#### Get All Devices (GET)
+#### GET ALL DEVICES (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/devices
 ```
 
 ---
+## USER MANAGEMENT
 
-## User Management
-
-#### Get All Users (GET)
+#### USERS LIST (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/user
 ```
 
-#### Create Users (Register) (POST)
+#### CREATE USER (REGISTER) (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/register
@@ -61,7 +62,7 @@
 
 ##### Note : Only Admin can register and manage users.
 
-#### Update User's Position (PUT)
+#### UPDATE USER'S POSITION (PUT)
 
 ```http
   https://f.mmsdev.site/api/v1/user/position-management/{id}
@@ -71,12 +72,32 @@
 | :-------- | :---   | :----------------- |
 | position  | string | **Required** admin |
 
-###### Note : Only Admin can change user's role.
+###### Note : Only Admin can change user's position.
+
+#### BAN USER (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/user/ban
+```
+
+| Arguments | Type    | Description        |
+| :-------- | :---    | :----------------- |
+| id        | integer | **Required**  2    |
+
+#### UNBAN USER (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/user/unban
+```
+
+| Arguments | Type    | Description        |
+| :-------- | :---    | :----------------- |
+| id        | integer | **Required**  2    |
 
 ---
-## User's Profile
+## USER PROFILE
 
-### Change Password (POST)
+### CHANGE PASSWORD (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/profile/change-password
@@ -88,7 +109,7 @@
 | new_password     | string | **Required** helloworld |
 | confirm_password | string | **Required** helloworld |
 
-#### User's info Update (PUT)
+#### USER INFO UPDATE (PUT)
 
 ```http
   https://f.mmsdev.site/api/v1/profile/{id}
@@ -104,21 +125,109 @@
 | photo         | string   | **Nullable** public/media/flower.png |
 
 ---
-## Products
 
-#### Get All Products (GET)
+## MEDIA
+
+#### PHOTO LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/photo
+```
+
+#### STORE PHOTO (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/photo
+```
+
+| Arguments | Type   | Description               |
+| :-------- | :----- | :-------------------------|
+| photo[]   | file   | **Required** apple.png    |
+
+###### Note : You need to put [] after photo parameter for uploading multiple files at once.
+
+#### DELETE PHOTO (DELETE)
+
+```http
+  https://f.mmsdev.site/api/v1/photo/{id}
+```
+
+### MULTIPLE DELETE PHOTOS (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/photo/multiple-delete
+```
+
+###### Note: Photo's ids have to be passed as an array
+
+---
+
+## Inventory
+
+## Brands
+#### Brand List (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/brand
+```
+
+#### Show A Particular Brand (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/brand/{id}
+```
+
+#### Store Brand (or) Create A Brand (POST) 
+
+```http
+  https://f.mmsdev.site/api/v1/brand
+```
+
+| Arguments    | Type   | Description                  |
+| :----------  | :----- | :--------------------------- |
+| name         | string | **Required** Good Morning    |
+| company      | string | **Required** Fresh Food      |
+| agent        | string | **Required** Micheal Jordan  |
+| phone_number | string | **Required** 0978787878      |
+| information  | string | **Required** Founded in 1999 |
+| photo        | file   | **Nullable** brand.png       |
+
+#### Update Brand (PATCH)
+
+```http
+  https://f.mmsdev.site/api/v1/brand/{id}
+```
+
+| Arguments    | Type   | Description                  |
+| :----------  | :----- | :--------------------------- |
+| name         | string | **Required** Good Morning    |
+| company      | string | **Required** Fresh Food      |
+| agent        | string | **Required** Micheal Jordan  |
+| phone_number | string | **Required** 0978787878      |
+| information  | string | **Required** Founded in 1999 |
+| photo        | file   | **Nullable** brand.png       |
+
+#### Delete Brand (DELETE)
+
+```http
+  https://f.mmsdev.site/api/v1/brand/{id}
+```
+---
+## Product
+
+#### PRODUCT LIST (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/product
 ```
 
-#### Show A Particular Product (GET)
+#### SHOW A PARTICULAR PRODUCT (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/product/{id}
 ```
 
-#### Store Product (Post)
+#### STORE PRODUCT (or) CREATE A NEW PRODUCT (Post)
 
 ```http
   https://f.mmsdev.site/api/v1/product
@@ -133,11 +242,11 @@
 | total_stock      | integer | **Required** 20                 |
 | unit             | string  | **Required** bottle             |
 | more_information | string  | **Required** Do not press on it |
-| photo            | string  | **Nullable** user.png           |
+| photo            | string  | **Nullable** product.png        |
 
 ##### Note : As soon as a product is created and total stocks of it is defined, a new row in stocks table is added automatically as a stock record of that product.
 
-#### Update product (Patch)
+#### UPDATE PRODUCT (PATCH)
 
 ```http
   https://f.mmsdev.site/api/v1/product/{id}
@@ -156,77 +265,28 @@
 
 ##### Note : After updating total stocks of a product, the increased stock amount of that product is stored as a new stock record of that product in stock tables.
 
-#### Delete product (Delete)
+#### DELETE PRODUCT (Delete)
 
 ```http
   https://f.mmsdev.site/api/v1/product/{id}
 ```
-
 ---
 
-## Brands
+## STOCK
 
-#### Get All Brands (GET)
-
-```http
-  https://f.mmsdev.site/api/v1/brand
-```
-
-#### Show A Particular Brand (GET)
-
-```http
-  https://f.mmsdev.site/api/v1/brand/{id}
-```
-
-#### Store Brand (Post)
-
-```http
-  https://f.mmsdev.site/api/v1/brand
-```
-
-| Arguments   | Type   | Description                  |
-| :---------- | :----- | :--------------------------- |
-| name        | string | **Required** Good Morning    |
-| company     | string | **Required** Fresh Food      |
-| information | string | **Required** Founded in 1999 |
-| photo       | string | **Nullable** user.png        |
-
-#### Update Brand (Patch)
-
-```http
-  https://f.mmsdev.site/api/v1/brand/{id}
-```
-
-| Arguments   | Type   | Description                  |
-| :---------- | :----- | :--------------------------- |
-| name        | string | **Required** Good Morning    |
-| company     | string | **Required** Fresh Food      |
-| information | string | **Required** Founded in 1999 |
-| photo       | string | **Nullable** user.png        |
-
-#### Delete Brand (Delete)
-
-```http
-  https://f.mmsdev.site/api/v1/brand/{id}
-```
-
----
-
-## Stocks
-
-#### Get All Stocks (GET)
+#### STOCK LIST (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/stock
 ```
 
-#### Show A Particular Stock (GET)
+#### SHOW A PARTICULAR STOCK (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/stock/{id}
 ```
 
-#### Store Stock (POST)
+#### STORE (OR) CREATE A NEW STOCK (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/stock
@@ -240,7 +300,7 @@
 
 ##### Note : After storing a stock, the amount of that stored quantity is added to the total stock of a respective product.
 
-#### Update Stock (Patch)
+#### UPDATE STOCK (PATCH)
 
 ```http
   https://f.mmsdev.site/api/v1/stock/{id}
@@ -252,44 +312,12 @@
 | quantity   | integer | **Required** 20             |
 | more       | string  | **Required** blah blah blah |
 
-#### Delete Stock (Delete)
+#### DELETE STOCK (DELETE)
 
 ```http
   https://f.mmsdev.site/api/v1/stock/{id}
 ```
 
-## Media
 
-#### Get All Media (GET)
-
-```http
-  https://f.mmsdev.site/api/v1/photos
-```
-
-#### Store Photo (POST)
-
-```http
-  https://f.mmsdev.site/api/v1/photos
-```
-
-| Arguments | Type   | Description                           |
-| :-------- | :----- | :------------------------------------ |
-| url       | string | **Required** public/media/example.png |
-| name      | string | **Required** apple                    |
-| extension | string | **Required** png                      |
-
-#### Delete Photo (Delete)
-
-```http
-  https://f.mmsdev.site/api/v1/photos/{id}
-```
-
-### Multiple Delete Photos (Multi Delete Photos)
-
-```http
-  https://f.mmsdev.site/api/v1/multiple-delete-photos
-```
-
-###### Note: Photo's ids have to be passed as an array
 
 
