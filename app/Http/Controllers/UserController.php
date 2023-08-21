@@ -101,6 +101,11 @@ class UserController extends Controller
     public function unban(Request $request)
     {
         $user = User::findOrFail($request->id);
+        if (!$user->isBanned()) {
+            return response()->json([
+                "message" => "A user is not banned."
+            ]);
+        }
         $user->unban();
         return response()->json(
             [
