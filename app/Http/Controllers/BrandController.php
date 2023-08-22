@@ -10,6 +10,7 @@ use App\Http\Resources\BrandResource;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Gate;
 
 class BrandController extends Controller
 {
@@ -43,6 +44,9 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
+
+        Gate::authorize("create", App\Models\Brand::class);
+
         if ($request->has("information")) {
             $brand = Brand::create([
                 "name" => $request->name,
@@ -86,6 +90,8 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
+        Gate::authorize("update", $brand);
+
         if (is_null($brand)) {
             return response()->json([
                 "message" => "product not found"
@@ -123,15 +129,13 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        if (is_null($brand)) {
-            return response()->json([
-                "message" => "product not found"
-            ], 404);
-        }
+        Gate::authorize("delete", $brand);
 
         $brand->delete();
 
-        return response()->json([], 204);
+        return response()->json([
+            "message" => "A brand has been deleted."
+        ]);
     }
 
 

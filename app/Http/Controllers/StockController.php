@@ -10,6 +10,7 @@ use App\Http\Resources\StockResource;
 use App\Models\Product;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Gate;
 
 class StockController extends Controller
 {
@@ -18,6 +19,7 @@ class StockController extends Controller
      */
     public function index()
     {
+        Gate::authorize("viewAny", App\Models\Stock::class);
         $stocks = Stock::when(request()->has("keyword"), function ($query) {
             $query->where(function (Builder $builder) {
                 $keyword = request()->keyword;
@@ -46,6 +48,8 @@ class StockController extends Controller
      */
     public function store(StoreStockRequest $request)
     {
+        Gate::authorize("create", App\Models\Stock::class);
+
         if ($request->has("more")) {
             $stock = Stock::create([
                 "user_id" => auth()->id(),
@@ -79,6 +83,8 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
+        Gate::authorize("view", $stock);
+
         return new StockDetailResource($stock);
     }
 
@@ -87,6 +93,8 @@ class StockController extends Controller
      */
     public function update(UpdateStockRequest $request, Stock $stock)
     {
+        Gate::authorize("update", $stock);
+
         $oldValue = $stock->quantity;
 
         if($request->has('product_id')){
@@ -133,9 +141,11 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
-    {
-        $stock->delete();
-        return response()->json([], 204);
-    }
+    // public function destroy(Stock $stock)
+    // {
+    //     Gate::authorize("delete", $stock);
+
+    //     $stock->delete();
+    //     return response()->json([], 204);
+    // }
 }

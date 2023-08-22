@@ -167,7 +167,9 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json(
-            [],204
+            [
+                "message" => "A product has been deleted."
+            ]
         );
 
     }

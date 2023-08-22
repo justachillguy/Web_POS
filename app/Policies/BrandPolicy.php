@@ -29,7 +29,7 @@ class BrandPolicy
      */
     public function create(User $user): bool
     {
-        // return $user->role == "admin";
+        return $user->position === "admin";
     }
 
     /**
@@ -37,7 +37,7 @@ class BrandPolicy
      */
     public function update(User $user, Brand $brand): bool
     {
-        //
+        return $user->position === "admin";
     }
 
     /**
@@ -45,7 +45,7 @@ class BrandPolicy
      */
     public function delete(User $user, Brand $brand): bool
     {
-        //
+        return $user->position === "admin";
     }
 
     /**

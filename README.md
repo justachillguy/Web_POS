@@ -312,11 +312,7 @@
 | quantity   | integer | **Required** 20             |
 | more       | string  | **Required** blah blah blah |
 
-#### DELETE STOCK (DELETE)
-
-```http
-  https://f.mmsdev.site/api/v1/stock/{id}
-```
+---
 
 
 
