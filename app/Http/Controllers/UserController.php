@@ -95,7 +95,8 @@ class UserController extends Controller
     public function ban(Request $request)
     {
         $user = User::findOrFail($request->id);
-        $user->ban();
+        $user->ban_status = "true";
+        $user->update();
         return response()->json(
             [
                 "message" => "You have been banned for being a really bad boy"
@@ -107,12 +108,14 @@ class UserController extends Controller
     public function unban(Request $request)
     {
         $user = User::findOrFail($request->id);
-        if (!$user->isBanned()) {
+
+        if ($user->ban_status === "false") {
             return response()->json([
-                "message" => "A user is not banned."
+                "message" => "This user is not banned."
             ]);
         }
-        $user->unban();
+        $user->ban_status = "false";
+        $user->update();
         return response()->json(
             [
                 "message" => "You have been unbanned.Be a good boy now."

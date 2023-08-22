@@ -28,7 +28,7 @@ class AuthController extends Controller
         /*  Checking if a user is banned or not after loggin in process.
             If not, tokens will not be returned.
         */
-        if ($request->user()->isBanned()) {
+        if ($request->user()->ban_status === "true") {
             return response()->json([
                 "message" => "You have been banned. Could not login at the moment."
             ]);

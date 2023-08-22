@@ -34,7 +34,9 @@
 ```
 
 ---
-## USER MANAGEMENT
+## USER MANAGEMENT 
+
+###### Note : Only Admin can manage users. So basically, a normal staff cannot access these routes.
 
 #### USERS LIST (GET)
 

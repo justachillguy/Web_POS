@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IsUserBanned;
 use App\Http\Middleware\OnlyAdmin;
 use App\Http\Middleware\SetAppJsonAceeptHeader;
 use Illuminate\Foundation\Bootstrap\SetRequestForConsole;
@@ -69,5 +70,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         "adminOnly" => OnlyAdmin::class,
+        "isUserBanned" => IsUserBanned::class,
     ];
 }
