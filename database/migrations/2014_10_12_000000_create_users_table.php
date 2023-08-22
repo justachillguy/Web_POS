@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             // $table->string('photo')->default("public/media/blank-profile-picture-973460_1280.webp");
             $table->string('photo')->nullable();
+            $table->enum("ban_status", ["true", "false"])->default("false");
             $table->rememberToken();
             // $table->softDeletes();
             $table->timestamps();
