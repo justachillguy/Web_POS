@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string("phone_number");
             $table->string('information')->nullable();
             $table->foreignId('user_id');
-            $table->string("photo")->default("public/media/download.png");
+            $table->string('photo')->nullable();
+            // $table->string("photo")->default("public/media/download.png");
             $table->timestamps();
         });
     }

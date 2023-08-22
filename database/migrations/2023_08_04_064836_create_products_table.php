@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('unit');
             $table->text('more_information')->nullable();
             $table->foreignId('user_id');
-            $table->string('photo')->default("public/media/product-concept-line-icon-simple-element-illustration-product-concept-outline-symbol-design-can-be-used-web-mobile-ui-ux_159242-2076.avif");
+            $table->string('photo')->nullable();
+            // $table->string('photo')->default("public/media/product-concept-line-icon-simple-element-illustration-product-concept-outline-symbol-design-can-be-used-web-mobile-ui-ux_159242-2076.avif");
             $table->timestamps();
         });
     }
