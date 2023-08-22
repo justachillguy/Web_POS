@@ -19,10 +19,9 @@ return new class extends Migration
             $table->float('sale_price');
             $table->integer('total_stock')->default('0');
             $table->string('unit');
-            $table->text('more_information')->nullable();
+            $table->text('more_information');
             $table->foreignId('user_id');
-            $table->string('photo')->nullable();
-            // $table->string('photo')->default("public/media/product-concept-line-icon-simple-element-illustration-product-concept-outline-symbol-design-can-be-used-web-mobile-ui-ux_159242-2076.avif");
+            $table->string('photo')->default(config("info.default_product_imgae"));
             $table->timestamps();
         });
     }

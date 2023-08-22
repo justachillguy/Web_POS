@@ -26,9 +26,9 @@ class BrandController extends Controller
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })
-        ->latest("id")
-        ->paginate(4)
-        ->withQueryString();
+            ->latest("id")
+            ->paginate(4)
+            ->withQueryString();
 
         if ($brands->isEmpty()) {
             return response()->json([
@@ -47,7 +47,7 @@ class BrandController extends Controller
 
         Gate::authorize("create", App\Models\Brand::class);
 
-        if ($request->has("information")) {
+        if ($request->has("photo")) {
             $brand = Brand::create([
                 "name" => $request->name,
                 "company" => $request->company,
@@ -55,6 +55,7 @@ class BrandController extends Controller
                 "phone_number" => $request->phone_number,
                 "information" => $request->information,
                 "user_id" => auth()->id(),
+                "photo" => $request->photo,
             ]);
         } else {
             $brand = Brand::create([
@@ -62,6 +63,7 @@ class BrandController extends Controller
                 "company" => $request->company,
                 "agent" => $request->agent,
                 "phone_number" => $request->phone_number,
+                "information" => $request->information,
                 "user_id" => auth()->id(),
             ]);
         }
@@ -98,23 +100,23 @@ class BrandController extends Controller
             ], 404);
         }
 
-        if($request->has('name')){
+        if ($request->has('name')) {
             $brand->name = $request->name;
         }
 
-        if($request->has('company')){
+        if ($request->has('company')) {
             $brand->company = $request->company;
         }
 
-        if($request->has('agent')){
+        if ($request->has('agent')) {
             $brand->agent = $request->agent;
         }
 
-        if($request->has('phone_number')){
+        if ($request->has('phone_number')) {
             $brand->phone_number = $request->phone_number;
         }
 
-        if($request->has('information')){
+        if ($request->has('information')) {
             $brand->information = $request->information;
         }
 
@@ -137,6 +139,4 @@ class BrandController extends Controller
             "message" => "A brand has been deleted."
         ]);
     }
-
-
 }

@@ -24,9 +24,9 @@ class ProductController extends Controller
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })
-        ->latest("id")
-        ->paginate(4)
-        ->withQueryString();
+            ->latest("id")
+            ->paginate(4)
+            ->withQueryString();
 
         if ($products->isEmpty()) {
             return response()->json([
@@ -45,30 +45,32 @@ class ProductController extends Controller
         $this->authorize("create", App\Models\Product::class);
 
 
-            if ($request->has("information")) {
-                $product = Product::create(
-                    [
+        if ($request->has("photo")) {
+            $product = Product::create(
+                [
                     "name" => $request->name,
                     "brand_id" => $request->brand_id,
-                    "actual_price" =>$request->actual_price,
-                    "sale_price" =>$request->sale_price,
-                    "unit" =>$request->unit,
-                    "more_information" =>$request->more_information,
+                    "actual_price" => $request->actual_price,
+                    "sale_price" => $request->sale_price,
+                    "unit" => $request->unit,
+                    "more_information" => $request->more_information,
                     "user_id" => auth()->id(),
-                    ]
-                    );
-            } else {
-                $product = Product::create(
-                    [
+                    "photo" => $request->photo,
+                ]
+            );
+        } else {
+            $product = Product::create(
+                [
                     "name" => $request->name,
                     "brand_id" => $request->brand_id,
-                    "actual_price" =>$request->actual_price,
-                    "sale_price" =>$request->sale_price,
-                    "unit" =>$request->unit,
+                    "actual_price" => $request->actual_price,
+                    "sale_price" => $request->sale_price,
+                    "unit" => $request->unit,
+                    "more_information" => $request->more_information,
                     "user_id" => auth()->id(),
-                    ]
-                    );
-            }
+                ]
+            );
+        }
 
         //     if($request->has("total_stock")){
 
@@ -97,7 +99,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request,Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         $this->authorize("update", $product);
         // $product = Product::findOrFail($id);
@@ -110,35 +112,35 @@ class ProductController extends Controller
         // $oldTotalStock = $product->total_stock;
 
 
-        if($request->has('name')){
+        if ($request->has('name')) {
             $product->name = $request->name;
         }
 
-        if($request->has('brand_id')){
+        if ($request->has('brand_id')) {
             $product->brand_id = $request->brand_id;
         }
 
-        if($request->has('actual_price')){
+        if ($request->has('actual_price')) {
             $product->actual_price = $request->actual_price;
         }
 
-        if($request->has('sale_price')){
+        if ($request->has('sale_price')) {
             $product->sale_price = $request->sale_price;
         }
 
-        if($request->has('unit')){
+        if ($request->has('unit')) {
             $product->unit = $request->unit;
         }
 
-        if($request->has('more_information')){
+        if ($request->has('more_information')) {
             $product->more_information = $request->more_information;
         }
 
-        if($request->has('user_id')){
+        if ($request->has('user_id')) {
             $product->user_id = $request->user_id;
         }
 
-        if($request->has('photo')){
+        if ($request->has('photo')) {
             $product->photo = $request->photo;
         }
 
@@ -156,7 +158,6 @@ class ProductController extends Controller
         //     );
 
         return response()->json(["message" => "Success"]);
-
     }
     /**
      * Remove the specified resource from storage.
@@ -171,6 +172,5 @@ class ProductController extends Controller
                 "message" => "A product has been deleted."
             ]
         );
-
     }
 }

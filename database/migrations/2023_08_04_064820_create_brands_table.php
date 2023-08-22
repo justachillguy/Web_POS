@@ -17,10 +17,9 @@ return new class extends Migration
             $table->string('company');
             $table->string("agent");
             $table->string("phone_number");
-            $table->string('information')->nullable();
+            $table->string('information');
             $table->foreignId('user_id');
-            $table->string('photo')->nullable();
-            // $table->string("photo")->default("public/media/download.png");
+            $table->string("photo")->default(config("info.defualt_brand_imgae"));
             $table->timestamps();
         });
     }

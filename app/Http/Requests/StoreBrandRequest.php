@@ -24,7 +24,7 @@ class StoreBrandRequest extends FormRequest
         return [
             "name" => ["required","min:2", "max:225", "string"],
             "company" => ["required","min:2", "max:225", "string"],
-            "information" => ["nullable", "string", "max:225"],
+            "information" => ["required", "string", "max:225"],
             "user_id" => "exists:users,id",
         ];
     }

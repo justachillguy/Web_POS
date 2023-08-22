@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Photo;
 use App\Models\VoucherRecord;
 use App\Models\Stock;
 use App\Policies\ProductPolicy;
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
+            // PhotoSeeder::class,
             UserSeeder::class,
             // BrandSeeder::class,
             // ProductSeeder::class,
