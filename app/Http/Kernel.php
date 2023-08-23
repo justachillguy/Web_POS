@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         "adminOnly" => OnlyAdmin::class,
         "isUserBanned" => IsUserBanned::class,
+        "setHeaderAppJson" => SetAppJsonAceeptHeader::class,
     ];
 }

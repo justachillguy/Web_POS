@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::prefix("v1")->group(function () {
+Route::prefix("v1")->middleware("setHeaderAppJson")->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::post("login", "login")->name("auth.login");
