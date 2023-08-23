@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             "address" => "ho nar d nar",
             "position" => "admin",
             "password" => Hash::make("thepassword"),
-
+            "photo" => "jokerj oekr ej ojskdffjsdoff",
         ]);
 
         // $users = [

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('photo')->default(config("info.default_user_profile"));
+            $table->string('photo');
             $table->enum("ban_status", ["true", "false"])->default("false");
             $table->rememberToken();
             $table->timestamps();

@@ -50,19 +50,30 @@
   https://f.mmsdev.site/api/v1/user/register
 ```
 
-| Arguments             | Type     | Description                  |
-| :-------------------- | :------- | :--------------------------- |
-| name                  | string   | **Required** Joy             |
-| phone_number          | string   | **Requried** 092544411       |
-| date_of_birth         | date     | **Required** 12.5.2000       |
-| gender                | enum     | **Required** male            |
-| position              | enum     | **Required** admin           |
-| address               | longText | **Required** yangon          |
-| email                 | string   | **Required** admin@gmail.com |
-| password              | string   | **Required** thepassword     |
-| password_confirmation | string   | **Required** thepassword     |
+| Arguments             | Type     | Description                        |
+| :-------------------- | :------- | :----------------------------------|
+| name                  | string   | **Required** Joy                   |
+| phone_number          | string   | **Requried** 092544411             |
+| date_of_birth         | date     | **Required** 12.5.2000             |
+| gender                | enum     | **Required** male                  |
+| position              | enum     | **Required** admin                 |
+| address               | longText | **Required** yangon                |
+| email                 | string   | **Required** admin@gmail.com       |
+| password              | string   | **Required** thepassword           |
+| password_confirmation | string   | **Required** thepassword           |
+| photo                 | string   | **Required** public/media/user.png |
 
 ###### Note : Only Admin can register and manage users.
+
+#### USER PROFILE DETAILS (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/user/details/{id}
+```
+
+| Arguments | Type    | Description     |
+| :-------- | :---    | :-------------- |
+| id        | integer | **Required** 2  |
 
 #### UPDATE USER'S POSITION (PUT)
 
@@ -97,7 +108,7 @@
 | id        | integer | **Required**  2    |
 
 ---
-## USER PROFILE
+## USER PROFILE 
 
 ### CHANGE PASSWORD (POST)
 

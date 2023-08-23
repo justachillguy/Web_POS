@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserDetailResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Hamcrest\Type\IsBoolean;
@@ -30,7 +31,11 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-
+    public function details($id)
+    {
+        $user = User::findOrFail($id);
+        return new UserDetailResource($user);
+    }
 
     public function create(Request $request){
         // Gate::authorize("admin-only", App\Models\User::class);
@@ -43,7 +48,8 @@ class UserController extends Controller
             "position" => ["required", "in:admin,staff"],
             "address" => ["required", "max:255"],
             "email" => ["required", "email", "unique:users"],
-            "password" => ["required", "min:8", "confirmed"]
+            "password" => ["required", "min:8", "confirmed"],
+            "photo" => ["required", "string"],
         ]);
 
         // return response()->json([
@@ -58,7 +64,8 @@ class UserController extends Controller
             "address" => $request->address,
             "position" => $request->position,
             "email" => $request->email,
-            "password" => Hash::make($request->password)
+            "password" => Hash::make($request->password),
+            "photo" => $request->photo,
         ]);
 
         return response()->json([
