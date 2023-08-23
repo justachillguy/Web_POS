@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('unit');
             $table->text('more_information');
             $table->foreignId('user_id');
-            $table->string('photo')->default(config("info.default_product_imgae"));
+            $table->string('photo');
             $table->timestamps();
         });
     }

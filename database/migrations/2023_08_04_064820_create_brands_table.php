@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("phone_number");
             $table->string('information');
             $table->foreignId('user_id');
-            $table->string("photo")->default(config("info.defualt_brand_imgae"));
+            $table->string("photo");
             $table->timestamps();
         });
     }
