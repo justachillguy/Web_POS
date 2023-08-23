@@ -29,7 +29,7 @@ class UpdateProductRequest extends FormRequest
             "unit" => ["nullable", "string"],
             "more_information" => ["nullable", "string", "max:225"],
             "user_id" => ["nullable", "exists:users,id"],
-            "photo" => ["nullable"],
+            "photo" => ['nullable','string']
         ];
     }
 }

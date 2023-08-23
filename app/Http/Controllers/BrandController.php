@@ -120,6 +120,10 @@ class BrandController extends Controller
             $brand->information = $request->information;
         }
 
+        if ($request->has('photo')) {
+            $brand->photo = $request->photo;
+        }
+
         $brand->update();
         return response()->json([
             "message" => $brand,

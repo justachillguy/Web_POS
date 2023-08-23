@@ -25,6 +25,7 @@ class UpdateBrandRequest extends FormRequest
             "name" => ["nullable","min:2", "max:225", "string"],
             "company" => ["nullable","min:2", "max:225", "string"],
             "information" => ["nullable", "string", "max:225"],
+            "photo" => ['nullable', "string"]
         ];
     }
 }
