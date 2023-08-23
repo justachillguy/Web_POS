@@ -29,14 +29,14 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::prefix("v1")->middleware("setHeaderAppJson")->group(function () {
+Route::prefix("v1")->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::post("login", "login")->name("auth.login");
     });
 
 
-    Route::middleware(["auth:sanctum", "isUserBanned"])->group(function () {
+    Route::middleware(["auth:sanctum", "isUserBanned", "setHeaderAppJson"])->group(function () {
         Route::controller(AuthController::class)->group(function () {
             Route::get("devices", "devices")->name("auth.devices");
             Route::post("logout", 'logout')->name("auth.logout");
