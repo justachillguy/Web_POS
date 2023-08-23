@@ -9,6 +9,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherRecordController;
 use App\Http\Middleware\OnlyAdmin;
+use App\Http\Middleware\SetAppJsonAceeptHeader;
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ Route::prefix("v1")->group(function () {
     });
 
 
-    Route::middleware(["auth:sanctum", "isUserBanned", "setHeaderAppJson"])->group(function () {
+    Route::middleware(["auth:sanctum", "isUserBanned", SetAppJsonAceeptHeader::class])->group(function () {
         Route::controller(AuthController::class)->group(function () {
             Route::get("devices", "devices")->name("auth.devices");
             Route::post("logout", 'logout')->name("auth.logout");
