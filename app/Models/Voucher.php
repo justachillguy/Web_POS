@@ -11,4 +11,9 @@ class Voucher extends Model
     use HasFactory;
 
     protected $fillable = ['voucher_number','total','tax','net_total','user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
