@@ -334,7 +334,7 @@
 ```http
   https://f.mmsdev.site/api/v1/sale/checkout
 ```
-###### NOTE: JSON of products and quantity of them have to be passed from Frontend.
+###### NOTE: JSON of product_id and quantity of them have to be passed from Frontend.
 
 #### VOUCHER LIST (GET)
 
