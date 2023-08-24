@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Voucher;
 use App\Http\Requests\StoreVoucherRequest;
 use App\Http\Requests\UpdateVoucherRequest;
+use App\Http\Resources\ItemsInVoucherResource;
 use App\Http\Resources\VoucherResource;
+use App\Models\VoucherRecord;
 
 class VoucherController extends Controller
 {
@@ -33,8 +35,23 @@ class VoucherController extends Controller
 
         // return $voucher_number;
         $voucher  =  Voucher::where('voucher_number',$voucher_number)->first();
-        // return $voucher;
-        return new VoucherResource($voucher);
+
+        $voucher_id = $voucher->id;
+        // $tax = $voucher->tax;
+        // $total = $voucher->total;
+        // $netTotal = $voucher->net_total;
+
+        $voucherRecords = VoucherRecord::where("voucher_id", $voucher_id)->get();
+
+        return response()->json(
+            [
+                "items" => ItemsInVoucherResource::collection($voucherRecords),
+                // "total" => $total,
+                // "tax" => $tax,
+                // "net_total" => $netTotal,
+                "voucher" => new VoucherResource($voucher),
+            ]
+        );
 
     }
 

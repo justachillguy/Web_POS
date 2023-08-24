@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemsInVoucherResource;
 use App\Http\Resources\VoucherRecordResource;
 use App\Http\Resources\VoucherResource;
 use App\Models\Product;
@@ -62,12 +63,19 @@ class SaleController extends Controller
                 ]);
             }
 
-         VoucherRecord::insert($records); // use database
-
-        $voucherRecords = VoucherRecord::all();
-        return VoucherRecordResource::collection($voucherRecords);
+            VoucherRecord::insert($records); // use database
+            $voucherRecords = VoucherRecord::where("voucher_id", $voucher->id)->get();
 
             DB::commit();
+
+            return response()->json(
+                [
+                    "items" => ItemsInVoucherResource::collection($voucherRecords),
+                    "total" => $total,
+                    "tax" => $tax,
+                    "net_total" => $netTotal
+                ]
+            );
 
         } catch (\Throwable $th) {
             //throw $th;

@@ -316,6 +316,28 @@
 
 ---
 
+## SALE 
+
+#### CHECKOUT (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/sale/checkout
+```
+###### NOTE: JSON of products and quantity of them have to be passed from Frontend.
+
+#### VOUCHER LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/sale/list
+```
+
+#### VOUCHER DETAILS (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/voucher/{voucher_id}
+```
+
+
 
 
 

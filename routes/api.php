@@ -71,12 +71,11 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("stock", StockController::class)->except("destroy");
         // Route::apiResource("voucher-record", VoucherRecordController::class);
 
-        Route::controller(SaleController::class)->group(function(){
-            Route::post("sale/checkout","checkout")->name('sale.checkout');
-            Route::get('sale/list','list')->name('sale.list');
+        Route::controller(SaleController::class)->group(function () {
+            Route::post("sale/checkout", "checkout")->name('sale.checkout');
+            Route::get('sale/list', 'list')->name('sale.list');
         });
 
-       Route::get('voucher/{voucher_number}',[VoucherController::class,'show'])->name('voucher.show');
-
+        Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
     });
 });
