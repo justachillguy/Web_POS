@@ -114,6 +114,8 @@ class UserController extends Controller
                 "message" => "This user is not banned."
             ]);
         }
+
+
         $user->ban_status = "false";
         $user->update();
         return response()->json(
@@ -123,4 +125,5 @@ class UserController extends Controller
         );
 
     }
+
 }

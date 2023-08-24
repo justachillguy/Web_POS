@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             "unit" => fake()->word(),
             "more_information" => fake()->sentence(5),
             "user_id" => rand(1,2),
-            // "photo" => fake()->sentence(),
+            "photo" => fake()->sentence(),
         ];
     }
 }

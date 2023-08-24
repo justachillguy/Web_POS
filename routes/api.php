@@ -5,6 +5,8 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherRecordController;
@@ -65,5 +67,10 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("product", ProductController::class);
         Route::apiResource("stock", StockController::class)->except("destroy");
         // Route::apiResource("voucher-record", VoucherRecordController::class);
+
+        Route::controller(SaleController::class)->group(function(){
+            Route::post("sale/checkout","checkout")->name('sale.checkout');
+            Route::get('sale/list','list')->name('sale.list');
+        });
     });
 });
