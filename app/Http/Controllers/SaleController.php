@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\VoucherRecordResource;
 use App\Http\Resources\VoucherResource;
 use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\VoucherRecord;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -18,7 +20,6 @@ class SaleController extends Controller
         try {
             DB::beginTransaction();
 
-            // return $request;
             //collect([array])
             $productIds = collect($request->items)->pluck("product_id");
             // return $productIds; //[1,2,3]
@@ -61,11 +62,12 @@ class SaleController extends Controller
                 ]);
             }
 
-            VoucherRecord::insert($records); // use database
+         VoucherRecord::insert($records); // use database
+
+        $voucherRecords = VoucherRecord::all();
+        return VoucherRecordResource::collection($voucherRecords);
 
             DB::commit();
-
-            return ;
 
         } catch (\Throwable $th) {
             //throw $th;

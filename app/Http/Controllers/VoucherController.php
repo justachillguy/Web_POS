@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Voucher;
 use App\Http\Requests\StoreVoucherRequest;
 use App\Http\Requests\UpdateVoucherRequest;
+use App\Http\Resources\VoucherResource;
 
 class VoucherController extends Controller
 {
@@ -27,9 +28,14 @@ class VoucherController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Voucher $voucher)
+    public function show($voucher_number)
     {
-        //
+
+        // return $voucher_number;
+        $voucher  =  Voucher::where('voucher_number',$voucher_number)->first();
+        // return $voucher;
+        return new VoucherResource($voucher);
+
     }
 
     /**
