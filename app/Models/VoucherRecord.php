@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VoucherRecord extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "voucher_id",
+        "product_id",
+        "quantity",
+        "cost"
+    ];
 
     public function product()
     {
