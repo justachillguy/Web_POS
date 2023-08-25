@@ -155,7 +155,7 @@
 
 | Arguments | Type   | Description               |
 | :-------- | :----- | :-------------------------|
-| photo[]   | file   | **Required** apple.png    |
+| photos[]   | file   | **Required** apple.png    |
 
 ###### Note : You need to put [] after photo parameter for uploading multiple files at once.
 
