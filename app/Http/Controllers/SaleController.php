@@ -74,8 +74,8 @@ class SaleController extends Controller
                     "total" => $total,
                     "tax" => $tax,
                     "net_total" => $netTotal
-                ]
-            );
+                    ]
+                );
 
         } catch (\Throwable $th) {
             //throw $th;

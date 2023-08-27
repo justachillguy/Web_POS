@@ -15,7 +15,7 @@ class StockSeeder extends Seeder
     public function run(): void
     {
         $stocks = [];
-        for($i=1; $i<=20; $i++){
+        for($i=1; $i<=10; $i++){
             $quantity = rand(30,100);
             $stocks[] = [
                 "user_id" => rand(1,2),
