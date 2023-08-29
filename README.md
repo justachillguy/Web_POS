@@ -203,7 +203,7 @@
 | agent        | string | **Required** Micheal Jordan  |
 | phone_number | string | **Required** 0978787878      |
 | information  | string | **Required** Founded in 1999 |
-| photo        | file   | **Nullable** brand.png       |
+| photo        | file   | **Required** brand.png       |
 
 #### UPDATE BRAND (PATCH)
 
@@ -213,11 +213,11 @@
 
 | Arguments    | Type   | Description                  |
 | :----------  | :----- | :--------------------------- |
-| name         | string | **Required** Good Morning    |
-| company      | string | **Required** Fresh Food      |
-| agent        | string | **Required** Micheal Jordan  |
-| phone_number | string | **Required** 0978787878      |
-| information  | string | **Required** Founded in 1999 |
+| name         | string | **Nullable** Good Morning    |
+| company      | string | **Nullable** Fresh Food      |
+| agent        | string | **Nullable** Micheal Jordan  |
+| phone_number | string | **Nullable** 0978787878      |
+| information  | string | **Nullable** Founded in 1999 |
 | photo        | file   | **Nullable** brand.png       |
 
 #### DELETE BRAND (DELETE)
@@ -255,7 +255,7 @@
 | total_stock      | integer | **Required** 20                 |
 | unit             | string  | **Required** bottle             |
 | more_information | string  | **Required** Do not press on it |
-| photo            | string  | **Nullable** product.png        |
+| photo            | string  | **Required** product.png        |
 
 ###### Note : As soon as a product is created and total stocks of it is defined, a new row in stocks table is added automatically as a stock record of that product.
 
@@ -267,13 +267,13 @@
 
 | Arguments        | Type    | Description                     |
 | :--------------- | :------ | :------------------------------ |
-| name             | string  | **Required** Juice              |
-| brand_id         | integer | **Required** 1                  |
-| actual_price     | integer | **Required** 3000               |
-| sale_price       | integer | **Required** 3100               |
-| total_stock      | integer | **Required** 20                 |
-| unit             | string  | **Required** bottle             |
-| more_information | string  | **Required** Do not press on it |
+| name             | string  | **Nullable** Juice              |
+| brand_id         | integer | **Nullable** 1                  |
+| actual_price     | integer | **Nullable** 3000               |
+| sale_price       | integer | **Nullable** 3100               |
+| total_stock      | integer | **Nullable** 20                 |
+| unit             | string  | **Nullable** bottle             |
+| more_information | string  | **Nullable** Do not press on it |
 | photo            | string  | **Nullable** user.png           |
 
 ###### Note : After updating total stocks of a product, the increased stock amount of that product is stored as a new stock record of that product in stock tables.
@@ -321,9 +321,9 @@
 
 | Arguments  | Type    | Description                 |
 | :--------- | :------ | :-------------------------- |
-| product_id | integer | **Required** 2              |
-| quantity   | integer | **Required** 20             |
-| more       | string  | **Required** blah blah blah |
+| product_id | integer | **Nullable** 2              |
+| quantity   | integer | **Nullable** 20             |
+| more       | string  | **Nullable** blah blah blah |
 
 ---
 
