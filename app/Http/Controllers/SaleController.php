@@ -8,6 +8,7 @@ use App\Http\Resources\VoucherResource;
 use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\VoucherRecord;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -110,6 +111,7 @@ class SaleController extends Controller
     {
         $isSaleClose = DB::table("sale_close")->first()->sale_close;
 
+        /* Checking if sale_close status is close or not  */
         if ($isSaleClose) {
             DB::table("sale_close")->where("id", 1)->update([
                 "sale_close" => false,
@@ -118,6 +120,43 @@ class SaleController extends Controller
             DB::table("sale_close")->where("id", 1)->update([
                 "sale_close" => true,
             ]);
+
+            $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
+            $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
+
+            // $today = Carbon::today()->format("Y-m-d H:i:s");
+            // $now = Carbon::now()->format("Y-m-d ") . "23:59:59";
+
+            // return response()->json([
+            //     "today" => $today,
+            //     "now" => $now,
+            // ]);
+            $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
+            $cash = array_sum($vouchers->pluck("total")->toArray());
+            $tax = array_sum($vouchers->pluck("tax")->toArray());
+            $total = array_sum($vouchers->pluck("net_total")->toArray());
+            $totalVocuhers = Voucher::selectRaw("count(*) as vouchers")->whereBetween("created_at", [$today, $now])->get();
+            $NOV = collect($totalVocuhers)->pluck("vouchers")->all();
+            $nov = implode("", $NOV);
+            // return $nov;
+
+            DB::table("daily_sale")->insert(
+                [
+                    "date" => Carbon::today(),
+                    "vouchers" => $nov,
+                    "cash" => $cash,
+                    "tax" => $tax,
+                    "total" => $total,
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ]
+                );
+
+            return response()->json(
+                [
+                    "message" => "ရက်ချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
+                ]
+            );
         }
     }
 }

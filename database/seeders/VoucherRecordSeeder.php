@@ -14,6 +14,6 @@ class VoucherRecordSeeder extends Seeder
     public function run(): void
     {
         //
-        VoucherRecord::factory()->count(20)->create();
+        // VoucherRecord::factory()->count(20)->create();
     }
 }

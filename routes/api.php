@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\VoucherRecordController;
@@ -19,6 +21,7 @@ use App\Models\Voucher;
 use App\Models\VoucherRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +80,14 @@ Route::prefix("v1")->group(function () {
             Route::post("sale/sale-close", "saleClose")->name("sale.close");
         });
 
+        Route::controller(FinanceController::class)->group(function () {
+            Route::get("finance/daily-list", "dailyList")->name("finanace.daily");
+        });
+
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
+    });
+
+    Route::controller(TestController::class)->group(function () {
+        Route::post("test", "test");
     });
 });
