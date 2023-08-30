@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IsSaleClose;
 use App\Http\Middleware\IsUserBanned;
 use App\Http\Middleware\OnlyAdmin;
 use App\Http\Middleware\SetAppJsonAceeptHeader;
@@ -72,5 +73,6 @@ class Kernel extends HttpKernel
         "adminOnly" => OnlyAdmin::class,
         "isUserBanned" => IsUserBanned::class,
         "setHeaderAppJson" => SetAppJsonAceeptHeader::class,
+        "isSaleClose" => IsSaleClose::class,
     ];
 }

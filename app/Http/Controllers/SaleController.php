@@ -105,4 +105,19 @@ class SaleController extends Controller
 
         return VoucherResource::collection($vouchers);
     }
+
+    public function saleClose()
+    {
+        $isSaleClose = DB::table("sale_close")->first()->sale_close;
+
+        if ($isSaleClose) {
+            DB::table("sale_close")->where("id", 1)->update([
+                "sale_close" => false,
+            ]);
+        } else {
+            DB::table("sale_close")->where("id", 1)->update([
+                "sale_close" => true,
+            ]);
+        }
+    }
 }

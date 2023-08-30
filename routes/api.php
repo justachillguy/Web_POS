@@ -72,8 +72,9 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("stock", StockController::class)->except("destroy");
 
         Route::controller(SaleController::class)->group(function () {
-            Route::post("sale/checkout", "checkout")->name('sale.checkout');
+            Route::post("sale/checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");
             Route::get('sale/list', 'list')->name('sale.list');
+            Route::post("sale/sale-close", "saleClose")->name("sale.close");
         });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
