@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\Voucher;
+use App\Models\VoucherRecord;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,17 +17,49 @@ class VoucherSeeder extends Seeder
      */
     public function run(): void
     {
-        /* To gather all vouchers. */
-        $vouchers = [];
+        /* Generate dates of 2 years. */
+        $endDate = Carbon::now();
+        $startDate = Carbon::now()->subYears(2)->subMonths(3);
+        $period = CarbonPeriod::create($startDate, $endDate);
+
+        $voucher_id = 1;
+
 
         /* This for loop (i) is for dates. */
-        for ($i = 1; $i <= 300; $i++) {
+        foreach ($period as $date) {
 
-            /* This for loop (r) represents the total number of vouchers in a day. */
+            $vouchers = [];
             for ($r = 1; $r <= 2; $r++) {
 
-                /* Generate random cost. */
-                $total = rand(3000, 10000);
+                $prodIds = [];
+                for ($i = 1; $i <= 2; $i++) {
+                    array_push($prodIds, random_int(1, 10));
+                }
+
+                $prods = Product::whereIn("id", $prodIds)->get();
+                $total = 0;
+
+                $records = [];
+
+                foreach ($prods as $prod) {
+                    /* product quantity */
+                    $q = random_int(1,3);
+                    $cost = $prod->sale_price * $q;
+                    $total += $cost;
+
+                    $records[] = [
+                        "voucher_id" => $voucher_id,
+                        "product_id" => $prod->id,
+                        "quantity" => $q,
+                        "cost" => $cost,
+                    ];
+
+                    $prod->total_stock -= $q;
+                    $prod->update();
+                }
+
+                VoucherRecord::insert($records);
+
                 $tax = $total * 0.05;
                 $netTotal = $total + $tax;
 
@@ -37,11 +71,12 @@ class VoucherSeeder extends Seeder
                     'tax' => $tax,
                     'net_total' => $netTotal,
                     'user_id' => 1,
-                    "created_at" => Carbon::now()->addDays($i),
-                    "updated_at" => Carbon::now()->addDays($i),
+                    "created_at" => $date,
+                    "updated_at" => $date,
                 ];
+                $voucher_id++;
             }
+            Voucher::insert($vouchers);
         }
-        Voucher::insert($vouchers);
     }
 }

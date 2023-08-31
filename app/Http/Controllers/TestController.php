@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -17,7 +18,17 @@ class TestController extends Controller
             // $d = rand(1, 30);
             array_push($dates, Carbon::createFromDate("2023", "1", "1")->addDays($i));
         }
-        return $dates;
+
+        $endDate = Carbon::now();
+        $startDate = Carbon::now()->subYears(2)->subMonths(3);
+        $period = CarbonPeriod::create($startDate, $endDate);
+        return response()->json(
+            [
+                "startDate" => $startDate,
+                "endDate" => $endDate,
+                $period
+            ]
+        );
 
     }
 }

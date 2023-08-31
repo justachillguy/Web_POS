@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('daily_sale', function (Blueprint $table) {
             $table->id();
             $table->dateTime("date");
-            $table->string("vouchers");
+            $table->unsignedInteger("vouchers");
             $table->float("cash");
             $table->float("tax");
             $table->float("total");

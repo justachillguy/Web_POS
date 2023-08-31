@@ -117,28 +117,35 @@ class SaleController extends Controller
                 "sale_close" => false,
             ]);
         } else {
+
+            /* If sale has been closed, close it and collect the lists of vouchers for today. */
             DB::table("sale_close")->where("id", 1)->update([
                 "sale_close" => true,
             ]);
 
-            $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
-            $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
+            // $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
+            // $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
 
-            // $today = Carbon::today()->format("Y-m-d H:i:s");
-            // $now = Carbon::now()->format("Y-m-d ") . "23:59:59";
+            $today = Carbon::today()->subDay()->format("Y-m-d H:i:s");
+            $now = Carbon::today()->subDay()->format("Y-m-d ") . "23:59:59";
 
             // return response()->json([
             //     "today" => $today,
             //     "now" => $now,
             // ]);
+
             $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
+            // return $vouchers;
+
             $cash = array_sum($vouchers->pluck("total")->toArray());
             $tax = array_sum($vouchers->pluck("tax")->toArray());
             $total = array_sum($vouchers->pluck("net_total")->toArray());
+
+            /* Counting the number of voucher we've got so far for today. */
             $totalVocuhers = Voucher::selectRaw("count(*) as vouchers")->whereBetween("created_at", [$today, $now])->get();
             $NOV = collect($totalVocuhers)->pluck("vouchers")->all();
-            $nov = implode("", $NOV);
-            // return $nov;
+            $nov = intval(implode("", $NOV));
+            // var_dump($nov);
 
             DB::table("daily_sale")->insert(
                 [

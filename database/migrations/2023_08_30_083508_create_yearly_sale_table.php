@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('yearly_sale', function (Blueprint $table) {
             $table->id();
+            $table->dateTime("year");
+            $table->unsignedBigInteger("vouchers");
+            $table->float("cash");
+            $table->float("tax");
+            $table->float("total");
             $table->timestamps();
         });
     }

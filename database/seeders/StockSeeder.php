@@ -16,7 +16,7 @@ class StockSeeder extends Seeder
     {
         $stocks = [];
         for($i=1; $i<=10; $i++){
-            $quantity = rand(30,100);
+            $quantity = random_int(1500, 2000);
             $stocks[] = [
                 "user_id" => 1,
                 "product_id" => $i,
