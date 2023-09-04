@@ -16,4 +16,12 @@ class Voucher extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public static function getDistinctYears()
+    {
+        return self::selectRaw('YEAR(created_at) as year')
+            ->distinct()            // Retrieve only distinct years
+            ->orderBy('year', 'asc')  // Order the years in ascending order
+            ->pluck('year');         // Retrieve the "year" values and return them as a collection
+    }
 }

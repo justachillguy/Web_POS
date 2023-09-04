@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime("date");
             $table->unsignedInteger("vouchers");
+            $table->integer('item count');
             $table->float("cash");
             $table->float("tax");
             $table->float("total");

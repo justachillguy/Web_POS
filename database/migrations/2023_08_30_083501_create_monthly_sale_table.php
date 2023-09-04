@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('monthly_sale', function (Blueprint $table) {
             $table->id();
-            $table->dateTime("date");
-            $table->unsignedBigInteger("vouchers");
-            $table->float("cash");
-            $table->float("tax");
-            $table->float("total");
+            $table->string('date');
+            $table->unsignedInteger("vouchers");
+            $table->bigInteger('cash');
+            $table->unsignedInteger("tax");
+            $table->unsignedInteger("total");
             $table->timestamps();
         });
     }

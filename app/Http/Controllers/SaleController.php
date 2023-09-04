@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\VoucherRecord;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -126,8 +127,9 @@ class SaleController extends Controller
             // $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
             // $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
 
-            $today = Carbon::today()->subDay()->format("Y-m-d H:i:s");
-            $now = Carbon::today()->subDay()->format("Y-m-d ") . "23:59:59";
+            $today = Carbon::today()->subDays()->format("Y-m-d H:i:s");
+            $now = Carbon::today()->subDays()->format("Y-m-d ") . "23:59:59";
+
 
             // return response()->json([
             //     "today" => $today,
@@ -142,8 +144,10 @@ class SaleController extends Controller
             $total = array_sum($vouchers->pluck("net_total")->toArray());
 
             /* Counting the number of voucher we've got so far for today. */
-            $totalVocuhers = Voucher::selectRaw("count(*) as vouchers")->whereBetween("created_at", [$today, $now])->get();
-            $NOV = collect($totalVocuhers)->pluck("vouchers")->all();
+            $totalVouchers = Voucher::selectRaw("count(*) as vouchers")->whereBetween("created_at", [$today, $now])->get();
+            // return $totalVouchers;
+            $NOV = $totalVouchers->pluck("vouchers")->all();
+            // return $NOV;
             $nov = intval(implode("", $NOV));
             // var_dump($nov);
 
@@ -165,5 +169,81 @@ class SaleController extends Controller
                 ]
             );
         }
+
     }
+
+    public function monthlySale(Request $request)
+    {
+        $monthlySale = DB::table("daily_sale")->whereBetween("date", [$request->startDate, $request->endDate])->get();
+        // return $monthlySale;
+
+            $cash = array_sum($monthlySale->pluck("cash")->toArray());
+            // return $cash;
+            $tax = array_sum($monthlySale->pluck("tax")->toArray());
+            $total = array_sum($monthlySale->pluck("total")->toArray());
+            // return $total;
+
+            /* Counting the number of voucher we've got so far for today. */
+            $totalVouchers = array_sum($monthlySale->pluck('vouchers')->toArray());
+            //  var_dump($totalVouchers);
+            $date = DB::table("daily_sale")->first()->created_at;
+            // var_dump($date);
+
+
+            DB::table("monthly_sale")->insert(
+                [
+                    "date" => $request->endDate,
+                    "vouchers" => $totalVouchers,
+                    "cash" => $cash,
+                    "tax" => $tax,
+                    "total" => $total,
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ]
+                );
+
+
+
+
+     return response()->json([
+         'message'=>'monthly sale done'
+     ]);
+    }
+
+
+    public function yearlySale(Request $request)
+    {
+        $yearlySale = DB::table("daily_sale")->whereBetween("date", [$request->startDate, $request->endDate])->get();
+        // return $yearlySale;
+
+            $cash = array_sum($yearlySale->pluck("cash")->toArray());
+            // return $cash;
+            $tax = array_sum($yearlySale->pluck("tax")->toArray());
+            $total = array_sum($yearlySale->pluck("total")->toArray());
+            // return $total;
+
+            /* Counting the number of voucher we've got so far for today. */
+            $totalVouchers = array_sum($yearlySale->pluck('vouchers')->toArray());
+            //  var_dump($totalVouchers);
+            // $year = $request->
+            // var_dump($date);
+
+            DB::table("yearly_sale")->insert(
+                [
+                    "year" => $request->endDate,
+                    "vouchers" => $totalVouchers,
+                    "cash" => $cash,
+                    "tax" => $tax,
+                    "total" => $total,
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ]
+                );
+
+     return response()->json([
+         'message'=>'yearly sale done'
+     ]);
+    }
+
+
 }

@@ -78,10 +78,14 @@ Route::prefix("v1")->group(function () {
             Route::post("sale/checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");
             Route::get('sale/list', 'list')->name('sale.list');
             Route::post("sale/sale-close", "saleClose")->name("sale.close");
+            Route::post("sale/monthly-sale", "monthlySale")->name("sale.monthly");
+            Route::post("sale/yearly-sale", "yearlySale")->name("sale.yearly");
         });
 
         Route::controller(FinanceController::class)->group(function () {
-            Route::get("finance/daily-list", "dailyList")->name("finanace.daily");
+            Route::get("finance/daily-list", "dailyList")->name("finance.daily");
+            Route::get("finance/monthly-list", "monthlyList")->name("finance.monthly");
+            Route::get("finance/yearly-list", "yearlyList")->name("finance.yearly");
         });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
