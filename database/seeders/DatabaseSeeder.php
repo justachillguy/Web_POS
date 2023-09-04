@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             VoucherSeeder::class,
             // // VoucherRecordSeeder::class,
             SaleCloseSeeder::class,
-            DailySaleSeeder::class,
+            // DailySaleSeeder::class,
         ]);
     }
 }

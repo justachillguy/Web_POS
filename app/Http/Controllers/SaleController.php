@@ -124,11 +124,11 @@ class SaleController extends Controller
                 "sale_close" => true,
             ]);
 
-            // $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
-            // $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
+            $today = Carbon::today()->subDays(4)->format("Y-m-d H:i:s");
+            $now = Carbon::today()->subDays(4)->format("Y-m-d ") . "23:59:59";
 
-            $today = Carbon::today()->subDays()->format("Y-m-d H:i:s");
-            $now = Carbon::today()->subDays()->format("Y-m-d ") . "23:59:59";
+            // $today = Carbon::today()->format("Y-m-d H:i:s");
+            // $now = Carbon::today()->format("Y-m-d ") . "23:59:59";
 
 
             // return response()->json([
@@ -138,7 +138,10 @@ class SaleController extends Controller
 
             $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
             // return $vouchers;
-
+            $itemsQuantity = VoucherRecord::whereBetween('created_at',[$today,$now])->pluck('quantity')->all();
+            $itemsCount = array_sum($itemsQuantity);
+            // var_dump($itemsCount);
+            // dd($itemsCount);
             $cash = array_sum($vouchers->pluck("total")->toArray());
             $tax = array_sum($vouchers->pluck("tax")->toArray());
             $total = array_sum($vouchers->pluck("net_total")->toArray());
@@ -155,6 +158,7 @@ class SaleController extends Controller
                 [
                     "date" => Carbon::today(),
                     "vouchers" => $nov,
+                    "item count"=>$itemsCount,
                     "cash" => $cash,
                     "tax" => $tax,
                     "total" => $total,
