@@ -130,7 +130,6 @@ class SaleController extends Controller
             $today = Carbon::today()->format("Y-m-d H:i:s");
             $now = Carbon::today()->format("Y-m-d ") . "23:59:59";
 
-
             // return response()->json([
             //     "today" => $today,
             //     "now" => $now,
