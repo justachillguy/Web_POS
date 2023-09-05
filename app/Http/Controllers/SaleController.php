@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ItemsInVoucherResource;
 use App\Http\Resources\VoucherRecordResource;
 use App\Http\Resources\VoucherResource;
+use App\Models\DailySale;
+use App\Models\MonthlySale;
 use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\VoucherRecord;
@@ -75,9 +77,8 @@ class SaleController extends Controller
                     "total" => $total,
                     "tax" => $tax,
                     "net_total" => $netTotal
-                    ]
-                );
-
+                ]
+            );
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
@@ -91,19 +92,19 @@ class SaleController extends Controller
         }
     }
 
-    public function list()
+    public function recentList()
     {
-        $vouchers = Voucher::when(request()->has("keyword"), function ($query) {
+        $start = Carbon::today();
+        $end = Carbon::now();
+        // $vouchers = DB::table("vouchers")
+        //     ->whereBetween("created_at", [$start, $end])
+        //     ->paginate(5);
 
-            $keyword = request()->keyword;
-
-            $query->where("voucher_number", "LIKE", "%" . $keyword . "%");
-            $query->orWhere("created_at", "LIKE", "%" . $keyword . "%");
-        })
-            ->latest("id")
-            ->paginate(10)
-            ->withQueryString();
-
+        $vouchers = Voucher::select("*")
+        ->whereBetween("created_at", [$start, $end])
+        ->paginate(5)
+        ->withQueryString();
+        // return $vouchers;
         return VoucherResource::collection($vouchers);
     }
 
@@ -126,8 +127,8 @@ class SaleController extends Controller
             // $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
             // $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
 
-            $today = Carbon::today()->subDay()->format("Y-m-d H:i:s");
-            $now = Carbon::today()->subDay()->format("Y-m-d ") . "23:59:59";
+            $today = Carbon::today()->format("Y-m-d H:i:s");
+            $now = Carbon::today()->format("Y-m-d ") . "23:59:59";
 
             // return response()->json([
             //     "today" => $today,
@@ -137,27 +138,21 @@ class SaleController extends Controller
             $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
             // return $vouchers;
 
-            $cash = array_sum($vouchers->pluck("total")->toArray());
+            $total = array_sum($vouchers->pluck("total")->toArray());
             $tax = array_sum($vouchers->pluck("tax")->toArray());
-            $total = array_sum($vouchers->pluck("net_total")->toArray());
+            $netTotal = array_sum($vouchers->pluck("net_total")->toArray());
 
-            /* Counting the number of voucher we've got so far for today. */
-            $totalVocuhers = Voucher::selectRaw("count(*) as vouchers")->whereBetween("created_at", [$today, $now])->get();
-            $NOV = collect($totalVocuhers)->pluck("vouchers")->all();
-            $nov = intval(implode("", $NOV));
-            // var_dump($nov);
+            /* Counting today's sales */
+            $totalVocuhers = count($vouchers);
 
-            DB::table("daily_sale")->insert(
+            DailySale::create(
                 [
-                    "date" => Carbon::today(),
-                    "vouchers" => $nov,
-                    "cash" => $cash,
-                    "tax" => $tax,
+                    "vouchers" => $totalVocuhers,
                     "total" => $total,
-                    "created_at" => now(),
-                    "updated_at" => now(),
+                    "tax" => $tax,
+                    "net_total" => $netTotal,
                 ]
-                );
+            );
 
             return response()->json(
                 [
@@ -165,5 +160,32 @@ class SaleController extends Controller
                 ]
             );
         }
+    }
+
+    public function createMonthlySale()
+    {
+        $date = request()->date;
+        $dailySales = DailySale::where("created_at", "LIKE", "%" . $date . "%")->get();
+
+        $totalVocuhers = array_sum($dailySales->pluck("vouchers")->toArray());
+        // return $totalVocuhers;
+        $total = array_sum($dailySales->pluck("total")->toArray());
+        $tax = array_sum($dailySales->pluck("tax")->toArray());
+        $netTotal = array_sum($dailySales->pluck("net_total")->toArray());
+
+        MonthlySale::create(
+            [
+                "vouchers" => $totalVocuhers,
+                "total" => $total,
+                "tax" => $tax,
+                "net_total" => $netTotal,
+            ]
+        );
+
+        return response()->json(
+            [
+                "message" => "လချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
+            ]
+        );
     }
 }

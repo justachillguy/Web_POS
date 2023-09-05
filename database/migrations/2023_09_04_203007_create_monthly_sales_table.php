@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('yearly_sale', function (Blueprint $table) {
+        Schema::create('monthly_sales', function (Blueprint $table) {
             $table->id();
-            $table->dateTime("year");
-            $table->unsignedBigInteger("vouchers");
-            $table->float("cash");
-            $table->float("tax");
-            $table->float("total");
+            $table->unsignedInteger("vouchers");
+            $table->double("total");
+            $table->double("tax");
+            $table->double("net_total");
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('yearly_sale');
+        Schema::dropIfExists('monthly_sales');
     }
 };

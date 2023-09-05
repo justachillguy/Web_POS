@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('monthly_sale', function (Blueprint $table) {
+        Schema::create('daily_sales', function (Blueprint $table) {
             $table->id();
-            $table->dateTime("date");
-            $table->unsignedBigInteger("vouchers");
-            $table->float("cash");
-            $table->float("tax");
+            $table->unsignedInteger("vouchers");
             $table->float("total");
+            $table->float("tax");
+            $table->float("net_total");
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('monthly_sale');
+        Schema::dropIfExists('daily_sales');
     }
 };
