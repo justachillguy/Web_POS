@@ -16,6 +16,7 @@ class FinanceController extends Controller
 {
     public function dailySales()
     {
+        /* $dailySales to be passed thru API and shown in tables. */
         $dailySales = Voucher::where(function ($query) {
             $date = request()->date;
             $query->where("created_at", "LIKE", "%" . $date . "%");
@@ -23,10 +24,13 @@ class FinanceController extends Controller
             ->paginate(5)
             ->withQueryString();
 
+        /* dailySales2 to calculated the info about total vouchers, cost, tax and final cost. */
         $dailySales2 = Voucher::where(function ($query) {
             $date = request()->date;
             $query->where("created_at", "LIKE", "%" . $date . "%");
         })->get();
+
+        /* Calculating total vouchers, total cost, total tax and total final cost. */
         $totalVocuhers = count($dailySales2);
         $total_cash = array_sum($dailySales2->pluck("total")->toArray());
         $total_tax = array_sum($dailySales2->pluck("tax")->toArray());
@@ -53,11 +57,12 @@ class FinanceController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        // return $totalVocuhers;
+
         $thisMonthSales2 = DailySale::where(function ($query) {
             $date = request()->date;
             $query->where("created_at", "LIKE", "%" . $date . "%");
         })->get();
+
         $totalDays = count($thisMonthSales2);
         $totalVocuhers = array_sum($thisMonthSales2->pluck("vouchers")->toArray());
         $total_cash = array_sum($thisMonthSales2->pluck("total")->toArray());
@@ -112,15 +117,15 @@ class FinanceController extends Controller
     {
         $startDate = request()->startDate . " 00:00:00";
         $endDate = request()->endDate . " 23:59:59";
-        // return $startDate;
+
         $salesList = Voucher::select("*")
             ->whereBetween("created_at", [$startDate, $endDate])
             ->paginate(5)
             ->withQueryString();
-        // return $salesList;
 
         $salesList2 = Voucher::select("*")
-        ->whereBetween("created_at", [$startDate, $endDate])->get();
+            ->whereBetween("created_at", [$startDate, $endDate])->get();
+
         $totalVocuhers = count($salesList2);
         $total_cash = array_sum($salesList2->pluck("total")->toArray());
         $total_tax = array_sum($salesList2->pluck("tax")->toArray());

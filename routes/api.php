@@ -79,6 +79,7 @@ Route::prefix("v1")->group(function () {
             Route::get("sale/recent-list", "recentList")->name('sale.recentList');
             Route::post("sale/sale-close", "saleClose")->name("sale.close");
             Route::post("sale/sum-daily-sales", "createMonthlySale")->name("sale.createMonthly");
+            Route::post("sale/sum-monthly-sales", "createYearlySale")->name("sale.createYearly");
         });
 
         Route::controller(FinanceController::class)->group(function () {
