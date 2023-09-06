@@ -24,9 +24,7 @@ class TestController extends Controller
         $period = CarbonPeriod::create($startDate, $endDate);
         return response()->json(
             [
-                "startDate" => $startDate,
-                "endDate" => $endDate,
-                $period
+                "period" => $period,
             ]
         );
 

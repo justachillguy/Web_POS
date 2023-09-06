@@ -10,6 +10,7 @@ use App\Models\MonthlySale;
 use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\VoucherRecord;
+use App\Models\YearlySale;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -101,9 +102,9 @@ class SaleController extends Controller
         //     ->paginate(5);
 
         $vouchers = Voucher::select("*")
-        ->whereBetween("created_at", [$start, $end])
-        ->paginate(5)
-        ->withQueryString();
+            ->whereBetween("created_at", [$start, $end])
+            ->paginate(5)
+            ->withQueryString();
         // return $vouchers;
         return VoucherResource::collection($vouchers);
     }
@@ -127,17 +128,14 @@ class SaleController extends Controller
             // $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
             // $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
 
+            /* Getting today's 24 hours to get today's vouchers */
             $today = Carbon::today()->format("Y-m-d H:i:s");
             $now = Carbon::today()->format("Y-m-d ") . "23:59:59";
 
-            // return response()->json([
-            //     "today" => $today,
-            //     "now" => $now,
-            // ]);
-
+            /* Get today's vouchers */
             $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
-            // return $vouchers;
 
+            /* Calculating total of cost, tax and net total. */
             $total = array_sum($vouchers->pluck("total")->toArray());
             $tax = array_sum($vouchers->pluck("tax")->toArray());
             $netTotal = array_sum($vouchers->pluck("net_total")->toArray());
@@ -164,12 +162,14 @@ class SaleController extends Controller
 
     public function createMonthlySale()
     {
+        /* လချုပ်ချုပ်ဖို့ date  */
         $date = request()->date;
+        /* Getting the daily sales between selected date to create monthly sals. */
         $dailySales = DailySale::where("created_at", "LIKE", "%" . $date . "%")->get();
         // return $dailySales;
 
+        /* Calculating total vouchers, total cost, total tax and total final cost. */
         $totalVocuhers = array_sum($dailySales->pluck("vouchers")->toArray());
-        // return $totalVocuhers;
         $total = array_sum($dailySales->pluck("total")->toArray());
         $tax = array_sum($dailySales->pluck("tax")->toArray());
         $netTotal = array_sum($dailySales->pluck("net_total")->toArray());
@@ -186,6 +186,33 @@ class SaleController extends Controller
         return response()->json(
             [
                 "message" => "လချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
+            ]
+        );
+    }
+
+    public function createYearlySale()
+    {
+        $year = request()->year;
+        $monthlySales = MonthlySale::where("created_at", "like", "%" . $year . "%")->get();
+
+        $totalVocuhers = array_sum($monthlySales->pluck("vouchers")->toArray());
+        $total = array_sum($monthlySales->pluck("total")->toArray());
+        $tax = array_sum($monthlySales->pluck("tax")->toArray());
+        $netTotal = array_sum($monthlySales->pluck("net_total")->toArray());
+        
+
+        YearlySale::create(
+            [
+                "vouchers" => $totalVocuhers,
+                "total" => $total,
+                "tax" => $tax,
+                "net_total" => $netTotal,
+            ]
+        );
+
+        return response()->json(
+            [
+                "message" => "နှစ်ချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
             ]
         );
     }
