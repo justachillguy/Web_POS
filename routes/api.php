@@ -82,10 +82,10 @@ Route::prefix("v1")->group(function () {
         });
 
         Route::controller(FinanceController::class)->group(function () {
-            Route::get("finance/daily-sales", "dailySales")->name("finanace.dailySales");
-            Route::get("finance/monthly-sales", "thisMonthSales")->name("finanace.thisMonthSales");
-            Route::get("finance/yearly-sales", "thisYearSales")->name("finanace.thisMonthSales");
-            Route::get("finance/custom-sales-list", "customSalesList")->name("finanace.customSalesList");
+            Route::get("finance/daily-sales", "dailySales")->name("finance.dailySales");
+            Route::get("finance/monthly-sales", "thisMonthSales")->name("finance.thisMonthSales");
+            Route::get("finance/yearly-sales", "thisYearSales")->name("finance.thisMonthSales");
+            Route::get("finance/custom-sales-list", "customSalesList")->name("finance.customSalesList");
         });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');

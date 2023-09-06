@@ -166,6 +166,7 @@ class SaleController extends Controller
     {
         $date = request()->date;
         $dailySales = DailySale::where("created_at", "LIKE", "%" . $date . "%")->get();
+        // return $dailySales;
 
         $totalVocuhers = array_sum($dailySales->pluck("vouchers")->toArray());
         // return $totalVocuhers;

@@ -46,6 +46,7 @@ class FinanceController extends Controller
 
     public function thisMonthSales()
     {
+
         $thisMonthSales = DailySale::where(function ($query) {
             $date = request()->date;
             $query->where("created_at", "LIKE", "%" . $date . "%");
