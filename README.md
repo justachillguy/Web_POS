@@ -336,11 +336,12 @@
 ```
 ###### NOTE: JSON of ids of products and quantity of them have to be passed from Frontend.
 
-#### VOUCHER LIST (GET)
+#### RECENT LIST (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/sale/list
+  https://f.mmsdev.site/api/v1/sale/recent-list
 ```
+###### NOTE: Today's recent sales list.
 
 #### VOUCHER DETAILS (GET)
 
@@ -348,7 +349,60 @@
   https://f.mmsdev.site/api/v1/voucher/{voucher_id}
 ```
 
+#### CLOSE SALE & CREATE DAILY SALES (POST)
 
+```http
+  https://f.mmsdev.site/api/v1/sale/sale-close
+```
+
+#### CREATE MONTHLY SALES (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/sale/sum-daily-sales
+```
+| Arguments  | Type     | Description                 |
+| :--------- | :------  | :-------------------------- |
+| date       | datetime | **Required** 2022-01        |
+
+###### NOTE: Month and year are essential.
+
+#### CREATE YEARLY SALES (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/sale/sum-monthly-sales
+```
+| Arguments  | Type     | Description                 |
+| :--------- | :------  | :-------------------------- |
+| year       | datetime | **Required** 2022           |
+
+
+## FINANCE
+
+#### DAILY SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/daily-sales
+```
+
+#### MONTHLY SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/monthly-sales
+```
+
+#### YEARLY SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/yearly-sales
+```
+
+#### CUSTOM SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/custom-sales-list
+```
+
+###### NOTE: Start date and end date have to be selected and passed from frontend. So it wii be passed through param and sales list will be returned.
 
 
 
