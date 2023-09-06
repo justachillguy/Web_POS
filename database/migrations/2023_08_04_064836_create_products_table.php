@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained()->cascadeOnDelete();
             $table->float('actual_price');
             $table->float('sale_price');
-            $table->integer('total_stock')->default('0');
+            $table->unsignedBigInteger('total_stock')->default('0');
             $table->string('unit');
             $table->text('more_information');
             $table->foreignId('user_id');

@@ -16,4 +16,9 @@ class Voucher extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function voucherRecords()
+    {
+        return $this->hasMany(VoucherRecord::class);
+    }
 }

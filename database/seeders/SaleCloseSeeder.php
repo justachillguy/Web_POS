@@ -2,18 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\VoucherRecord;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
-class VoucherRecordSeeder extends Seeder
+class SaleCloseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        //
-        // VoucherRecord::factory()->count(20)->create();
+        DB::table("sale_close")->insert([
+            "sale_close" => false
+        ]);
     }
 }

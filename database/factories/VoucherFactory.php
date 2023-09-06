@@ -19,12 +19,12 @@ class VoucherFactory extends Factory
         return [
             //
             'customer' => fake()->name(),
-            'phone'=>fake()->phoneNumber(),
-            'voucher_number'=>fake()->uuid(),
-            'total'=>fake()->numberBetween(100, 10000),
-            'tax'=>fake()->numberBetween(0,1000),
-            'net_total'=>fake()->numberBetween(100,10000),
-            'user_id'=>rand(1,5)
+            'phone' => fake()->phoneNumber(),
+            'voucher_number' => fake()->uuid(),
+            'total' => 0,
+            'tax' => 0,
+            'net_total' => 0,
+            'user_id' => 1,
         ];
     }
 }

@@ -16,15 +16,15 @@ class StockSeeder extends Seeder
     {
         $stocks = [];
         for($i=1; $i<=10; $i++){
-            $quantity = rand(30,100);
+            $quantity = random_int(1500, 2000);
             $stocks[] = [
-                "user_id" => rand(1,2),
+                "user_id" => 1,
                 "product_id" => $i,
                 "quantity" => $quantity,
                 "more" => fake()->sentence(5),
             ];
             $product = Product::findOrFail($i);
-            $product->total_stock = $quantity;
+            $product->total_stock += $quantity;
             $product->update();
         }
         Stock::insert($stocks);
