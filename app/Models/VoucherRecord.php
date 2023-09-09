@@ -20,4 +20,5 @@ class VoucherRecord extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SaleReportController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
@@ -77,5 +78,11 @@ Route::prefix("v1")->group(function () {
         });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
+
+        Route::controller(SaleReportController::class)->group(function () {
+            Route::get("brand-report/{brandId}", "brandSale")->name('report.brand');
+            Route::get('today-report', 'todaySaleReport')->name('report.today');
+            Route::get('weekly-report', 'weeklySaleReport')->name('report.weekly');
+        });
     });
 });
