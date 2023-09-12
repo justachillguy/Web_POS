@@ -32,8 +32,8 @@ class VoucherSeeder extends Seeder
             for ($r = 1; $r <= 2; $r++) {
 
                 $prodIds = [];
-                $itemQuan = random_int(3,5);
-                for ($i = 1; $i <= $itemQuan; $i++) {
+                // $itemQuan = random_int);
+                for ($i = 1; $i <= 2; $i++) {
                     array_push($prodIds, random_int(1, 10));
                 }
 

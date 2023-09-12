@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\StockReportController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
@@ -87,6 +88,10 @@ Route::prefix("v1")->group(function () {
             Route::get("finance/monthly-sales", "thisMonthSales")->name("finance.thisMonthSales");
             Route::get("finance/yearly-sales", "thisYearSales")->name("finance.thisMonthSales");
             Route::get("finance/custom-sales-list", "customSalesList")->name("finance.customSalesList");
+        });
+
+        Route::controller(StockReportController::class)->group(function () {
+            Route::get("stock-report", "stockReport")->name("stockReport");
         });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
