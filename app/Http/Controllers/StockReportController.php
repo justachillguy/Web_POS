@@ -11,32 +11,25 @@ use Illuminate\Support\Facades\DB;
 
 class StockReportController extends Controller
 {
-    // public function stockReport()
-    // {
-    //     $totoalProducts = Product::all()->count();
-    //     $totalBrands = Brand::all()->count();
-    //     $productStocks = Product::select("*")
-    //         ->when(request()->has("inStock"), function ($query) {
-    //             $query->where("total_stock", ">", 20);
-    //         })
-    //         ->when(request()->has("outOfStock"), function ($query) {
-    //             $query->where("total_stock", 0);
-    //         })
-    //         ->when(request()->has("lowStock"), function ($query) {
-    //             $query->whereBetween("total_stock", [500, 100]);
-    //         })
-    //         ->paginate(5);
+    public function stockReport()
+    {
+        // $productStocks = Product::when(request()->has("keyword"), function ($query) {
+        //     $query->where(function (Builder $builder) {
+        //         $keyword = request()->keyword;
+        //         $builder->where("name", "LIKE", "%" . $keyword . "%");
+        //     });
+        // })
+        //     ->when(request()->has("inStock"), function ($query) {
+        //         $query->where("total_stock", ">", 30);
+        //     })
+        //     ->latest("id")
+        //     ->paginate(4)
+        //     ->withQueryString();
 
-    //     // $products = Product::all();
-    //     // if (request()->has("lowStock")) {
-    //     //     $productStocks = $products->whereBetween("total_stock", [20,1])->paginate(5);
-    //     // }
-    //     return response()->json(
-    //         [
-    //             "total_products" => $totoalProducts,
-    //             "total_brands" => $totalBrands,
-    //             "productStocks" => $productStocks,
-    //         ]
-    //     );
-    // }
+        // return response()->json(
+        //     [
+        //         "productStocks" => $productStocks,
+        //     ]
+        // );
+    }
 }
