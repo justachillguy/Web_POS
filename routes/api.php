@@ -90,9 +90,9 @@ Route::prefix("v1")->group(function () {
             Route::get("finance/custom-sales-list", "customSalesList")->name("finance.customSalesList");
         });
 
-        // Route::controller(StockReportController::class)->group(function () {
-        //     Route::get("stock-report", "stockReport")->name("stockReport");
-        // });
+        Route::controller(StockReportController::class)->group(function () {
+            Route::get("stock-report", "stockReport")->name("stockReport");
+        });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
     });
