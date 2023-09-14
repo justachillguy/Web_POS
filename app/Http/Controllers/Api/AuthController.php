@@ -35,7 +35,10 @@ class AuthController extends Controller
         }
 
 
-        return Auth::user()->createToken($request->has("device") ? $request->device : "unknown");
+        // return Auth::user()->createToken($request->has("device") ? $request->device : "unknown");
+        return response()->json([
+            "plainTextToken" => Auth::user()->createToken($request->has("device") ? $request->device : "unknown")->plainTextToken
+        ]);
 
     }
 

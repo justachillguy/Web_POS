@@ -11,19 +11,43 @@ use PhpParser\Node\Stmt\Foreach_;
 
 class SaleReportController extends Controller
 {
-    public function brandSale($brandId)
+    public function brandSale()
     {
-        $brand = Brand::find($brandId);
-        // return $brand;
-        $bestSellerBrand = $brand->bestSellerBrand;
-        // return $bestSellerBrand;
-        $brandName = $bestSellerBrand->first()->product->brand->name;
-        // return $brandName;
-        $count = count($bestSellerBrand);
-        //  return $count;
+        // $brand = Brand::find($brandId);
+        // // return $brand;
+        // $bestSellerBrand = $brand->bestSellerBrand;
+        // // return $bestSellerBrand;
+        // $brandName = $bestSellerBrand->first()->product->brand->name;
+        // // return $brandName;
+        // $count = count($bestSellerBrand);
+        // //  return $count;
+        // return response()->json([
+        //     "brand's name" => $brandName,
+        //     "Brand Counts" => $count
+        // ]);
+
+        
+        $brands = Brand::withCount('brand')
+            ->withSum('brand', 'cost')
+            ->get();
+        // return $brands;
+        $brandInfo = [];
+
+        foreach ($brands as $brand) {
+            $brandName = $brand->name;
+            $brandCount = $brand->brand_count;
+            $brandSales = $brand->brand_sum_cost;
+
+            $brandInfo[] = [
+                'name' => $brandName,
+                'count' => $brandCount,
+                'sales' => $brandSales,
+            ];
+
+        }
+
         return response()->json([
-            "brand's name" => $brandName,
-            "Brand Counts" => $count
+            'brandInfo' => $brandInfo
         ]);
     }
 
@@ -36,7 +60,7 @@ class SaleReportController extends Controller
         $total = array_sum($vouchers->pluck("total")->toArray());
 
         return response()->json([
-            'Today Sales' => $total
+            'todaySales' => $total
         ]);
     }
 
@@ -117,7 +141,7 @@ class SaleReportController extends Controller
         //Lowest Sales
         $lowest = $all->min('daySales');
         // return $lowest;
- 
+
         if ($lowest == 0) {
             $lowestSellingDays = $all->where('daySales', $lowest)->pluck('date');
             // return $lowestSellingDays;
@@ -148,9 +172,9 @@ class SaleReportController extends Controller
 
         return response()->json([
             "Weekly Sales" => $daysOfWeek,
-            "Total Weekly Sales Amount"=>$total,
+            "Total Weekly Sales Amount" => $total,
             "Average Amount" => $average,
-            "Highest Sale"=> $highestDay,
+            "Highest Sale" => $highestDay,
             "Lowest Sale" => $lowestDays
         ]);
     }

@@ -80,7 +80,7 @@ Route::prefix("v1")->group(function () {
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
 
         Route::controller(SaleReportController::class)->group(function () {
-            Route::get("brand-report/{brandId}", "brandSale")->name('report.brand');
+            Route::get("brand-report", "brandSale")->name('report.brand');
             Route::get('today-report', 'todaySaleReport')->name('report.today');
             Route::get('weekly-report', 'weeklySaleReport')->name('report.weekly');
         });

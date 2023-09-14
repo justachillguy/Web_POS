@@ -21,7 +21,7 @@ class Brand extends Model
     }
 
 
-    public function bestSellerBrand()
+    public function brand()
     {
         return $this->hasManyThrough(VoucherRecord::class, Product::class);
     }
