@@ -405,4 +405,8 @@
 ###### NOTE: Start date and end date have to be selected and passed from frontend. So it wii be passed through param and sales list will be returned.
 
 
+## For Overview Page
 
+```http
+  https://f.mmsdev.site/api/v1/overview
+```
