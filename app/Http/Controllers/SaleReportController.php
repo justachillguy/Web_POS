@@ -26,7 +26,7 @@ class SaleReportController extends Controller
         //     "Brand Counts" => $count
         // ]);
 
-        
+
         $brands = Brand::withCount('brand')
             ->withSum('brand', 'cost')
             ->get();
@@ -47,20 +47,49 @@ class SaleReportController extends Controller
         }
 
         return response()->json([
-            'brandInfo' => $brandInfo
+            'brandsInfo' => $brandInfo
         ]);
     }
 
     public function todaySaleReport()
     {
+
         $today = Carbon::today()->format("Y-m-d H:i:s");
         $now = Carbon::today()->format("Y-m-d ") . "23:59:59";
 
         $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
+        // return $vouchers;
         $total = array_sum($vouchers->pluck("total")->toArray());
+        $average = $vouchers->avg('net_total');
+        // return $average;
+
+        $maxSale = Voucher::whereBetween("created_at", [$today, $now])->orderByDesc('net_total')->first();
+        // return $maxSale;
+        $maxVoucherNumber = $maxSale->voucher_number;
+        // return $maxVoucherNumber;
+        $maxTotal = $maxSale->net_total;
+        // return $maxTotal;
+        $max=[
+            "voucherNumber"=>$maxVoucherNumber,
+            'total'=>$maxTotal
+        ];
+
+        $minSale = Voucher::whereBetween("created_at", [$today, $now])->orderBy('net_total')->first();
+        // return $minSale;
+        $minVoucherNumber = $minSale->voucher_number;
+        // return $minVoucherNumber;
+        $minTotal = $minSale->net_total;
+        // return $minTotal;
+        $min=[
+            "voucherNumber"=>$minVoucherNumber,
+            'total'=>$minTotal
+        ];
 
         return response()->json([
-            'todaySales' => $total
+            'todayTotalSales' => $total,
+            'todayAverageSales'=>$average,
+            'todayMaxSales'=> $max,
+            'todayMinSales'=>$min
         ]);
     }
 
