@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\OverViewController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -90,11 +91,12 @@ Route::prefix("v1")->group(function () {
             Route::get("finance/custom-sales-list", "customSalesList")->name("finance.customSalesList");
         });
 
-        Route::controller(StockReportController::class)->group(function () {
-            Route::get("stock-report", "stockReport")->name("stockReport");
-        });
+        // Route::controller(StockReportController::class)->group(function () {
+        //     Route::get("stock-report", "stockReport")->name("stockReport");
+        // });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
+        Route::get("overview", [OverViewController::class, "overViewPage"]);
     });
 
     Route::controller(TestController::class)->group(function () {
