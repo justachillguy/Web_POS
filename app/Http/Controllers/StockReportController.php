@@ -13,29 +13,33 @@ class StockReportController extends Controller
 {
     // public function stockReport()
     // {
-    //     $totoalProducts = Product::all()->count();
-    //     $totalBrands = Brand::all()->count();
-    //     $productStocks = Product::select("*")
+    //     $productStocks = Product::when(request()->has("keyword"), function ($query) {
+    //         $query->where(function (Builder $builder) {
+    //             $keyword = request()->keyword;
+    //             $builder->where("name", "LIKE", "%" . $keyword . "%");
+    //         });
+    //     })
     //         ->when(request()->has("inStock"), function ($query) {
-    //             $query->where("total_stock", ">", 20);
+    //             $query->where("total_stock", ">", 30);
+    //         })
+    //         ->when(request()->has("lowStock"), function ($query) {
+    //             $query->whereBetween("total_stock", [1, 30]);
     //         })
     //         ->when(request()->has("outOfStock"), function ($query) {
     //             $query->where("total_stock", 0);
     //         })
-    //         ->when(request()->has("lowStock"), function ($query) {
-    //             $query->whereBetween("total_stock", [500, 100]);
-    //         })
-    //         ->paginate(5);
+    //         ->latest("id")
+    //         ->paginate(4)
+    //         ->withQueryString();
 
-    //     // $products = Product::all();
-    //     // if (request()->has("lowStock")) {
-    //     //     $productStocks = $products->whereBetween("total_stock", [20,1])->paginate(5);
-    //     // }
+    //     $totalProduct = Product::all()->count();
+    //     $totalBrand = Brand::all()->count();
+
     //     return response()->json(
     //         [
-    //             "total_products" => $totoalProducts,
-    //             "total_brands" => $totalBrands,
     //             "productStocks" => $productStocks,
+    //             "total_product" => $totalProduct,
+    //             "total_brand" => $totalBrand,
     //         ]
     //     );
     // }
