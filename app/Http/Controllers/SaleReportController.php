@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductReportResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Brand;
+use App\Models\Product;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,6 +51,12 @@ class SaleReportController extends Controller
         return response()->json([
             'brandsInfo' => $brandInfo
         ]);
+    }
+
+    public function productReport()
+    {
+        $product = Product::all();
+        return ProductReportResource::collection($product);
     }
 
     public function todaySaleReport()
