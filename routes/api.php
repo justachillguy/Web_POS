@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ChildController;
+use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -86,6 +88,13 @@ Route::prefix("v1")->group(function () {
             Route::get('monthly-report', 'monthlySaleReport')->name('report.monthly');
             Route::get('yearly-report', 'yearlySaleReport')->name('report.yearly');
             Route::get('product-report', 'productReport')->name('report.product');
+        });
+
+        Route::controller(OverviewController::class)->group(function(){
+            Route::get('weekly-overview','weeklySaleOverview')->name('overview.weekly');
+            Route::get('monthly-overview','monthlySaleOverview')->name('overview.monthly');
+            Route::get('yearly-overview','yearlySaleOverview')->name('overview.yearly');
+
         });
     });
 });
