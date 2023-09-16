@@ -17,13 +17,14 @@ class VoucherResource extends JsonResource
 
         return [
             "id" => $this->id,
+            "staff" => $this->user->name,
             "voucher_number" => $this->voucher_number,
+            "item_quantity" => array_sum($this->voucherRecords()->pluck("quantity")->toArray()),
+            "net_total" => $this->net_total,
             "total" => $this->total,
             "tax" => $this->tax,
-            "net_total" => $this->net_total,
-            "staff" => $this->user->name,
-            "created_at" => $this->created_at->format("d m Y"),
-            "updated_at" => $this->updated_at->format("d m Y"),
+            "time" => $this->created_at->format("d-m-Y H:i:s"),
+            // "updated_at" => $this->updated_at->format("d m Y"),
         ];
     }
 }

@@ -91,6 +91,7 @@ Route::prefix("v1")->group(function () {
         });
 
         Route::controller(OverviewController::class)->group(function(){
+            Route::get('overview-page','overViewPage')->name('overview.todaySales');
             Route::get('weekly-overview','weeklySaleOverview')->name('overview.weekly');
             Route::get('monthly-overview','monthlySaleOverview')->name('overview.monthly');
             Route::get('yearly-overview','yearlySaleOverview')->name('overview.yearly');
