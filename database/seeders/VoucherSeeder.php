@@ -53,6 +53,8 @@ class VoucherSeeder extends Seeder
                         "product_id" => $prod->id,
                         "quantity" => $q,
                         "cost" => $cost,
+                        "created_at" => $date,
+                    "updated_at" => $date,
                     ];
 
                     $prod->total_stock -= $q;
