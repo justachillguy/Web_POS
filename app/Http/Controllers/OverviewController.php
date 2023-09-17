@@ -43,7 +43,7 @@ class OverviewController extends BaseController
 
     public function weeklySaleOverview()
     {
-        $weekly = $this->weeklySale()->original;
+        $weekly = $this->weeklySale();
 
         $currentWeekStart = now()->startOfWeek();
         $currentWeekEnd = now()->endOfWeek();
@@ -89,8 +89,8 @@ class OverviewController extends BaseController
     public function monthlySaleOverview()
     {
         $monthly = $this->monthlySale()->original;
-        $currentMonthStart = now()->startOfYear();
-        $currentMonthEnd = now()->endOfYear();
+        $currentMonthStart = now()->startOfMonth();
+        $currentMonthEnd = now()->endOfMonth();
 
         $voucherRecords = VoucherRecord::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->get();
 
@@ -132,30 +132,47 @@ class OverviewController extends BaseController
 
     public function yearlySaleOverview()
     {
-        $yearly =  $this->yearlySale()->original;
+        $yearly = $this->yearlySale()->original;
+        $currentYearStart = now()->startOfYear();
+        $currentYearEnd = now()->endOfYear();
 
-        $yearlyProfits = DB::table('voucher_records')
-            ->selectRaw('YEAR(voucher_records.created_at) as year')
-            ->selectRaw('SUM( voucher_records.cost - products.actual_price ) as total_profit')
-            ->selectRaw('CAST(SUM(vouchers.total) AS SIGNED) as total_income')
-            ->selectRaw('SUM(products.actual_price) as total_expenses')
-            ->join('products', 'voucher_records.product_id', '=', 'products.id')
-            ->join('vouchers', 'voucher_records.voucher_id', '=', 'vouchers.id')
-            ->groupBy('year')
-            ->get();
+        $voucherRecords = VoucherRecord::whereBetween('created_at', [$currentYearStart, $currentYearEnd])->get();
 
-        // return $yearlyProfits;
+        // return $voucherRecords;
 
-        // foreach ($yearlyProfits as $profit) {
-        //     $year = $profit->year;
-        //     $totalProfit = $profit->total_profit;
-        //     $totalCost = $profit->total_cost;
-        //     $totalActualPrice = $profit->total_actual_price;
-        // }
+        foreach ($voucherRecords as $voucherRecord) {
+            // $cost = $voucherRecord->cost;
+            // $actualPrice = $voucherRecord->product->actual_price;
+
+            // $profit = $cost - $actualPrice;
+
+            $totalProfit = $voucherRecords->sum(function ($voucherRecord) {
+                $cost = $voucherRecord->cost;
+                $actualPrice = $voucherRecord->product->actual_price;
+
+                return $cost - $actualPrice;
+            });
+
+            $totalExpenses = $voucherRecords->sum(function ($voucherRecord) {
+                return $voucherRecord->product->actual_price;
+            });
+
+            // return $totalExpenses;
+        }
+
+        // return $totalProfit;
+
+        $voucher = Voucher::whereBetween('created_at', [$currentYearStart, $currentYearEnd])->get();
+        $totalIncome = $voucher->sum('total');
+        // return $totalIncome;
 
         return response()->json([
-            'yearlySaleOverview'=>$yearly,
-            'yearly'=>$yearlyProfits
+            'yearlySaleOverview' => $yearly,
+            'totalProfit' => $totalProfit,
+            'totalIncome' => $totalIncome,
+            'totalExpenses' => $totalExpenses
         ]);
     }
+
+
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleReportController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\VoucherRecordController;
@@ -22,6 +23,7 @@ use App\Models\Voucher;
 use App\Models\VoucherRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Event\Code\Test;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,5 +99,8 @@ Route::prefix("v1")->group(function () {
             Route::get('yearly-overview','yearlySaleOverview')->name('overview.yearly');
 
         });
+
+        // Route::get('month-test',[TestController::class,'testMonth']);
+        // Route::get('year-test',[TestController::class,'yearlySale']);
     });
 });
