@@ -97,15 +97,11 @@
 | :-------- | :---    | :----------------- |
 | id        | integer | **Required**  2    |
 
-#### UNBAN USER (POST)
+#### UNBAN USER (PUT)
 
 ```http
-  https://f.mmsdev.site/api/v1/user/unban
+  https://f.mmsdev.site/api/v1/user/unban/{id}
 ```
-
-| Arguments | Type    | Description        |
-| :-------- | :---    | :----------------- |
-| id        | integer | **Required**  2    |
 
 ---
 ## USER PROFILE 

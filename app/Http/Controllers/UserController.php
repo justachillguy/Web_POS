@@ -112,9 +112,9 @@ class UserController extends Controller
 
     }
 
-    public function unban(Request $request)
+    public function unban($id)
     {
-        $user = User::findOrFail($request->id);
+        $user = User::findOrFail($id);
 
         if ($user->ban_status === "false") {
             return response()->json([
@@ -131,6 +131,12 @@ class UserController extends Controller
             ]
         );
 
+    }
+
+    public function bannedUsers()
+    {
+        $bannedUsers = User::where("ban_status", "true")->get();
+        return $bannedUsers;
     }
 
 }
