@@ -34,7 +34,8 @@
 ```
 
 ---
-## USER MANAGEMENT 
+
+## USER MANAGEMENT
 
 ###### Note : Only Admin can manage users. So basically, a normal staff cannot access these routes.
 
@@ -51,7 +52,7 @@
 ```
 
 | Arguments             | Type     | Description                        |
-| :-------------------- | :------- | :----------------------------------|
+| :-------------------- | :------- | :--------------------------------- |
 | name                  | string   | **Required** Joy                   |
 | phone_number          | string   | **Requried** 092544411             |
 | date_of_birth         | date     | **Required** 12.5.2000             |
@@ -71,9 +72,9 @@
   https://f.mmsdev.site/api/v1/user/details/{id}
 ```
 
-| Arguments | Type    | Description     |
-| :-------- | :---    | :-------------- |
-| id        | integer | **Required** 2  |
+| Arguments | Type    | Description    |
+| :-------- | :------ | :------------- |
+| id        | integer | **Required** 2 |
 
 #### UPDATE USER'S POSITION (PUT)
 
@@ -82,7 +83,7 @@
 ```
 
 | Arguments | Type   | Description        |
-| :-------- | :---   | :----------------- |
+| :-------- | :----- | :----------------- |
 | position  | string | **Required** admin |
 
 ###### Note : Only Admin can change user's position.
@@ -93,9 +94,9 @@
   https://f.mmsdev.site/api/v1/user/ban
 ```
 
-| Arguments | Type    | Description        |
-| :-------- | :---    | :----------------- |
-| id        | integer | **Required**  2    |
+| Arguments | Type    | Description    |
+| :-------- | :------ | :------------- |
+| id        | integer | **Required** 2 |
 
 #### UNBAN USER (POST)
 
@@ -103,12 +104,13 @@
   https://f.mmsdev.site/api/v1/user/unban
 ```
 
-| Arguments | Type    | Description        |
-| :-------- | :---    | :----------------- |
-| id        | integer | **Required**  2    |
+| Arguments | Type    | Description    |
+| :-------- | :------ | :------------- |
+| id        | integer | **Required** 2 |
 
 ---
-## USER PROFILE 
+
+## USER PROFILE
 
 ### CHANGE PASSWORD (POST)
 
@@ -153,9 +155,9 @@
   https://f.mmsdev.site/api/v1/photo
 ```
 
-| Arguments | Type   | Description               |
-| :-------- | :----- | :-------------------------|
-| photos[]   | file   | **Required** apple.png    |
+| Arguments | Type | Description            |
+| :-------- | :--- | :--------------------- |
+| photos[]  | file | **Required** apple.png |
 
 ###### Note : You need to put [] after photo parameter for uploading multiple files at once.
 
@@ -178,6 +180,7 @@
 ## Inventory
 
 ## BRAND
+
 #### BRAND LIST (GET)
 
 ```http
@@ -190,14 +193,14 @@
   https://f.mmsdev.site/api/v1/brand/{id}
 ```
 
-#### STORE (or) CREATE A BRAND (POST) 
+#### STORE (or) CREATE A BRAND (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/brand
 ```
 
 | Arguments    | Type   | Description                  |
-| :----------  | :----- | :--------------------------- |
+| :----------- | :----- | :--------------------------- |
 | name         | string | **Required** Good Morning    |
 | company      | string | **Required** Fresh Food      |
 | agent        | string | **Required** Micheal Jordan  |
@@ -212,7 +215,7 @@
 ```
 
 | Arguments    | Type   | Description                  |
-| :----------  | :----- | :--------------------------- |
+| :----------- | :----- | :--------------------------- |
 | name         | string | **Nullable** Good Morning    |
 | company      | string | **Nullable** Fresh Food      |
 | agent        | string | **Nullable** Micheal Jordan  |
@@ -225,7 +228,9 @@
 ```http
   https://f.mmsdev.site/api/v1/brand/{id}
 ```
+
 ---
+
 ## PRODUCT
 
 #### PRODUCT LIST (GET)
@@ -283,6 +288,7 @@
 ```http
   https://f.mmsdev.site/api/v1/product/{id}
 ```
+
 ---
 
 ## STOCK
@@ -327,13 +333,14 @@
 
 ---
 
-## SALE 
+## SALE
 
 #### CHECKOUT (POST)
 
 ```http
   https://f.mmsdev.site/api/v1/sale/checkout
 ```
+
 ###### NOTE: JSON of ids of products and quantity of them have to be passed from Frontend.
 
 #### VOUCHER LIST (GET)
@@ -345,10 +352,75 @@
 #### VOUCHER DETAILS (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/voucher/{voucher_id}
+  https://f.mmsdev.site/api/v1/voucher/{voucher_number}
 ```
 
+---
 
+## REPORT
 
+#### BRAND SALE REPORT (GET)
 
+```http
+  https://f.mmsdev.site/api/v1/brand-report
+```
 
+#### TODAY SALE REPORT (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/today-report
+```
+
+#### WEEKLY SALE REPORT (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/weekly-report
+```
+
+#### MONTHLY SALE REPORT (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/monthly-report
+```
+
+#### YEARLY SALE REPORT (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/yearly-report
+```
+
+---
+
+## For Overview Page
+
+#### Total Stock, Total Staff and Today's Sales (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/overview-page
+```
+
+#### Weekly Sales Overview (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/weekly-overview
+```
+
+#### Weekly Sales Overview (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/weekly-overview
+```
+
+#### Monthly Sales Overview (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/monthly-overview
+```
+
+#### Yearly Sales Overview (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/yearly-overview
+```
+
+---
