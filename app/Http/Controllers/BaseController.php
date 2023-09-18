@@ -23,7 +23,7 @@ class BaseController extends Controller
             ])
             ->groupBy('sale_date')
             ->get();
-        return $weeklySales;
+        // return $weeklySales;
         // dd($weeklySales);
 
         // Calculate the best-selling day
@@ -356,8 +356,8 @@ class BaseController extends Controller
         $average = $monthlySales->avg('total_sales');
         // return $average;
         return response()->json([
-            "monthlySales" => $daysOfMonth,
-            "totalMonthlySalesAmount" => $total,
+            "yearlySales" => $daysOfMonth,
+            "totalYearlySalesAmount" => $total,
             "averageAmount" => $average,
             "highestSale" => $highestMonth,
             "lowestSale" => $lowestMonths

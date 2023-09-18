@@ -43,7 +43,7 @@ class OverviewController extends BaseController
 
     public function weeklySaleOverview()
     {
-        $weekly = $this->weeklySale();
+        $weekly = $this->weeklySale()->original;
 
         $currentWeekStart = now()->startOfWeek();
         $currentWeekEnd = now()->endOfWeek();
