@@ -22,7 +22,7 @@ class StockSeeder extends Seeder
                 "user_id" => 1,
                 "product_id" => $i,
                 "quantity" => $quantity,
-                "more" => fake()->sentence(5),
+                // "more" => fake()->sentence(5),
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ];
