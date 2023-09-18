@@ -114,12 +114,13 @@ class BaseController extends Controller
         // return $lowestDays;
 
         $average = $weeklySales->avg('total_sales');
+        $averageAmount = round($average, 2);
         // return $average;
 
         return response()->json([
             "weeklySales" => $daysOfWeek,
             "totalWeeklySalesAmount" => $total,
-            "averageAmount" => $average,
+            "averageAmount" => $averageAmount,
             "highestSale" => $highestDay,
             "lowestSale" => $lowestDays
         ]);
@@ -128,51 +129,31 @@ class BaseController extends Controller
     public function monthlySale()
     {
 
-        // Get the current month in Carbon format
-        $currentDate = Carbon::parse('2023-08-01');
+        $currentDate = Carbon::now();
         // return $currentDate;
-        $currentMonth = $currentDate->format('Y-m');
-        // return $currentMonth;
+        $startOfMonth = $currentDate->startOfMonth();
+        // return $startOfMonth;
 
-        // Initialize an array to store the sum of sales for each day
-        $salesByDay = array_fill(1, $currentDate->daysInMonth, 0);
-        // return $salesByDay;
+        if ($currentDate->isLastOfMonth()) {
+            // If today is the last day of the current month, retrieve sales for the entire month.
+            $endOfMonth = $currentDate->endOfMonth();
 
-        // Initialize an array to store formatted dates
-        $formattedDates = array_fill(1, $currentDate->daysInMonth, '');
-        // return $formattedDates;
+        } else {
+            // If today is not the last day of the current month, set the end date to today.
+            $endOfMonth = Carbon::now();
 
-        // Retrieve sales data from the voucher model for the current month
-        $vouchers = Voucher::whereYear('created_at', $currentDate->year)
-            ->whereMonth('created_at', $currentDate->month)
+        }
 
+        // return $endOfMonth;
+
+        $monthlySales = DB::table('vouchers')
+            ->select(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y') as date"), DB::raw('CAST(SUM(total) AS SIGNED) as total_sales'))
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y')"))
             ->get();
-            // return $vouchers;
-
-        // Loop through the retrieved vouchers and calculate the total sales for each day
-        foreach ($vouchers as $voucher) {
-            $saleDate = Carbon::parse($voucher->created_at);
-            $dayOfMonth = $saleDate->day;
-            // return $dayOfMonth;
-            $salesByDay[$dayOfMonth] += $voucher->total;
-            // return $salesByDay;
-            $formattedDates[$dayOfMonth] = $saleDate->format('d/m/Y');
-            // return $formattedDates;
-        }
-        // return $dayOfMonth;
-        // return $salesByDay;
-        // return $formattedDates;
-
-        for ($day = 1; $day <= $currentDate->daysInMonth; $day++) {
-            $sales = $salesByDay[$day];
-            $formattedDate = $formattedDates[$day];
-            $monthlySales[]=[
-                "date"=>$formattedDate,
-                "total_sales"=>$sales
-            ];
-        }
 
         // return $monthlySales;
+
         $monthly = collect($monthlySales);
 
         $total = $monthly->sum('total_sales');
@@ -222,11 +203,13 @@ class BaseController extends Controller
         // return $lowestDays;
 
         $average = $monthly->avg('total_sales');
+        $averageAmount = round($average, 2);
+
         // return $average;
         return response()->json([
             "monthlySales" => $monthlySales,
             "totalMonthlySalesAmount" => $total,
-            "averageAmount" => $average,
+            "averageAmount" => $averageAmount,
             "highestSale" => $highestSellingDateOfMonth,
             "lowestSale" => $lowestSellingDateOfMonth
         ]);
@@ -354,11 +337,12 @@ class BaseController extends Controller
         // return $lowestDays;
 
         $average = $monthlySales->avg('total_sales');
+        $averageAmount = round($average, 2);
         // return $average;
         return response()->json([
             "yearlySales" => $daysOfMonth,
             "totalYearlySalesAmount" => $total,
-            "averageAmount" => $average,
+            "averageAmount" => $averageAmount,
             "highestSale" => $highestMonth,
             "lowestSale" => $lowestMonths
         ]);

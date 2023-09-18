@@ -72,6 +72,7 @@ class SaleReportController extends BaseController
         // return $vouchers;
         $total = array_sum($vouchers->pluck("total")->toArray());
         $average = $vouchers->avg('net_total');
+        $averageAmount = round($average,2);
         // return $average;
 
         $maxSale = Voucher::whereBetween("created_at", [$today, $now])->orderByDesc('net_total')->first();
@@ -98,7 +99,7 @@ class SaleReportController extends BaseController
 
         return response()->json([
             'todayTotalSales' => $total,
-            'todayAverageSales' => $average,
+            'todayAverageSales' => $averageAmount,
             'todayMaxSales' => $max,
             'todayMinSales' => $min
         ]);
@@ -108,8 +109,6 @@ class SaleReportController extends BaseController
     {
 
        return $this->weeklySale();
-
-
 
     }
 
