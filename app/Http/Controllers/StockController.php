@@ -20,16 +20,19 @@ class StockController extends Controller
     public function index()
     {
         Gate::authorize("viewAny", App\Models\Stock::class);
-        $stocks = Stock::when(request()->has("keyword"), function ($query) {
+        $products = Product::when(request()->has("keyword"), function ($query) {
             $query->where(function (Builder $builder) {
                 $keyword = request()->keyword;
 
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
+        })->get();
+        $stocks = Stock::when(request()->has("keyword"), function ($query) use ($products) {
+            $query->whereIn("product_id", $products->pluck("id"));
         })
-        ->latest("id")
-        ->paginate(4)
-        ->withQueryString();
+            ->latest("id")
+            ->paginate(4)
+            ->withQueryString();
 
         if ($stocks->isEmpty()) {
             return response()->json([
@@ -75,7 +78,6 @@ class StockController extends Controller
                 "message" => $stock
             ]
         );
-
     }
 
     /**
@@ -97,16 +99,16 @@ class StockController extends Controller
 
         $oldValue = $stock->quantity;
 
-        if($request->has('product_id')){
+        if ($request->has('product_id')) {
             $stock->product_id = $request->product_id;
         }
 
-        if($request->has('quantity')){
+        if ($request->has('quantity')) {
             $newValue = $request->quantity;
             $stock->quantity = $request->quantity;
         }
 
-        if($request->has('more')){
+        if ($request->has('more')) {
             $stock->more = $request->more;
         }
 
@@ -134,8 +136,6 @@ class StockController extends Controller
                 "message" => $stock
             ]
         );
-
-
     }
 
     /**
