@@ -91,10 +91,14 @@ Route::prefix("v1")->group(function () {
             Route::get("finance/yearly-sales", "thisYearSales")->name("finance.thisMonthSales");
             Route::get("finance/custom-sales-list", "customSalesList")->name("finance.customSalesList");
         });
+        Route::prefix("report")->group(function () {
+            Route::controller(StockReportController::class)->group(function () {
+                Route::get("stock-level-table", "stockLvlTable")->name("stockReport.stockLvlTable");
+                Route::get("stock-level-bar", "stockLvlBar")->name("stockReport.stockLvlBar");
+                Route::get("best-seller-brands", "bestSellerBrands")->name("stockReport.bestSellerBrands");
 
-        // Route::controller(StockReportController::class)->group(function () {
-        //     Route::get("stock-report", "stockReport")->name("stockReport");
-        // });
+            });
+        });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
         Route::get("overview", [OverViewController::class, "overViewPage"]);

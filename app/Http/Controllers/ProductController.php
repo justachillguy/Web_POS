@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Brand;
 use App\Models\Stock;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -24,6 +25,10 @@ class ProductController extends Controller
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })
+            ->when(request()->has('id'), function ($query) {
+                $sortType = request()->id ?? 'asc';
+                $query->orderBy("id", $sortType);
+            })
             ->latest("id")
             ->paginate(4)
             ->withQueryString();
@@ -44,46 +49,31 @@ class ProductController extends Controller
     {
         $this->authorize("create", App\Models\Product::class);
 
+        $product = new Product;
+        $product->name = $request->name;
+        $product->brand_id = $request->brand_id;
+        $product->total_stock = $request->total_stock;
+        $product->actual_price = $request->actual_price;
+        $product->sale_price = $request->sale_price;
+        $product->unit = $request->unit;
+        $product->more_information = $request->more_information;
+        $product->user_id = auth()->id();
 
         if ($request->has("photo")) {
-            $product = Product::create(
+            $product->photo = $request->photo;
+        }
+
+        $product->save();
+
+        if ($request->total_stock > 0) {
+            Stock::create(
                 [
-                    "name" => $request->name,
-                    "brand_id" => $request->brand_id,
-                    "actual_price" => $request->actual_price,
-                    "sale_price" => $request->sale_price,
-                    "unit" => $request->unit,
-                    "more_information" => $request->more_information,
                     "user_id" => auth()->id(),
-                    "photo" => $request->photo,
-                ]
-            );
-        } else {
-            $product = Product::create(
-                [
-                    "name" => $request->name,
-                    "brand_id" => $request->brand_id,
-                    "actual_price" => $request->actual_price,
-                    "sale_price" => $request->sale_price,
-                    "unit" => $request->unit,
-                    "more_information" => $request->more_information,
-                    "user_id" => auth()->id(),
+                    "product_id" => $product->id,
+                    "quantity" => $request->total_stock,
                 ]
             );
         }
-
-        //     if($request->has("total_stock")){
-
-        //     }
-
-        // Stock::create(
-        //     [
-        //         "user_id" => auth()->id(),
-        //         "product_id" => $product->id,
-        //         "quantity" => $product->total_stock,
-        //         "more" => $product->more_information,
-        //     ]
-        //     );
 
         return new ProductDetailResource($product);
     }
@@ -102,15 +92,6 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $this->authorize("update", $product);
-        // $product = Product::findOrFail($id);
-
-        // if (!is_null($product)) {
-        //     return response()->json([
-        //         "message" => "product not found"
-        //     ]);
-        // }
-        // $oldTotalStock = $product->total_stock;
-
 
         if ($request->has('name')) {
             $product->name = $request->name;
@@ -126,6 +107,12 @@ class ProductController extends Controller
 
         if ($request->has('sale_price')) {
             $product->sale_price = $request->sale_price;
+        }
+
+        if ($request->has('total_stock')) {
+            $oldValue = $product->total_stock;
+            $newValue = $request->total_stock;
+            $product->total_stock = $request->total_stock;
         }
 
         if ($request->has('unit')) {
@@ -145,6 +132,14 @@ class ProductController extends Controller
         }
 
         $product->update();
+
+        if ($request->has('total_stock')) {
+            $addition = $newValue - $oldValue;
+            $subtraction = $oldValue - $newValue;
+            $stock = Stock::where("product_id", $product->id)->latest("id")->first();
+            $stock->quantity = $newValue > $oldValue ? $stock->quantity + $addition : $stock->quantity - $subtraction;
+            $stock->update();
+        }
 
         // $quantity = $newTotalStock - $oldTotalStock;
 

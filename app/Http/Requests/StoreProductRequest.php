@@ -23,8 +23,9 @@ class StoreProductRequest extends FormRequest
     {
         return [
             "name" => ["required", "min:3", "max:30", "string"],
-            "brand_id" => "exists:brands,id",
+            "brand_id" => ["required", "exists:brand,id"],
             "actual_price" => ["required", "integer"],
+            "total_stock" => ["required", "integer"],
             "sale_price" => ["required", "integer"],
             "unit" => ["required", "string"],
             "more_information" => ["required","string", "max:225"],

@@ -26,6 +26,10 @@ class BrandController extends Controller
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })
+            ->when(request()->has('id'), function ($query) {
+                $sortType = request()->id ?? 'asc';
+                $query->orderBy("id", $sortType);
+            })
             ->latest("id")
             ->paginate(4)
             ->withQueryString();
@@ -47,29 +51,41 @@ class BrandController extends Controller
 
         Gate::authorize("create", App\Models\Brand::class);
 
+        // if ($request->has("photo")) {
+        //     $brand = Brand::create([
+        //         "name" => $request->name,
+        //         "company" => $request->company,
+        //         "agent" => $request->agent,
+        //         "phone_number" => $request->phone_number,
+        //         "information" => $request->information,
+        //         "user_id" => auth()->id(),
+        //         "photo" => $request->photo,
+        //     ]);
+        // } else {
+        //     $brand = Brand::create([
+        //         "name" => $request->name,
+        //         "company" => $request->company,
+        //         "agent" => $request->agent,
+        //         "phone_number" => $request->phone_number,
+        //         "information" => $request->information,
+        //         "user_id" => auth()->id(),
+        //     ]);
+        // }
+
+        $brand = new Brand;
+        $brand->name = $request->name;
+        $brand->company = $request->company;
+        $brand->agent = $request->agent;
+        $brand->phone_number = $request->phone_number;
+        $brand->information = $request->information;
+        $brand->user_id = $request->user_id;
+
         if ($request->has("photo")) {
-            $brand = Brand::create([
-                "name" => $request->name,
-                "company" => $request->company,
-                "agent" => $request->agent,
-                "phone_number" => $request->phone_number,
-                "information" => $request->information,
-                "user_id" => auth()->id(),
-                "photo" => $request->photo,
-            ]);
-        } else {
-            $brand = Brand::create([
-                "name" => $request->name,
-                "company" => $request->company,
-                "agent" => $request->agent,
-                "phone_number" => $request->phone_number,
-                "information" => $request->information,
-                "user_id" => auth()->id(),
-            ]);
+            $brand->photo = $request->photo;
         }
 
         return response()->json([
-            "brand" => $brand
+            "message" => "Successful"
         ]);
     }
 

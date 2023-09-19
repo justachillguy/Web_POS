@@ -103,6 +103,10 @@ class SaleController extends Controller
 
         $vouchers = Voucher::select("*")
             ->whereBetween("created_at", [$start, $end])
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "asc";
+                $query->orderBy("id", $sortType);
+            })
             ->paginate(5)
             ->withQueryString();
         // return $vouchers;
@@ -199,7 +203,7 @@ class SaleController extends Controller
         $total = array_sum($monthlySales->pluck("total")->toArray());
         $tax = array_sum($monthlySales->pluck("tax")->toArray());
         $netTotal = array_sum($monthlySales->pluck("net_total")->toArray());
-        
+
 
         YearlySale::create(
             [

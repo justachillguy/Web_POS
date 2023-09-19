@@ -21,6 +21,10 @@ class FinanceController extends Controller
             $date = request()->date;
             $query->where("created_at", "LIKE", "%" . $date . "%");
         })
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "asc";
+                $query->orderBy("id", $sortType);
+            })
             ->paginate(5)
             ->withQueryString();
 
@@ -55,6 +59,10 @@ class FinanceController extends Controller
             $date = request()->date;
             $query->where("created_at", "LIKE", "%" . $date . "%");
         })
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "asc";
+                $query->orderBy("id", $sortType);
+            })
             ->paginate(5)
             ->withQueryString();
 
@@ -88,6 +96,10 @@ class FinanceController extends Controller
             $year = request()->year;
             $query->where("created_at", "LIKE", "%" . $year . "%");
         })
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "asc";
+                $query->orderBy("id", $sortType);
+            })
             ->paginate(5)
             ->withQueryString();
 
@@ -121,6 +133,10 @@ class FinanceController extends Controller
 
         $salesList = Voucher::select("*")
             ->whereBetween("created_at", [$startDate, $endDate])
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "asc";
+                $query->orderBy("id", $sortType);
+            })
             ->paginate(5)
             ->withQueryString();
 

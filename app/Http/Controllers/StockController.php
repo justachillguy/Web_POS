@@ -20,16 +20,32 @@ class StockController extends Controller
     public function index()
     {
         Gate::authorize("viewAny", App\Models\Stock::class);
-        $stocks = Stock::when(request()->has("keyword"), function ($query) {
+        /* When searching stock records, the only keyword we're gonna use is the name of the product. So, we have to find the products by the product's name we pass thru parameter. */
+        $products = Product::when(request()->has("keyword"), function ($query) {
             $query->where(function (Builder $builder) {
                 $keyword = request()->keyword;
 
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
+        })->get();
+
+        /* If the products we get by the keyword value is empty, we're gonna return them
+        empty state.
+        */
+        if (empty($products)) {
+            return response()->json(["message" => "There is no result."]);
+        }
+
+        $stocks = Stock::when(request()->has("keyword"), function ($query) use ($products) {
+            $query->whereIn("product_id", $products->pluck("id"));
         })
-        ->latest("id")
-        ->paginate(4)
-        ->withQueryString();
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "asc";
+                $query->orderBy("id", $sortType);
+            })
+            ->latest("id")
+            ->paginate(5)
+            ->withQueryString();
 
         if ($stocks->isEmpty()) {
             return response()->json([
@@ -37,9 +53,6 @@ class StockController extends Controller
             ]);
         }
 
-        // return response()->json([
-        //     "message" => $stocks
-        // ]);
         return StockResource::collection($stocks);
     }
 
@@ -75,7 +88,6 @@ class StockController extends Controller
                 "message" => $stock
             ]
         );
-
     }
 
     /**
@@ -97,16 +109,16 @@ class StockController extends Controller
 
         $oldValue = $stock->quantity;
 
-        if($request->has('product_id')){
+        if ($request->has('product_id')) {
             $stock->product_id = $request->product_id;
         }
 
-        if($request->has('quantity')){
+        if ($request->has('quantity')) {
             $newValue = $request->quantity;
             $stock->quantity = $request->quantity;
         }
 
-        if($request->has('more')){
+        if ($request->has('more')) {
             $stock->more = $request->more;
         }
 
@@ -134,8 +146,6 @@ class StockController extends Controller
                 "message" => $stock
             ]
         );
-
-
     }
 
     /**
