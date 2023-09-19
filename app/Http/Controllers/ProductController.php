@@ -59,6 +59,10 @@ class ProductController extends Controller
         $product->more_information = $request->more_information;
         $product->user_id = auth()->id();
 
+        if ($request->has("more_information")) {
+            $product->more_information = $request->more_information;
+        }
+
         if ($request->has("photo")) {
             $product->photo = $request->photo;
         }

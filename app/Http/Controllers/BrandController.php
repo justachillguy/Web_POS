@@ -77,8 +77,11 @@ class BrandController extends Controller
         $brand->company = $request->company;
         $brand->agent = $request->agent;
         $brand->phone_number = $request->phone_number;
-        $brand->information = $request->information;
-        $brand->user_id = $request->user_id;
+        $brand->user_id = auth()->id();
+
+        if ($request->has("information")) {
+            $brand->information = $request->information;
+        }
 
         if ($request->has("photo")) {
             $brand->photo = $request->photo;

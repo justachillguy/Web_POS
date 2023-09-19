@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('sale_price');
             $table->unsignedBigInteger('total_stock')->default('0');
             $table->string('unit');
-            $table->text('more_information');
+            $table->text('more_information')->nullable();
             $table->foreignId('user_id');
             $table->string('photo');
             $table->timestamps();

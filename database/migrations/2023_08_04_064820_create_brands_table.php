@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('company');
             $table->string("agent");
             $table->string("phone_number");
-            $table->string('information');
+            $table->string('information')->nullable();
             $table->foreignId('user_id');
             $table->string("photo");
             $table->timestamps();
