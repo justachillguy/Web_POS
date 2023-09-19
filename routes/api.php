@@ -73,7 +73,6 @@ Route::prefix("v1")->group(function () {
             Route::post('profile/change-password', 'chgPassword')->name('profile.chgPassword');
         });
 
-
         Route::apiResource("photo", PhotoController::class);
         Route::post("photo/multiple-delete", [PhotoController::class, "multipleDelete"])->name("photo.multiDel");
 
@@ -83,7 +82,7 @@ Route::prefix("v1")->group(function () {
             Route::post("user/register", "create")->name("user.register"); /* register route only admin can register */
             Route::put("user/position-management/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
             Route::get("user/details/{id}", "details")->name("user.details");
-            Route::post("user/ban", "ban")->name("user.ban");
+            Route::put("user/ban/{id}", "ban")->name("user.ban");
             Route::put("user/unban/{id}", "unban")->name("user.unban");
         });
 
@@ -91,50 +90,47 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("product", ProductController::class);
         Route::apiResource("stock", StockController::class)->except("destroy");
 
-        Route::controller(SaleController::class)->group(function () {
-            Route::post("sale/checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");
-            Route::get("sale/recent-list", "recentList")->name('sale.recentList');
-            Route::post("sale/sale-close", "saleClose")->name("sale.close");
-            Route::post("sale/sum-daily-sales", "createMonthlySale")->name("sale.createMonthly");
-            Route::post("sale/sum-monthly-sales", "createYearlySale")->name("sale.createYearly");
+        Route::prefix("sale")->controller(SaleController::class)->group(function () {
+            Route::post("checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");
+            Route::get("recent-list", "recentList")->name('sale.recentList');
+            Route::post("sale-close", "saleClose")->name("sale.close");
+            Route::post("sum-daily-sales", "createMonthlySale")->name("sale.createMonthly");
+            Route::post("sum-monthly-sales", "createYearlySale")->name("sale.createYearly");
         });
 
-        Route::controller(FinanceController::class)->group(function () {
-            Route::get("finance/daily-sales", "dailySales")->name("finance.dailySales");
-            Route::get("finance/monthly-sales", "thisMonthSales")->name("finance.thisMonthSales");
-            Route::get("finance/yearly-sales", "thisYearSales")->name("finance.thisMonthSales");
-            Route::get("finance/custom-sales-list", "customSalesList")->name("finance.customSalesList");
+        Route::prefix("finance")->controller(FinanceController::class)->group(function () {
+            Route::get("daily-sales", "dailySales")->name("finance.dailySales");
+            Route::get("monthly-sales", "thisMonthSales")->name("finance.thisMonthSales");
+            Route::get("yearly-sales", "thisYearSales")->name("finance.thisMonthSales");
+            Route::get("custom-sales-list", "customSalesList")->name("finance.customSalesList");
         });
+
         Route::prefix("report")->group(function () {
             Route::controller(StockReportController::class)->group(function () {
-                Route::get("stock-level-table", "stockLvlTable")->name("stockReport.stockLvlTable");
-                Route::get("stock-level-bar", "stockLvlBar")->name("stockReport.stockLvlBar");
-                Route::get("best-seller-brands", "bestSellerBrands")->name("stockReport.bestSellerBrands");
+                Route::get("stock-level-table", "stockLvlTable")->name("report.stockLvlTable");
+                Route::get("stock-level-bar", "stockLvlBar")->name("report.stockLvlBar");
+                Route::get("best-seller-brands", "bestSellerBrands")->name("report.bestSellerBrands");
+            });
+
+            Route::controller(SaleReportController::class)->group(function () {
+                Route::get("brand-report", "brandSale")->name('report.brand');
+                Route::get('today-report', 'todaySaleReport')->name('report.today');
+                Route::get('weekly-report', 'weeklySaleReport')->name('report.weekly');
+                Route::get('monthly-report', 'monthlySaleReport')->name('report.monthly');
+                Route::get('yearly-report', 'yearlySaleReport')->name('report.yearly');
+                Route::get('product-report', 'productReport')->name('report.product');
             });
         });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
-
-        Route::controller(SaleReportController::class)->group(function () {
-            Route::get("brand-report", "brandSale")->name('report.brand');
-            Route::get('today-report', 'todaySaleReport')->name('report.today');
-            Route::get('weekly-report', 'weeklySaleReport')->name('report.weekly');
-            Route::get('monthly-report', 'monthlySaleReport')->name('report.monthly');
-            Route::get('yearly-report', 'yearlySaleReport')->name('report.yearly');
-            Route::get('product-report', 'productReport')->name('report.product');
-        });
 
         Route::controller(OverviewController::class)->group(function(){
             Route::get('overview-page','overViewPage')->name('overview.todaySales');
             Route::get('weekly-overview','weeklySaleOverview')->name('overview.weekly');
             Route::get('monthly-overview','monthlySaleOverview')->name('overview.monthly');
             Route::get('yearly-overview','yearlySaleOverview')->name('overview.yearly');
-
         });
 
-
-
-       
     });
 
     Route::controller(TestController::class)->group(function () {

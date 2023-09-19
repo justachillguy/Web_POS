@@ -45,6 +45,12 @@
   https://f.mmsdev.site/api/v1/user
 ```
 
+#### BANNED-USERS LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/user/banned-users
+```
+
 #### CREATE USER (REGISTER) (POST)
 
 ```http
@@ -88,15 +94,11 @@
 
 ###### Note : Only Admin can change user's position.
 
-#### BAN USER (POST)
+#### BAN USER (PUT)
 
 ```http
-  https://f.mmsdev.site/api/v1/user/ban
+  https://f.mmsdev.site/api/v1/user/ban/{id}
 ```
-
-| Arguments | Type    | Description    |
-| :-------- | :------ | :------------- |
-| id        | integer | **Required** 2 |
 
 #### UNBAN USER (PUT)
 
@@ -424,36 +426,37 @@
 
 ###### NOTE: Start date and end date have to be selected and passed from frontend. So it wii be passed through param and sales list will be returned.
 
+
 ## SALE-REPORT
 
 #### BRAND SALE REPORT (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/brand-report
+  https://f.mmsdev.site/api/v1/report/brand-report
 ```
 
 #### TODAY SALE REPORT (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/today-report
+  https://f.mmsdev.site/api/v1/report/today-report
 ```
 
 #### WEEKLY SALE REPORT (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/weekly-report
+  https://f.mmsdev.site/api/v1/report/weekly-report
 ```
 
 #### MONTHLY SALE REPORT (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/monthly-report
+  https://f.mmsdev.site/api/v1/report/monthly-report
 ```
 
 #### YEARLY SALE REPORT (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/yearly-report
+  https://f.mmsdev.site/api/v1/report/yearly-report
 ```
 ---
 

@@ -23,6 +23,11 @@ class UserController extends Controller
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })
+        ->when(request()->has("id"), function ($query) {
+            $sortType = request()->id ?? "asc";
+            $query->orderBy("id", $sortType);
+        })
+        ->where("ban_status", "false")
         ->latest("id")
         ->paginate(4)
         ->withQueryString();
@@ -107,9 +112,9 @@ class UserController extends Controller
         );
     }
 
-    public function ban(Request $request)
+    public function ban($id)
     {
-        $user = User::findOrFail($request->id);
+        $user = User::findOrFail($id);
         $user->ban_status = "true";
         $user->update();
         return response()->json(
