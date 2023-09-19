@@ -15,7 +15,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleReportController;
-use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
 
 
