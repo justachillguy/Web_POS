@@ -98,16 +98,11 @@
 | :-------- | :------ | :------------- |
 | id        | integer | **Required** 2 |
 
-#### UNBAN USER (POST)
+#### UNBAN USER (PUT)
 
 ```http
-  https://f.mmsdev.site/api/v1/user/unban
+  https://f.mmsdev.site/api/v1/user/unban/{id}
 ```
-
-| Arguments | Type    | Description    |
-| :-------- | :------ | :------------- |
-| id        | integer | **Required** 2 |
-
 ---
 
 ## USER PROFILE
@@ -186,6 +181,13 @@
 ```http
   https://f.mmsdev.site/api/v1/brand
 ```
+###### Note : You can search the record in the list by passing "keyword" parameter in route URL. Example below.
+
+```http
+  https://f.mmsdev.site/api/v1/brand&keyword=pepsi
+```
+
+###### Note : By default the list will be shown from the latest to earliest records. You can make it show from the earliest by passing just "id" parameter in route URL.
 
 #### SHOW A PARTICULAR BRAND (GET)
 
@@ -205,7 +207,7 @@
 | company      | string | **Required** Fresh Food      |
 | agent        | string | **Required** Micheal Jordan  |
 | phone_number | string | **Required** 0978787878      |
-| information  | string | **Required** Founded in 1999 |
+| information  | string | **Nullable** Founded in 1999 |
 | photo        | file   | **Required** brand.png       |
 
 #### UPDATE BRAND (PATCH)
@@ -238,6 +240,13 @@
 ```http
   https://f.mmsdev.site/api/v1/product
 ```
+###### Note : You can search the record in the list by passing "keyword" parameter in route URL. Example below.
+
+```http
+  https://f.mmsdev.site/api/v1/product&keyword=drink
+```
+
+###### Note : By default the list will be shown from the latest to earliest records. You can make it show from the earliest by passing just "id" parameter in route URL.
 
 #### SHOW A PARTICULAR PRODUCT (GET)
 
@@ -259,7 +268,6 @@
 | sale_price       | integer | **Required** 3100               |
 | total_stock      | integer | **Required** 20                 |
 | unit             | string  | **Required** bottle             |
-| more_information | string  | **Required** Do not press on it |
 | photo            | string  | **Required** product.png        |
 
 ###### Note : As soon as a product is created and total stocks of it is defined, a new row in stocks table is added automatically as a stock record of that product.
@@ -298,6 +306,13 @@
 ```http
   https://f.mmsdev.site/api/v1/stock
 ```
+###### Note : You can search the record in the list by passing "keyword" parameter in route URL. Example below.
+
+```http
+  https://f.mmsdev.site/api/v1/stock&keyword=chocolate
+```
+
+###### Note : By default the list will be shown from the latest to earliest records. You can make it show from the earliest by passing just "id" parameter in route URL.
 
 #### SHOW A PARTICULAR STOCK (GET)
 
@@ -315,7 +330,6 @@
 | :--------- | :------ | :-------------------------- |
 | product_id | integer | **Required** 2              |
 | quantity   | integer | **Required** 20             |
-| more       | string  | **Required** blah blah blah |
 
 ###### Note : After storing a stock, the amount of that stored quantity is added to the total stock of a respective product.
 
@@ -329,7 +343,6 @@
 | :--------- | :------ | :-------------------------- |
 | product_id | integer | **Nullable** 2              |
 | quantity   | integer | **Nullable** 20             |
-| more       | string  | **Nullable** blah blah blah |
 
 ---
 
@@ -343,21 +356,75 @@
 
 ###### NOTE: JSON of ids of products and quantity of them have to be passed from Frontend.
 
-#### VOUCHER LIST (GET)
+#### RECENT LIST (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/sale/list
+  https://f.mmsdev.site/api/v1/sale/recent-list
 ```
+###### NOTE: Today's recent sales list.
 
 #### VOUCHER DETAILS (GET)
 
 ```http
   https://f.mmsdev.site/api/v1/voucher/{voucher_number}
 ```
+  
+#### CLOSE SALE & CREATE DAILY SALES (POST)
 
+```http
+  https://f.mmsdev.site/api/v1/sale/sale-close
+```
+
+#### CREATE MONTHLY SALES (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/sale/sum-daily-sales
+```
+| Arguments  | Type     | Description                 |
+| :--------- | :------  | :-------------------------- |
+| date       | datetime | **Required** 2022-01        |
+
+###### NOTE: Month and year are essential.
+
+#### CREATE YEARLY SALES (POST)
+
+```http
+  https://f.mmsdev.site/api/v1/sale/sum-monthly-sales
+```
+| Arguments  | Type     | Description                 |
+| :--------- | :------  | :-------------------------- |
+| year       | datetime | **Required** 2022           |
+
+## FINANCE
+
+#### DAILY SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/daily-sales
+```
+
+#### MONTHLY SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/monthly-sales
+```
+
+#### YEARLY SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/yearly-sales
+```
+
+#### CUSTOM SALES LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/finance/custom-sales-list
+```
 ---
 
-## REPORT
+###### NOTE: Start date and end date have to be selected and passed from frontend. So it wii be passed through param and sales list will be returned.
+
+## SALE-REPORT
 
 #### BRAND SALE REPORT (GET)
 
@@ -388,8 +455,34 @@
 ```http
   https://f.mmsdev.site/api/v1/yearly-report
 ```
-
 ---
+
+## STOCK-REPORT
+
+#### PRODUCT'S STOCK LEVEL TABLE (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/report/stock-level-table
+```
+###### You can filter the list by stock level. All you have to do is passing one of these parameters ( in_stock, low_stock, out_of_stock) in route URL. Example below.
+
+```http
+  https://f.mmsdev.site/api/v1/report/stock-level-table?in_stock
+```
+
+###### Note : By default the list will be shown from the latest to earliest records. You can make it show from the earliest by passing just "id" parameter in route URL.
+
+#### PRODUCT'S STOCK LEVEL BAR (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/report/stock-level-bar
+```
+
+#### BEST SELLER BRANDS (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/report/best-seller-brands
+```
 
 ## For Overview Page
 
@@ -423,4 +516,3 @@
   https://f.mmsdev.site/api/v1/yearly-overview
 ```
 
----

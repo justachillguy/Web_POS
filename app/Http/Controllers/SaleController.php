@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ItemsInVoucherResource;
 use App\Http\Resources\VoucherRecordResource;
 use App\Http\Resources\VoucherResource;
+use App\Models\DailySale;
+use App\Models\MonthlySale;
 use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\VoucherRecord;
+use App\Models\YearlySale;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -74,9 +78,8 @@ class SaleController extends Controller
                     "total" => $total,
                     "tax" => $tax,
                     "net_total" => $netTotal
-                    ]
-                );
-
+                ]
+            );
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
@@ -90,19 +93,131 @@ class SaleController extends Controller
         }
     }
 
-    public function list()
+    public function recentList()
     {
-        $vouchers = Voucher::when(request()->has("keyword"), function ($query) {
+        $start = Carbon::today();
+        $end = Carbon::now();
+        // $vouchers = DB::table("vouchers")
+        //     ->whereBetween("created_at", [$start, $end])
+        //     ->paginate(5);
 
-            $keyword = request()->keyword;
-
-            $query->where("voucher_number", "LIKE", "%" . $keyword . "%");
-            $query->orWhere("created_at", "LIKE", "%" . $keyword . "%");
-        })
-            ->latest("id")
-            ->paginate(10)
+        $vouchers = Voucher::select("*")
+            ->whereBetween("created_at", [$start, $end])
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "asc";
+                $query->orderBy("id", $sortType);
+            })
+            ->paginate(5)
             ->withQueryString();
-
+        // return $vouchers;
         return VoucherResource::collection($vouchers);
+    }
+
+    public function saleClose()
+    {
+        $isSaleClose = DB::table("sale_close")->first()->sale_close;
+
+        /* Checking if sale_close status is close or not  */
+        if ($isSaleClose) {
+            DB::table("sale_close")->where("id", 1)->update([
+                "sale_close" => false,
+            ]);
+        } else {
+
+            /* If sale has been closed, close it and collect the lists of vouchers for today. */
+            DB::table("sale_close")->where("id", 1)->update([
+                "sale_close" => true,
+            ]);
+
+            // $today = Carbon::today()->addDay()->format("Y-m-d H:i:s");
+            // $now = Carbon::today()->addDay()->format("Y-m-d ") . "23:59:59";
+
+            /* Getting today's 24 hours to get today's vouchers */
+            $today = Carbon::today()->format("Y-m-d H:i:s");
+            $now = Carbon::today()->format("Y-m-d ") . "23:59:59";
+
+            /* Get today's vouchers */
+            $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
+
+            /* Calculating total of cost, tax and net total. */
+            $total = array_sum($vouchers->pluck("total")->toArray());
+            $tax = array_sum($vouchers->pluck("tax")->toArray());
+            $netTotal = array_sum($vouchers->pluck("net_total")->toArray());
+
+            /* Counting today's sales */
+            $totalVocuhers = count($vouchers);
+
+            DailySale::create(
+                [
+                    "vouchers" => $totalVocuhers,
+                    "total" => $total,
+                    "tax" => $tax,
+                    "net_total" => $netTotal,
+                ]
+            );
+
+            return response()->json(
+                [
+                    "message" => "ရက်ချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
+                ]
+            );
+        }
+    }
+
+    public function createMonthlySale()
+    {
+        /* လချုပ်ချုပ်ဖို့ date  */
+        $date = request()->date;
+        /* Getting the daily sales between selected date to create monthly sals. */
+        $dailySales = DailySale::where("created_at", "LIKE", "%" . $date . "%")->get();
+        // return $dailySales;
+
+        /* Calculating total vouchers, total cost, total tax and total final cost. */
+        $totalVocuhers = array_sum($dailySales->pluck("vouchers")->toArray());
+        $total = array_sum($dailySales->pluck("total")->toArray());
+        $tax = array_sum($dailySales->pluck("tax")->toArray());
+        $netTotal = array_sum($dailySales->pluck("net_total")->toArray());
+
+        MonthlySale::create(
+            [
+                "vouchers" => $totalVocuhers,
+                "total" => $total,
+                "tax" => $tax,
+                "net_total" => $netTotal,
+            ]
+        );
+
+        return response()->json(
+            [
+                "message" => "လချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
+            ]
+        );
+    }
+
+    public function createYearlySale()
+    {
+        $year = request()->year;
+        $monthlySales = MonthlySale::where("created_at", "like", "%" . $year . "%")->get();
+
+        $totalVocuhers = array_sum($monthlySales->pluck("vouchers")->toArray());
+        $total = array_sum($monthlySales->pluck("total")->toArray());
+        $tax = array_sum($monthlySales->pluck("tax")->toArray());
+        $netTotal = array_sum($monthlySales->pluck("net_total")->toArray());
+
+
+        YearlySale::create(
+            [
+                "vouchers" => $totalVocuhers,
+                "total" => $total,
+                "tax" => $tax,
+                "net_total" => $netTotal,
+            ]
+        );
+
+        return response()->json(
+            [
+                "message" => "နှစ်ချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
+            ]
+        );
     }
 }

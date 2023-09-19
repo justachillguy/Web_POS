@@ -16,17 +16,19 @@ class StockSeeder extends Seeder
     public function run(): void
     {
         $stocks = [];
-        for($i=1; $i<=10; $i++){
-            $quantity = rand(30,100);
+        for($i=1; $i<=30; $i++){
+            // $quantity = random_int(1100, 1200);
+            $quantity = $i < 21 ? random_int(1100, 1200) : random_int(0,8);
             $stocks[] = [
-                "user_id" => rand(1,2),
+                "user_id" => 1,
                 "product_id" => $i,
                 "quantity" => $quantity,
-                "more" => fake()->sentence(5),
-                
+                // "more" => fake()->sentence(5),
+                "created_at"=>Carbon::now(),
+                "updated_at"=>Carbon::now()
             ];
             $product = Product::findOrFail($i);
-            $product->total_stock = $quantity;
+            $product->total_stock += $quantity;
             $product->update();
         }
         Stock::insert($stocks);

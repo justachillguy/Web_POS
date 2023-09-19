@@ -18,13 +18,11 @@ class VoucherSeeder extends Seeder
     public function run(): void
     {
         /* Generate dates of 2 years. */
-        $endDate = Carbon::now()->addDay();
-        $startDate = Carbon::now()->subYears(2)->subMonths(3);
+        $endDate = Carbon::now()->addMonths(2);
+        $startDate = Carbon::now()->subYears(2)->subMonths(1);
         $period = CarbonPeriod::create($startDate, $endDate);
 
         $voucher_id = 1;
-
-
         /* This for loop (i) is for dates. */
         foreach ($period as $date) {
 
@@ -32,9 +30,9 @@ class VoucherSeeder extends Seeder
             for ($r = 1; $r <= 2; $r++) {
 
                 $prodIds = [];
-                $itemQuan = random_int(3, 5);
-                for ($i = 1; $i <= $itemQuan; $i++) {
-                    array_push($prodIds, random_int(1, 10));
+                // $itemQuan = random_int);
+                for ($i = 1; $i <= 2; $i++) {
+                    array_push($prodIds, random_int(1, 20));
                 }
 
                 $prods = Product::whereIn("id", $prodIds)->get();
@@ -44,7 +42,7 @@ class VoucherSeeder extends Seeder
 
                 foreach ($prods as $prod) {
                     /* product quantity */
-                    $q = random_int(1, 3);
+                    $q = random_int(1,3);
                     $cost = $prod->sale_price * $q;
                     $total += $cost;
 

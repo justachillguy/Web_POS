@@ -42,7 +42,10 @@ class VoucherController extends Controller
         // $netTotal = $voucher->net_total;
 
         $voucherRecords = VoucherRecord::where("voucher_id", $voucher_id)->get();
+        $q = $voucher->voucherRecords()->pluck("quantity")->toArray();
+        $quantity = array_sum($q);
 
+        return $quantity;
         return response()->json(
             [
                 "items" => ItemsInVoucherResource::collection($voucherRecords),

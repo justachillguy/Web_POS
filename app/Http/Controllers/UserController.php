@@ -6,6 +6,7 @@ use App\Http\Resources\UserDetailResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Hamcrest\Type\IsBoolean;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,14 @@ class UserController extends Controller
     public function list()
     {
         // Gate::authorize("admin-only", App\Models\User::class);
-        $users = User::latest("id")
+        $users = User::when(request()->has("keyword"), function ($query) {
+            $query->where(function (Builder $builder) {
+                $keyword = request()->keyword;
+
+                $builder->where("name", "LIKE", "%" . $keyword . "%");
+            });
+        })
+        ->latest("id")
         ->paginate(4)
         ->withQueryString();
 
@@ -112,9 +120,9 @@ class UserController extends Controller
 
     }
 
-    public function unban(Request $request)
+    public function unban($id)
     {
-        $user = User::findOrFail($request->id);
+        $user = User::findOrFail($id);
 
         if ($user->ban_status === "false") {
             return response()->json([
@@ -131,6 +139,12 @@ class UserController extends Controller
             ]
         );
 
+    }
+
+    public function bannedUsers()
+    {
+        $bannedUsers = User::where("ban_status", "true")->get();
+        return $bannedUsers;
     }
 
 }
