@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\VoucherResource;
-use App\Models\Product;
 use App\Models\Stock;
 use App\Models\User;
 use App\Models\Voucher;
 use App\Models\VoucherRecord;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class OverviewController extends BaseController
+class OverViewController extends Controller
 {
-
     public function overViewPage()
     {
         $totalStock = Stock::all()->sum("quantity");
@@ -32,11 +29,11 @@ class OverviewController extends BaseController
             [
                 "total_stock" => $totalStock,
                 "total_staff" => $totalStaff,
-                "today_sales" => VoucherResource::collection($todayVouchers),
+                "today_sales" => VoucherResource::collection($todaySales),
                 "total_voucher" => $totalVoucher,
                 "total_cash" => $totalCash,
                 "total_tax" => $totalTax,
-                "net_total" => $totalNet,
+                "total_net" => $totalNet,
             ]
         );
     }
@@ -173,6 +170,4 @@ class OverviewController extends BaseController
             'totalExpenses' => $totalExpenses
         ]);
     }
-
-
 }
