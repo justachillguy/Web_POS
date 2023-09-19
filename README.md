@@ -397,6 +397,8 @@
 | :--------- | :------  | :-------------------------- |
 | year       | datetime | **Required** 2022           |
 
+---
+
 ## FINANCE
 
 #### DAILY SALES LIST (GET)
@@ -426,7 +428,8 @@
 
 ###### NOTE: Start date and end date have to be selected and passed from frontend. So it wii be passed through param and sales list will be returned.
 
-
+---
+## REPORT
 ## SALE-REPORT
 
 #### BRAND SALE REPORT (GET)
@@ -486,6 +489,7 @@
 ```http
   https://f.mmsdev.site/api/v1/report/best-seller-brands
 ```
+---
 
 ## For Overview Page
 
@@ -519,3 +523,4 @@
   https://f.mmsdev.site/api/v1/yearly-overview
 ```
 
+---
