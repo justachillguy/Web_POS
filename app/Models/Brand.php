@@ -15,6 +15,8 @@ class Brand extends Model
     //     return $this->hasManyThrough(Stock::class, Product::class);
     // }
 
+
+
     protected $fillable = [
         "name",
         "company",
@@ -30,8 +32,9 @@ class Brand extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function voucherRecords()
+    public function brand()
     {
         return $this->hasManyThrough(VoucherRecord::class, Product::class);
     }
+
 }

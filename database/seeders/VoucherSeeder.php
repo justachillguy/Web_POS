@@ -23,7 +23,6 @@ class VoucherSeeder extends Seeder
         $period = CarbonPeriod::create($startDate, $endDate);
 
         $voucher_id = 1;
-
         /* This for loop (i) is for dates. */
         foreach ($period as $date) {
 

@@ -25,13 +25,14 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             UserSeeder::class,
-            // BrandSeeder::class,
-            // ProductSeeder::class,
-            // StockSeeder::class,
-            // VoucherSeeder::class,
-            // SaleCloseSeeder::class,
-            // DailySaleSeeder::class,
-            // MonthlySaleSeeder::class,
+            BrandSeeder::class,
+            ProductSeeder::class,
+            StockSeeder::class,
+            VoucherSeeder::class,
+            SaleCloseSeeder::class,
+            DailySaleSeeder::class,
+            MonthlySaleSeeder::class,
+
         ]);
     }
 }

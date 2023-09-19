@@ -1,16 +1,26 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\BrandController;
+
+use App\Http\Controllers\ChildController;
+use App\Http\Controllers\OverviewController;
+
 use App\Http\Controllers\FinanceController;
-use App\Http\Controllers\OverViewController;
+
+
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SaleReportController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
+
+
 use App\Http\Controllers\StockReportController;
+
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
@@ -23,6 +33,10 @@ use App\Models\Voucher;
 use App\Models\VoucherRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use PHPUnit\Event\Code\Test;
+use PHPUnit\Event\Code\TestCollection;
+
 use Tests\TestCase;
 
 /*
@@ -96,15 +110,35 @@ Route::prefix("v1")->group(function () {
                 Route::get("stock-level-table", "stockLvlTable")->name("stockReport.stockLvlTable");
                 Route::get("stock-level-bar", "stockLvlBar")->name("stockReport.stockLvlBar");
                 Route::get("best-seller-brands", "bestSellerBrands")->name("stockReport.bestSellerBrands");
-
             });
         });
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
-        Route::get("overview", [OverViewController::class, "overViewPage"]);
+
+        Route::controller(SaleReportController::class)->group(function () {
+            Route::get("brand-report", "brandSale")->name('report.brand');
+            Route::get('today-report', 'todaySaleReport')->name('report.today');
+            Route::get('weekly-report', 'weeklySaleReport')->name('report.weekly');
+            Route::get('monthly-report', 'monthlySaleReport')->name('report.monthly');
+            Route::get('yearly-report', 'yearlySaleReport')->name('report.yearly');
+            Route::get('product-report', 'productReport')->name('report.product');
+        });
+
+        Route::controller(OverviewController::class)->group(function(){
+            Route::get('overview-page','overViewPage')->name('overview.todaySales');
+            Route::get('weekly-overview','weeklySaleOverview')->name('overview.weekly');
+            Route::get('monthly-overview','monthlySaleOverview')->name('overview.monthly');
+            Route::get('yearly-overview','yearlySaleOverview')->name('overview.yearly');
+
+        });
+
+
+
+       
     });
 
     Route::controller(TestController::class)->group(function () {
         Route::post("test", "test");
+
     });
 });
