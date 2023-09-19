@@ -97,15 +97,11 @@
 | :-------- | :---    | :----------------- |
 | id        | integer | **Required**  2    |
 
-#### UNBAN USER (POST)
+#### UNBAN USER (PUT)
 
 ```http
-  https://f.mmsdev.site/api/v1/user/unban
+  https://f.mmsdev.site/api/v1/user/unban/{id}
 ```
-
-| Arguments | Type    | Description        |
-| :-------- | :---    | :----------------- |
-| id        | integer | **Required**  2    |
 
 ---
 ## USER PROFILE 
@@ -364,7 +360,7 @@
 #### VOUCHER DETAILS (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/voucher/{voucher_id}
+  https://f.mmsdev.site/api/v1/voucher/{voucher_number}
 ```
 
 #### CLOSE SALE & CREATE DAILY SALES (POST)
@@ -447,4 +443,10 @@
 
 ```http
   https://f.mmsdev.site/api/v1/report/best-seller-brands
+
+## For Overview Page
+
+```http
+  https://f.mmsdev.site/api/v1/overview
+
 ```

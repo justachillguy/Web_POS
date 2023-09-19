@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\Stock;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +24,8 @@ class StockSeeder extends Seeder
                 "product_id" => $i,
                 "quantity" => $quantity,
                 // "more" => fake()->sentence(5),
+                "created_at"=>Carbon::now(),
+                "updated_at"=>Carbon::now()
             ];
             $product = Product::findOrFail($i);
             $product->total_stock += $quantity;

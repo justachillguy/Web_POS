@@ -65,11 +65,12 @@ Route::prefix("v1")->group(function () {
 
         Route::middleware("adminOnly")->controller(UserController::class)->group(function () {
             Route::get("user", "list")->name("user.list");
+            Route::get("user/banned-users", "bannedUsers")->name("user.bannedList");
             Route::post("user/register", "create")->name("user.register"); /* register route only admin can register */
             Route::put("user/position-management/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
             Route::get("user/details/{id}", "details")->name("user.details");
             Route::post("user/ban", "ban")->name("user.ban");
-            Route::post("user/unban", "unban")->name("user.unban");
+            Route::put("user/unban/{id}", "unban")->name("user.unban");
         });
 
         Route::apiResource("brand", BrandController::class);
