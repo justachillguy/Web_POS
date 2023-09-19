@@ -342,7 +342,7 @@
 #### VOUCHER DETAILS (GET)
 
 ```http
-  https://f.mmsdev.site/api/v1/voucher/{voucher_id}
+  https://f.mmsdev.site/api/v1/voucher/{voucher_number}
 ```
 
 #### CLOSE SALE & CREATE DAILY SALES (POST)
