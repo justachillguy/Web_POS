@@ -18,9 +18,7 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        $photos = Photo::latest("id")
-            ->paginate(5)
-            ->withQueryString();
+        $photos = Photo::latest("id")->get();
 
         // Checking if there are stored files or not.
         // If not, this message will be returned.

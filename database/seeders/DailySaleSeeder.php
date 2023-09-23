@@ -32,8 +32,8 @@ class DailySaleSeeder extends Seeder
         //     ]);
         // }
 
-        $endDate = Carbon::now();
-        $startDate = Carbon::now()->subYears(2)->subMonths(3);
+        $endDate = Carbon::now()->addMonths(3);
+        $startDate = Carbon::now()->subYears(2);
         $period = CarbonPeriod::create($startDate, $endDate);
         $dailySales = [];
 

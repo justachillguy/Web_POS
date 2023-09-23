@@ -44,9 +44,9 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    public function details($id)
+    public function details()
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail(auth()->id());
         return new UserDetailResource($user);
     }
 

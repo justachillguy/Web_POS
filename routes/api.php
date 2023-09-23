@@ -3,23 +3,16 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\BrandController;
-
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\OverviewController;
-
 use App\Http\Controllers\FinanceController;
-
-
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleReportController;
 use App\Http\Controllers\StockController;
-
-
 use App\Http\Controllers\StockReportController;
-
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
@@ -80,7 +73,7 @@ Route::prefix("v1")->group(function () {
             Route::get("user/banned-users", "bannedUsers")->name("user.bannedList");
             Route::post("user/register", "create")->name("user.register"); /* register route only admin can register */
             Route::put("user/position-management/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
-            Route::get("user/details/{id}", "details")->name("user.details");
+            Route::get("user/details", "details")->name("user.details");
             Route::put("user/ban/{id}", "ban")->name("user.ban");
             Route::put("user/unban/{id}", "unban")->name("user.unban");
         });
