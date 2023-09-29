@@ -10,7 +10,7 @@ use App\Models\VoucherRecord;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class OverViewController extends Controller
+class OverViewController extends BaseController
 {
     public function overViewPage()
     {
