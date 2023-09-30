@@ -25,7 +25,7 @@ class ProductDetailResource extends JsonResource
             "unit" => $this->unit,
             "photo" => asset(Storage::url($this->photo)),
             "more_information" => $this->more_information,
-            "photo" => Storage::url($this->photo),
+            // "photo" => Storage::url($this->photo),
             // "photo" => $this->photo,
             "stock_history" => $this->stocks,
         ];
