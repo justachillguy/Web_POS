@@ -85,6 +85,7 @@ Route::prefix("v1")->group(function () {
         Route::prefix("sale")->controller(SaleController::class)->group(function () {
             Route::post("checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");
             Route::get("recent-list", "recentList")->name('sale.recentList');
+            Route::get("products-list", "productsList")->name('sale.prodList');
             Route::post("sale-close", "saleClose")->name("sale.close");
             Route::post("sum-daily-sales", "createMonthlySale")->name("sale.createMonthly");
             Route::post("sum-monthly-sales", "createYearlySale")->name("sale.createYearly");

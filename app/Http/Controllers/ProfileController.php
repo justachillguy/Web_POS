@@ -12,8 +12,8 @@ class ProfileController extends Controller
     public function chgPassword(Request $request)
     {
         $request->validate([
-            "current_password" => "required|min:6",
-            "new_password" => "required|confirmed|min:6",
+            "current_password" => "required|min:8",
+            "new_password" => "required|confirmed|min:8",
         ]);
 
         $userPassword = Auth::user()->password;

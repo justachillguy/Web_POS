@@ -350,6 +350,11 @@
 
 ## SALE
 
+#### PRODUCTS LIST (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/sale/products-list
+```
 #### CHECKOUT (POST)
 
 ```http
@@ -429,6 +434,12 @@
 ---
 ## REPORT
 ## SALE-REPORT
+
+#### PRODUCT REPORT (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/report/product-report
+```
 
 #### BRAND SALE REPORT (GET)
 
