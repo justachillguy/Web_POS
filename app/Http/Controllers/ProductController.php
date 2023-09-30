@@ -25,6 +25,12 @@ class ProductController extends Controller
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })
+            ->when(request()->has("category"), function (Builder $query) {
+                $query->whereHas("category", function (Builder $builder) {
+                    $title = request()->category;
+                    $builder->where("title", $title);
+                });
+            })
             ->when(request()->has('id'), function ($query) {
                 $sortType = request()->id ?? 'asc';
                 $query->orderBy("id", $sortType);
@@ -52,6 +58,7 @@ class ProductController extends Controller
         $product = new Product;
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
+        $product->category_id = $request->category_id;
         $product->total_stock = $request->total_stock;
         $product->actual_price = $request->actual_price;
         $product->sale_price = $request->sale_price;

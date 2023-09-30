@@ -19,6 +19,7 @@ class ProductFactory extends Factory
         return [
             "name" => fake()->domainWord(),
             "brand_id" => rand(1,10),
+            "category_id" => rand(1,5),
             "actual_price" => rand(1000, 3000),
             "sale_price" => rand(1200, 3300),
             "total_stock" => 0,
