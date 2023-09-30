@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ItemsInVoucherResource;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\VoucherRecordResource;
 use App\Http\Resources\VoucherResource;
 use App\Models\DailySale;
@@ -12,6 +13,7 @@ use App\Models\Voucher;
 use App\Models\VoucherRecord;
 use App\Models\YearlySale;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +21,48 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class SaleController extends Controller
 {
+
+    public function productsList()
+    {
+        $products = Product::when(request()->has("keyword"), function ($query) {
+            $query->where(function (Builder $builder) {
+                $keyword = request()->keyword;
+
+                $builder->where("name", "LIKE", "%" . $keyword . "%");
+            });
+        })
+            // ->when(request()->has("brandID"), function (Builder $query) {
+            //     $query->whereHas("brand", function (Builder $builder) {
+            //         $brandID = request()->brand_id;
+            //         $builder->where("id", $brandID);
+            //     });
+            // })
+            ->when(request()->has("brandID"), function ($query) {
+                $brandID = request()->brandID;
+                $query->where("brand_id", $brandID);
+            })
+            ->when(request()->has("id"), function ($query) {
+                $sortType = request()->id ?? "desc";
+                $query->orderBy("id", $sortType);
+            })
+            ->get();
+
+            $isSaleClose = DB::table("sale_close")->first()->sale_close;
+
+        if ($products->isEmpty()) {
+            return response()->json([
+                "message" => "There is no product to sell yet."
+            ]);
+        }
+
+        return response()->json(
+            [
+                "products" => ProductResource::collection($products),
+                "is_sale_close" => $isSaleClose,
+            ]
+        );
+    }
+
     public function checkout(Request $request)
     {
 
