@@ -41,7 +41,8 @@ class UserController extends Controller
         // return response()->json([
         //     "users" => $users,
         // ]);
-        return UserResource::collection($users);
+        $data = UserResource::collection($users);
+        return $data->resource;
     }
 
     public function details()
@@ -149,7 +150,8 @@ class UserController extends Controller
     public function bannedUsers()
     {
         $bannedUsers = User::where("ban_status", "true")->get();
-        return $bannedUsers;
+        $data = UserResource::collection($bannedUsers);
+        return $data->resource;
     }
 
 }

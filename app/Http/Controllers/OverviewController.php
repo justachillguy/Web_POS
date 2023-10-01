@@ -25,11 +25,13 @@ class OverViewController extends BaseController
         $totalCash = array_sum($todayVouchers->pluck("total")->toArray());
         $totalTax = array_sum($todayVouchers->pluck("tax")->toArray());
         $totalNet = array_sum($todayVouchers->pluck("net_total")->toArray());
+
+        $data = VoucherResource::collection($todaySales);
         return response()->json(
             [
                 "total_stock" => $totalStock,
                 "total_staff" => $totalStaff,
-                "today_sales" => VoucherResource::collection($todaySales),
+                "today_sales" => $data->resource,
                 "total_voucher" => $totalVoucher,
                 "total_cash" => $totalCash,
                 "total_tax" => $totalTax,
@@ -130,6 +132,7 @@ class OverViewController extends BaseController
     public function yearlySaleOverview()
     {
         $yearly = $this->yearlySale()->original;
+        // return $yearly;
         $currentYearStart = now()->startOfYear();
         $currentYearEnd = now()->endOfYear();
 

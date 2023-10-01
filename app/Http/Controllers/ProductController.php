@@ -38,8 +38,8 @@ class ProductController extends Controller
                 "message" => "There is no product records yet."
             ]);
         }
-
-        return ProductResource::collection($products);
+        $data = ProductResource::collection($products);
+        return $data->resource;
     }
 
     /**

@@ -29,7 +29,8 @@ class PhotoController extends Controller
         }
 
         // If there is, resource will be returned.
-        return PhotoResource::collection($photos);
+        $data = PhotoResource::collection($photos);
+        return $data->resource;
     }
 
     /**
