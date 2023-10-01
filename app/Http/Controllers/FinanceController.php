@@ -40,10 +40,10 @@ class FinanceController extends Controller
         $total_tax = array_sum($dailySales2->pluck("tax")->toArray());
         $total = array_sum($dailySales2->pluck("net_total")->toArray());
 
-
+        $data = DailySalesResource::collection($dailySales);
         return response()->json(
             [
-                "daily_sales" => DailySalesResource::collection($dailySales),
+                "daily_sales" => $data->resource,
                 "total_vouchers" => $totalVocuhers,
                 "total_cash" => $total_cash,
                 "total_tax" => $total_tax,
@@ -78,9 +78,10 @@ class FinanceController extends Controller
         $total_tax = array_sum($thisMonthSales2->pluck("tax")->toArray());
         $total = array_sum($thisMonthSales2->pluck("net_total")->toArray());
 
+        $data = MonthlySalesResource::collection($thisMonthSales);
         return response()->json(
             [
-                "this_month_sales" => MonthlySalesResource::collection($thisMonthSales),
+                "this_month_sales" => $data->resource,
                 "total_days" => $totalDays,
                 "total_vouchers" => $totalVocuhers,
                 "total_cash" => $total_cash,
@@ -114,9 +115,11 @@ class FinanceController extends Controller
         $total_tax = array_sum($thisYearSales2->pluck("tax")->toArray());
         $total = array_sum($thisYearSales2->pluck("net_total")->toArray());
 
+        $data = YearlySalesResource::collection($thisYearSales);
+
         return response()->json(
             [
-                "yearly_sales" => YearlySalesResource::collection($thisYearSales),
+                "yearly_sales" => $data->resource,
                 "total_months" => $totalMonths,
                 "total_vouchers" => $totalVocuhers,
                 "total_cash" => $total_cash,
@@ -148,10 +151,11 @@ class FinanceController extends Controller
         $total_tax = array_sum($salesList2->pluck("tax")->toArray());
         $total = array_sum($salesList2->pluck("net_total")->toArray());
 
+        $data = DailySalesResource::collection($salesList);
 
         return response()->json(
             [
-                "daily_sales" => DailySalesResource::collection($salesList),
+                "daily_sales" => $data->resource,
                 "total_vouchers" => $totalVocuhers,
                 "total_cash" => $total_cash,
                 "total_tax" => $total_tax,

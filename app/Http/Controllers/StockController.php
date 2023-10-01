@@ -52,8 +52,8 @@ class StockController extends Controller
                 "message" => "There is no stock records yet."
             ]);
         }
-
-        return StockResource::collection($stocks);
+        $data = StockResource::collection($stocks);
+        return $data->resource;
     }
 
     /**

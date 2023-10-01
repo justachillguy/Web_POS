@@ -154,7 +154,8 @@ class SaleController extends Controller
             ->paginate(5)
             ->withQueryString();
         // return $vouchers;
-        return VoucherResource::collection($vouchers);
+        $data = VoucherResource::collection($vouchers);
+        return $data->resource;
     }
 
     public function saleClose()

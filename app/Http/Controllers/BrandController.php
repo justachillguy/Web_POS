@@ -39,8 +39,8 @@ class BrandController extends Controller
                 "message" => "There is no brand records yet."
             ]);
         }
-
-        return BrandResource::collection($brands);
+        $data = BrandResource::collection($brands);
+        return $data->resource;
     }
 
     /**
