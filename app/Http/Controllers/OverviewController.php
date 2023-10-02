@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\VoucherResource;
+use App\Models\DailySale;
+use App\Models\MonthlySale;
 use App\Models\Stock;
 use App\Models\User;
 use App\Models\Voucher;
@@ -47,6 +49,12 @@ class OverViewController extends BaseController
         $currentWeekStart = now()->startOfWeek();
         $currentWeekEnd = now()->endOfWeek();
 
+        $weeklySales = DailySale::whereBetween("created_at", [$currentWeekStart, $currentWeekEnd])->get();
+        $totalExpenses = $weeklySales->sum("total_actual_price");
+        $totalIncome = $weeklySales->sum("total");
+        $totalProfit = $totalIncome - $totalExpenses;
+        // return $totalExpenses;
+        /*
         $voucherRecords = VoucherRecord::whereBetween('created_at', [$currentWeekStart, $currentWeekEnd])->get();
 
         // return $voucherRecords;
@@ -77,6 +85,8 @@ class OverViewController extends BaseController
         $totalIncome = $voucher->sum('total');
         // return $totalIncome;
 
+        */
+
         return response()->json([
             'weeklySaleOverview' => $weekly,
             'totalProfit' => $totalProfit,
@@ -91,6 +101,17 @@ class OverViewController extends BaseController
         $currentMonthStart = now()->startOfMonth();
         $currentMonthEnd = now()->endOfMonth();
 
+        $monthlySales = DailySale::whereBetween("created_at", [$currentMonthStart, $currentMonthEnd])->get();
+        $totalExpenses = $monthlySales->sum("total_actual_price");
+        $totalIncome = $monthlySales->sum("total");
+        $totalProfit = $totalIncome - $totalExpenses;
+        // return response()->json([
+        //     "a" => $totalExpenses,
+        //     "b" => $totalIncome,
+        //     "c" => $totalProfit,
+        // ]);
+
+        /*
         $voucherRecords = VoucherRecord::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->get();
 
         // return $voucherRecords;
@@ -121,6 +142,8 @@ class OverViewController extends BaseController
         $totalIncome = $voucher->sum('total');
         // return $totalIncome;
 
+        */
+
         return response()->json([
             'monthlySaleOverview' => $monthly,
             'totalProfit' => $totalProfit,
@@ -132,9 +155,20 @@ class OverViewController extends BaseController
     public function yearlySaleOverview()
     {
         $yearly = $this->yearlySale()->original;
+
+        $thisYear = Carbon::now()->format("Y");
+
+        $yearlySales = MonthlySale::whereYear("created_at", $thisYear)->get();
+        $totalExpenses = $yearlySales->sum("total_actual_price");
+        $totalIncome = $yearlySales->sum("total");
+        $totalProfit = $totalIncome - $totalExpenses;
+
+        /*
         // return $yearly;
-        $currentYearStart = now()->startOfYear();
-        $currentYearEnd = now()->endOfYear();
+        // $currentYearStart = now()->startOfYear();
+        // $currentYearEnd = now()->endOfYear();
+
+        // return $now;
 
         $voucherRecords = VoucherRecord::whereBetween('created_at', [$currentYearStart, $currentYearEnd])->get();
 
@@ -165,7 +199,7 @@ class OverViewController extends BaseController
         $voucher = Voucher::whereBetween('created_at', [$currentYearStart, $currentYearEnd])->get();
         $totalIncome = $voucher->sum('total');
         // return $totalIncome;
-
+        */
         return response()->json([
             'yearlySaleOverview' => $yearly,
             'totalProfit' => $totalProfit,

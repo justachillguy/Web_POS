@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('monthly_sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger("vouchers");
+            $table->double("total_actual_price");
             $table->double("total");
             $table->double("tax");
             $table->double("net_total");

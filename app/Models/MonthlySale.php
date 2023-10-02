@@ -11,6 +11,7 @@ class MonthlySale extends Model
 
     protected $fillable = [
         "vouchers",
+        "total_actual_price",
         "total",
         "tax",
         "net_total"

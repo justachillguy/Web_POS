@@ -39,10 +39,12 @@ class DailySaleSeeder extends Seeder
 
         foreach ($period as $date) {
             $total = random_int(35555, 74343);
+            $rand = random_int(10000, 13000);
             $tax = random_int(3557, 7435);
             $netTotal = $total + $tax;
             $dailySales[] = [
                 "vouchers" => random_int(10, 20),
+                "total_actual_price" => $total - $rand,
                 "total" => $total,
                 "tax" => $tax,
                 "net_total" => $netTotal,
