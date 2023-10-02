@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('daily_sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger("vouchers");
-            $table->float("total");
-            $table->float("tax");
-            $table->float("net_total");
+            $table->double("total_actual_price");
+            $table->double("total");
+            $table->double("tax");
+            $table->double("net_total");
             $table->timestamps();
         });
     }

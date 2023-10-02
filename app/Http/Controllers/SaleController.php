@@ -47,7 +47,7 @@ class SaleController extends Controller
             })
             ->get();
 
-            $isSaleClose = DB::table("sale_close")->first()->sale_close;
+        $isSaleClose = DB::table("sale_close")->first()->sale_close;
 
         if ($products->isEmpty()) {
             return response()->json([
@@ -183,8 +183,10 @@ class SaleController extends Controller
 
             /* Get today's vouchers */
             $vouchers = Voucher::whereBetween("created_at", [$today, $now])->get();
+            $prodIDs = VoucherRecord::whereBetween("created_at", [$today, $now])->get()->pluck("product_id")->toArray();
 
             /* Calculating total of cost, tax and net total. */
+            $total_actual_price = Product::whereIn("id", $prodIDs)->sum("actual_price");
             $total = array_sum($vouchers->pluck("total")->toArray());
             $tax = array_sum($vouchers->pluck("tax")->toArray());
             $netTotal = array_sum($vouchers->pluck("net_total")->toArray());
@@ -195,6 +197,7 @@ class SaleController extends Controller
             DailySale::create(
                 [
                     "vouchers" => $totalVocuhers,
+                    "total_actual_price" => $total_actual_price,
                     "total" => $total,
                     "tax" => $tax,
                     "net_total" => $netTotal,
@@ -219,6 +222,7 @@ class SaleController extends Controller
 
         /* Calculating total vouchers, total cost, total tax and total final cost. */
         $totalVocuhers = array_sum($dailySales->pluck("vouchers")->toArray());
+        $total_actual_price = array_sum($dailySales->pluck("total_actual_price")->toArray());
         $total = array_sum($dailySales->pluck("total")->toArray());
         $tax = array_sum($dailySales->pluck("tax")->toArray());
         $netTotal = array_sum($dailySales->pluck("net_total")->toArray());
@@ -226,6 +230,7 @@ class SaleController extends Controller
         MonthlySale::create(
             [
                 "vouchers" => $totalVocuhers,
+                "total_actual_price" => $total_actual_price,
                 "total" => $total,
                 "tax" => $tax,
                 "net_total" => $netTotal,
@@ -245,6 +250,7 @@ class SaleController extends Controller
         $monthlySales = MonthlySale::where("created_at", "like", "%" . $year . "%")->get();
 
         $totalVocuhers = array_sum($monthlySales->pluck("vouchers")->toArray());
+        $total_actual_price = array_sum($monthlySales->pluck("total_actual_price")->toArray());
         $total = array_sum($monthlySales->pluck("total")->toArray());
         $tax = array_sum($monthlySales->pluck("tax")->toArray());
         $netTotal = array_sum($monthlySales->pluck("net_total")->toArray());
@@ -253,6 +259,7 @@ class SaleController extends Controller
         YearlySale::create(
             [
                 "vouchers" => $totalVocuhers,
+                "total_actual_price" => $total_actual_price,
                 "total" => $total,
                 "tax" => $tax,
                 "net_total" => $netTotal,

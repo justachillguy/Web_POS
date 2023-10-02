@@ -23,10 +23,12 @@ class MonthlySaleSeeder extends Seeder
             for ($month = 1; $month <= 12; $month++) {
                 $quan = random_int(300, 350);
                 $total = rand(3000000, 4000000);
+                $rand = random_int(500000,800000);
                 $tax = rand(8000, 10000);
                 $netTotal = rand(3008000, 4010000);
                 $vouchers[] = [
                     "vouchers" => $quan,
+                    "total_actual_price" => $total - $rand,
                     "total" => $total,
                     "tax" => $tax,
                     "net_total" => $netTotal,
