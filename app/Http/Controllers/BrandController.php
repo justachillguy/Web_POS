@@ -34,13 +34,19 @@ class BrandController extends Controller
             ->paginate(4)
             ->withQueryString();
 
+        $noPagi = Brand::all();
         if ($brands->isEmpty()) {
             return response()->json([
                 "message" => "There is no brand records yet."
             ]);
         }
         $data = BrandResource::collection($brands);
-        return $data->resource;
+        return response()->json(
+            [
+                "brands" => $data->resource,
+                "with_no_pagi" => $noPagi,
+            ]
+        );
     }
 
     /**
