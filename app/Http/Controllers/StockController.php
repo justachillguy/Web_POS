@@ -8,9 +8,12 @@ use App\Http\Requests\UpdateStockRequest;
 use App\Http\Resources\StockDetailResource;
 use App\Http\Resources\StockResource;
 use App\Models\Product;
+use Exception;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use PhpParser\Node\Stmt\TryCatch;
 
 class StockController extends Controller
 {
@@ -63,31 +66,21 @@ class StockController extends Controller
     {
         Gate::authorize("create", App\Models\Stock::class);
 
-        if ($request->has("more")) {
-            $stock = Stock::create([
-                "user_id" => auth()->id(),
-                "product_id" => $request->product_id,
-                "quantity" => $request->quantity,
-                "more" => $request->more,
-            ]);
-        } else {
-            $stock = Stock::create([
-                "user_id" => auth()->id(),
-                "product_id" => $request->product_id,
-                "quantity" => $request->quantity,
-            ]);
-        }
+            $stock = new Stock;
+            $stock->user_id = auth()->id();
+            $stock->product_id = $request->product_id;
+            $stock->quantity = $request->quantity;
+            $stock->save();
 
-        $product = Product::findOrFail($request->product_id);
+            $product = Product::findOrFail($request->product_id);
+            $product->total_stock += $request->quantity;
+            $product->update();
 
-        $product->total_stock = $product->total_stock + $request->quantity;
-        $product->update();
-
-        return response()->json(
-            [
-                "message" => $stock
-            ]
-        );
+            return response()->json(
+                [
+                    "message" => $request->quantity . " " . $product->name . " are added to the inventory."
+                ]
+            );
     }
 
     /**
@@ -116,10 +109,6 @@ class StockController extends Controller
         if ($request->has('quantity')) {
             $newValue = $request->quantity;
             $stock->quantity = $request->quantity;
-        }
-
-        if ($request->has('more')) {
-            $stock->more = $request->more;
         }
 
         $stock->update();
