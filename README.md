@@ -268,7 +268,6 @@
 | brand_id         | integer | **Required** 1                  |
 | actual_price     | integer | **Required** 3000               |
 | sale_price       | integer | **Required** 3100               |
-| total_stock      | integer | **Required** 20                 |
 | unit             | string  | **Required** bottle             |
 | photo            | string  | **Required** product.png        |
 
@@ -286,7 +285,6 @@
 | brand_id         | integer | **Nullable** 1                  |
 | actual_price     | integer | **Nullable** 3000               |
 | sale_price       | integer | **Nullable** 3100               |
-| total_stock      | integer | **Nullable** 20                 |
 | unit             | string  | **Nullable** bottle             |
 | more_information | string  | **Nullable** Do not press on it |
 | photo            | string  | **Nullable** user.png           |

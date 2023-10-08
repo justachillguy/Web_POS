@@ -52,32 +52,14 @@ class ProductController extends Controller
         $product = new Product;
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
-        $product->total_stock = $request->total_stock;
+        // $product->total_stock = $request->total_stock;
         $product->actual_price = $request->actual_price;
         $product->sale_price = $request->sale_price;
         $product->unit = $request->unit;
         $product->more_information = $request->more_information;
+        $product->photo = $request->photo;
         $product->user_id = auth()->id();
-
-        if ($request->has("more_information")) {
-            $product->more_information = $request->more_information;
-        }
-
-        if ($request->has("photo")) {
-            $product->photo = $request->photo;
-        }
-
         $product->save();
-
-        if ($request->total_stock > 0) {
-            Stock::create(
-                [
-                    "user_id" => auth()->id(),
-                    "product_id" => $product->id,
-                    "quantity" => $request->total_stock,
-                ]
-            );
-        }
 
         return new ProductDetailResource($product);
     }
@@ -113,12 +95,6 @@ class ProductController extends Controller
             $product->sale_price = $request->sale_price;
         }
 
-        if ($request->has('total_stock')) {
-            $oldValue = $product->total_stock;
-            $newValue = $request->total_stock;
-            $product->total_stock = $request->total_stock;
-        }
-
         if ($request->has('unit')) {
             $product->unit = $request->unit;
         }
@@ -137,26 +113,11 @@ class ProductController extends Controller
 
         $product->update();
 
-        if ($request->has('total_stock')) {
-            $addition = $newValue - $oldValue;
-            $subtraction = $oldValue - $newValue;
-            $stock = Stock::where("product_id", $product->id)->latest("id")->first();
-            $stock->quantity = $newValue > $oldValue ? $stock->quantity + $addition : $stock->quantity - $subtraction;
-            $stock->update();
-        }
-
-        // $quantity = $newTotalStock - $oldTotalStock;
-
-        // Stock::create(
-        //     [
-        //         "user_id" => auth()->id(),
-        //         "product_id" => $product->id,
-        //         "quantity" => $quantity,
-        //         "more" => $product->more_information,
-        //     ]
-        //     );
-
-        return response()->json(["message" => "Success"]);
+        return response()->json(
+            [
+                "message" => "Product " . "'" . $product->name . "'" . " has been edited."
+            ]
+        );
     }
     /**
      * Remove the specified resource from storage.

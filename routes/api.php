@@ -73,14 +73,15 @@ Route::prefix("v1")->group(function () {
             Route::get("user/banned-users", "bannedUsers")->name("user.bannedList");
             Route::post("user/register", "create")->name("user.register"); /* register route only admin can register */
             Route::put("user/position-management/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
-            Route::get("user/details", "details")->name("user.details");
+            Route::get("user/details/{id}", "details")->name("user.details");
             Route::put("user/ban/{id}", "ban")->name("user.ban");
             Route::put("user/unban/{id}", "unban")->name("user.unban");
         });
 
         Route::apiResource("brand", BrandController::class);
         Route::apiResource("product", ProductController::class);
-        Route::apiResource("stock", StockController::class)->except("destroy");
+        Route::apiResource("stock", StockController::class)->except("destroy", "store", "update");
+        Route::post("stock/{prodID}", [StockController::class, "store"])->name("stock.store");
 
         Route::prefix("sale")->controller(SaleController::class)->group(function () {
             Route::post("checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");

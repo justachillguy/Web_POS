@@ -62,25 +62,28 @@ class StockController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStockRequest $request)
+    public function store(StoreStockRequest $request, $prodID)
     {
         Gate::authorize("create", App\Models\Stock::class);
 
-            $stock = new Stock;
-            $stock->user_id = auth()->id();
-            $stock->product_id = $request->product_id;
-            $stock->quantity = $request->quantity;
-            $stock->save();
+        $product = Product::findOrFail($prodID);
 
-            $product = Product::findOrFail($request->product_id);
-            $product->total_stock += $request->quantity;
-            $product->update();
+        Stock::create(
+            [
+                "user_id" => auth()->id(),
+                "product_id" => $product->id,
+                "quantity" => $request->quantity,
+            ]
+        );
 
-            return response()->json(
-                [
-                    "message" => $request->quantity . " " . $product->name . " are added to the inventory."
-                ]
-            );
+        $product->total_stock += $request->quantity;
+        $product->update();
+
+        return response()->json(
+            [
+                "message" => $request->quantity . " " . $product->name . " are added to the inventory."
+            ]
+        );
     }
 
     /**
