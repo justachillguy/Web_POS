@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserDetailResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,5 +80,11 @@ class ProfileController extends Controller
         $user->update();
 
         return response()->json(['message' => "user's info is updated"]);
+    }
+
+    public function details()
+    {
+        $user = User::findOrFail(auth()->id());
+        return new UserDetailResource($user);
     }
 }
