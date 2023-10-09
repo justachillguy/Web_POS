@@ -136,6 +136,12 @@
 | address       | longText | **Nullable** yangon                  |
 | photo         | string   | **Nullable** public/media/flower.png |
 
+#### MY PROFILE DETAILS (GET)
+
+```http
+  https://f.mmsdev.site/api/v1/profile/details
+```
+
 ---
 
 ## MEDIA
