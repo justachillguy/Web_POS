@@ -69,14 +69,14 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("photo", PhotoController::class);
         Route::post("photo/multiple-delete", [PhotoController::class, "multipleDelete"])->name("photo.multiDel");
 
-        Route::middleware("adminOnly")->controller(UserController::class)->group(function () {
-            Route::get("user", "list")->name("user.list");
-            Route::get("user/banned-users", "bannedUsers")->name("user.bannedList");
-            Route::post("user/register", "create")->name("user.register"); /* register route only admin can register */
-            Route::put("user/position-management/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
-            Route::get("user/details/{id}", "details")->name("user.details");
-            Route::put("user/ban/{id}", "ban")->name("user.ban");
-            Route::put("user/unban/{id}", "unban")->name("user.unban");
+        Route::prefix("user")->middleware("adminOnly")->controller(UserController::class)->group(function () {
+            Route::get("/", "list")->name("user.list");
+            Route::get("banned-users", "bannedUsers")->name("user.bannedList");
+            Route::post("register", "create")->name("user.register"); /* register route only admin can register */
+            Route::put("position-management/{id}", "updatePosition")->name("user.updatePosition"); /* promotion route only admin access */
+            Route::get("details/{id}", "details")->name("user.details");
+            Route::put("ban/{id}", "ban")->name("user.ban");
+            Route::put("unban/{id}", "unban")->name("user.unban");
         });
 
         Route::apiResource("brand", BrandController::class);
