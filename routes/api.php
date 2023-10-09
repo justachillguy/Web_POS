@@ -60,9 +60,10 @@ Route::prefix("v1")->group(function () {
             Route::post("logout-all", 'logoutAll')->name("auth.logoutAll");
         });
 
-        Route::controller(ProfileController::class)->group(function () {
-            Route::put('profile/{id}', 'update')->name('profile.update');
-            Route::post('profile/change-password', 'chgPassword')->name('profile.chgPassword');
+        Route::prefix("profile")->controller(ProfileController::class)->group(function () {
+            Route::put('{id}', 'update')->name('profile.update');
+            Route::post('change-password', 'chgPassword')->name('profile.chgPassword');
+            Route::get("details", "details")->name("profile.details");
         });
 
         Route::apiResource("photo", PhotoController::class);
