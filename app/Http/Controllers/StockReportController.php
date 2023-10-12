@@ -37,7 +37,7 @@ class StockReportController extends Controller
                 $query->where("total_stock", 0);
             })
             ->latest("id")
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         return ProductStockLevelResource::collection($productStocks);

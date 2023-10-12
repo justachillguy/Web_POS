@@ -47,7 +47,7 @@ class StockController extends Controller
                 $query->orderBy("id", $sortType);
             })
             ->latest("id")
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         if ($stocks->isEmpty()) {

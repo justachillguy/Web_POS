@@ -30,7 +30,7 @@ class ProductController extends Controller
                 $query->orderBy("id", $sortType);
             })
             ->latest("id")
-            ->paginate(4)
+            ->paginate(10)
             ->withQueryString();
 
         if ($products->isEmpty()) {

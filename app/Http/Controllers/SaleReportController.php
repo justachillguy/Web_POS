@@ -58,7 +58,7 @@ class SaleReportController extends BaseController
 
     public function productReport()
     {
-        $product = Product::paginate(4)->withQueryString();
+        $product = Product::paginate(10)->withQueryString();
         $data = ProductReportResource::collection($product);
         return $data->resource;
     }

@@ -29,7 +29,7 @@ class UserController extends Controller
         })
         ->where("ban_status", "false")
         ->latest("id")
-        ->paginate(4)
+        ->paginate(10)
         ->withQueryString();
 
         if ($users->isEmpty()) {
