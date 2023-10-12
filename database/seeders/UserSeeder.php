@@ -22,8 +22,20 @@ class UserSeeder extends Seeder
             "gender" => "male",
             "address" => "ho nar d nar",
             "position" => "admin",
-            "password" => Hash::make("thepassword"),
-            "photo" => "jokerj oekr ej ojskdffjsdoff",
+            "password" => Hash::make("aaaaaaaa"),
+            // "photo" => "jokerj oekr ej ojskdffjsdoff",
+        ]);
+
+        User::factory()->create([
+            "name" => "Nika",
+            "phone_number" => "09787878787",
+            "email" => "admin2@gmail.com",
+            "date_of_birth" => "2000-01-01",
+            "gender" => "male",
+            "address" => "ho nar d nar",
+            "position" => "admin",
+            "password" => Hash::make("aaaaaaaa"),
+            // "photo" => "jokerj oekr ej ojskdffjsdoff",
         ]);
 
         // $users = [
