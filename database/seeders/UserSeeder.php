@@ -15,9 +15,9 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            "name" => "Joy",
+            "name" => "Doffy",
             "phone_number" => "09787878787",
-            "email" => "admin@gmail.com",
+            "email" => "admin2@gmail.com",
             "date_of_birth" => "2000-01-01",
             "gender" => "male",
             "address" => "ho nar d nar",
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
             "name" => "Nika",
             "phone_number" => "09787878787",
-            "email" => "admin2@gmail.com",
+            "email" => "admin3@gmail.com",
             "date_of_birth" => "2000-01-01",
             "gender" => "male",
             "address" => "ho nar d nar",
