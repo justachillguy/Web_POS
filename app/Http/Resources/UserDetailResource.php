@@ -24,7 +24,8 @@ class UserDetailResource extends JsonResource
             "address" => $this->address,
             "position" => $this->position,
             "email" => $this->email,
-            "photo" => asset(Storage::url($this->photo)),
+            // "photo" => asset(Storage::url($this->photo)),
+            "photo" => $this->photo,
         ];
     }
 }

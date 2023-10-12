@@ -16,7 +16,8 @@ class AuthController extends Controller
             "password" => "required|min:8"
         ]);
 
-        /*  Checking if given credentials are valid.
+        /*
+            Checking if given credentials are valid.
             If not, tokens will not be returned.
         */
         if(!Auth::attempt($request->only('email','password'))){
@@ -25,7 +26,8 @@ class AuthController extends Controller
             ]);
         }
 
-        /*  Checking if a user is banned or not after loggin in process.
+        /*
+            Checking if a user is banned or not after loggin in process.
             If not, tokens will not be returned.
         */
         if ($request->user()->ban_status === "true") {
