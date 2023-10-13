@@ -23,24 +23,29 @@ class StockController extends Controller
     public function index()
     {
         Gate::authorize("viewAny", App\Models\Stock::class);
-        /* When searching stock records, the only keyword we're gonna use is the name of the product. So, we have to find the products by the product's name we pass thru parameter. */
-        $products = Product::when(request()->has("keyword"), function ($query) {
-            $query->where(function (Builder $builder) {
-                $keyword = request()->keyword;
 
-                $builder->where("name", "LIKE", "%" . $keyword . "%");
-            });
-        })->get();
-
-        /* If the products we get by the keyword value is empty, we're gonna return them
-        empty state.
+        /*
+        When searching stock records, the only keyword we're gonna use is
+        the name of the product. So, we have to find the products
+        by the product's name we pass thru parameter.
         */
-        if (empty($products)) {
-            return response()->json(["message" => "There is no result."]);
+        $ids = [];
+        if (request()->has("keyword")) {
+            $keyword = request()->keyword;
+            $prodIDs = Product::where("name", "LIKE", "%" . $keyword . "%")->get()->pluck("id")->toArray();
+            $ids = $prodIDs;
+            if (empty($ids)) {
+                return response()->json(["message" => "There is no result."]);
+            }
         }
 
-        $stocks = Stock::when(request()->has("keyword"), function ($query) use ($products) {
-            $query->whereIn("product_id", $products->pluck("id"));
+        /*
+        If the products we get by the keyword value is empty,
+        we're gonna return them the empty state.
+        */
+
+        $stocks = Stock::when(request()->has("keyword"), function ($query) use ($ids) {
+            $query->whereIn("product_id", $ids);
         })
             ->when(request()->has("id"), function ($query) {
                 $sortType = request()->id ?? "asc";
