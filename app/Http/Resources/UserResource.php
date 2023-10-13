@@ -21,7 +21,6 @@ class UserResource extends JsonResource
             "position" => $this->position,
             "email" => $this->email,
             "photo" => $this->photo,
-            // "photo" => asset(Storage::url($this->photo)),
         ];
     }
 }

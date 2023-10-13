@@ -20,6 +20,7 @@ class BrandResource extends JsonResource
             "company" => $this->company,
             "agent" => $this->agent,
             "phone_number" => $this->phone_number,
+            "photo" => $this->photo,
         ];
     }
 }

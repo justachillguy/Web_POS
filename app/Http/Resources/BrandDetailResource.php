@@ -21,7 +21,6 @@ class BrandDetailResource extends JsonResource
             "company" => $this->company,
             "agent" => $this->agent,
             "contact" => $this->phone_number,
-            // "photo" => asset(Storage::url($this->photo)),
             "photo" => $this->photo,
             "created_at" => $this->created_at->format("d-m-Y"),
             "updated_at" => $this->updated_at->format("d-m-Y"),
