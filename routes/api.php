@@ -81,8 +81,11 @@ Route::prefix("v1")->group(function () {
 
         Route::apiResource("brand", BrandController::class);
         Route::apiResource("product", ProductController::class);
-        Route::apiResource("stock", StockController::class)->except("destroy", "store", "update");
-        Route::post("stock/{prodID}", [StockController::class, "store"])->name("stock.store");
+        // Route::apiResource("stock", StockController::class)->except("destroy", "store", "update");
+        Route::prefix("stock")->controller(StockController::class)->group(function () {
+            Route::get("/", "index")->name("stock.index");
+            Route::post("{prodID}", "store")->name("stock.store");
+        });
 
         Route::prefix("sale")->controller(SaleController::class)->group(function () {
             Route::post("checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");
