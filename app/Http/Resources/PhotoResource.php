@@ -19,7 +19,6 @@ class PhotoResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "user_name" => $this->user->name,
-            "path" => $this->url,
             "url" => asset(Storage::url($this->url)),
             "user_id" => $this->user_id,
         ];

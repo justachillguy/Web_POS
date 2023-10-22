@@ -18,11 +18,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::when(request()->has("keyword"), function ($query) {
-            $query->where(function (Builder $builder) {
-                $keyword = request()->keyword;
 
-                $builder->where("name", "LIKE", "%" . $keyword . "%");
+        $products = Product::when(request()->has("keyword"), function ($query) {
+            $query->where(function ($query) {
+                $keyword = request()->keyword;
+                $query->where("name", "LIKE", "%" . $keyword . "%")->Orwhere(function ($query) {
+                    $query->whereHas("brand", function ($query) {
+                        $query->where("name", "LIKE",  "%" . request()->keyword . "%");
+                    });
+                });
             });
         })
             ->when(request()->has('id'), function ($query) {

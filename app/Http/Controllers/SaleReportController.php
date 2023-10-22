@@ -58,7 +58,11 @@ class SaleReportController extends BaseController
 
     public function productReport()
     {
+<<<<<<< HEAD
         $product = Product::paginate(5)->withQueryString();
+=======
+        $product = Product::paginate(10)->withQueryString();
+>>>>>>> a2a76d045a9d518544805d5e81cccf40cdce2675
         $data = ProductReportResource::collection($product);
         return response()->json([
             "productReport" => $data->resource

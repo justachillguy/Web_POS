@@ -23,8 +23,7 @@ class ProductResource extends JsonResource
             "price" => $this->sale_price,
             "stocks" => $this->total_stock,
             "info" => $this->more_information,
-            "photo" => asset(Storage::url($this->photo)),
-            // "photo" => $this->photo,
+            "photo" => $this->photo,
         ];
     }
 }

@@ -25,7 +25,7 @@ class FinanceController extends Controller
                 $sortType = request()->id ?? "asc";
                 $query->orderBy("id", $sortType);
             })
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         /* dailySales2 to calculated the info about total vouchers, cost, tax and final cost. */
@@ -62,7 +62,7 @@ class FinanceController extends Controller
                 $sortType = request()->id ?? "asc";
                 $query->orderBy("id", $sortType);
             })
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         $thisMonthSales2 = DailySale::where(function ($query) {
@@ -98,7 +98,7 @@ class FinanceController extends Controller
                 $sortType = request()->id ?? "asc";
                 $query->orderBy("id", $sortType);
             })
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         $thisYearSales2 = MonthlySale::where(function ($query) {
@@ -136,7 +136,7 @@ class FinanceController extends Controller
                 $sortType = request()->id ?? "asc";
                 $query->orderBy("id", $sortType);
             })
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         $salesList2 = Voucher::select("*")

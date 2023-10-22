@@ -23,11 +23,8 @@ class StockController extends Controller
     public function index()
     {
         Gate::authorize("viewAny", App\Models\Stock::class);
-        /* When searching stock records, the only keyword we're gonna use is the name of the product. So, we have to find the products by the product's name we pass thru parameter. */
-        $products = Product::when(request()->has("keyword"), function ($query) {
-            $query->where(function (Builder $builder) {
-                $keyword = request()->keyword;
 
+<<<<<<< HEAD
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })->paginate(10)->withQueryString();
@@ -37,18 +34,58 @@ class StockController extends Controller
         */
         if (empty($products)) {
             return response()->json(["message" => "There is no result."],404);
+=======
+            /*
+            When searching stock records, the only keyword we're gonna use is
+            the name of the product. So, we have to find the products
+            by the product's name we pass thru parameter.
+            */
+        $ids = [];
+        if (request()->has("keyword")) {
+            $keyword = request()->keyword;
+            $prodIDs = Product::where("name", "LIKE", "%" . $keyword . "%")
+            ->Orwhere(function ($query) {
+                $query->whereHas("brand", function ($query) {
+                    $query->where("name", "LIKE", request()->keyword);
+                });
+            })
+            ->get()
+            ->pluck("id")
+            ->toArray();
+
+            $ids = $prodIDs;
+            if (empty($ids)) {
+                return response()->json(["message" => "There is no result."]);
+            }
+>>>>>>> a2a76d045a9d518544805d5e81cccf40cdce2675
         }
 
-        $stocks = Stock::when(request()->has("keyword"), function ($query) use ($products) {
-            $query->whereIn("product_id", $products->pluck("id"));
+        /*
+        If the products we get by the keyword value is empty,
+        we're gonna return them the empty state.
+        */
+
+        $stocks = Stock::when(request()->has("keyword"), function ($query) use ($ids) {
+            $query->whereIn("product_id", $ids);
+
         })
             ->when(request()->has("id"), function ($query) {
                 $sortType = request()->id ?? "asc";
                 $query->orderBy("id", $sortType);
             })
             ->latest("id")
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
+
+
+        // $stocks = Stock::when(request()->has("id"), function ($query) {
+        //     $sortType = request()->id ?? "asc";
+        //     $query->orderBy("id", $sortType);
+        // })
+        //     ->latest("id")
+        //     ->paginate(10)
+        //     ->withQueryString();
+
 
         if ($stocks->isEmpty()) {
             return response()->json([
