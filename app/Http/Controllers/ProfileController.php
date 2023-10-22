@@ -34,7 +34,7 @@ class ProfileController extends Controller
         // return redirect()->route("auth.logout");
         return response()->json([
             "message" => "password change successful",
-        ]);
+        ],200);
     }
 
 
@@ -79,12 +79,20 @@ class ProfileController extends Controller
 
         $user->update();
 
-        return response()->json(['message' => "user's info is updated"]);
+        return response()->json([
+            'message' => "user's info is updated",
+            "updatedUser"=> $user
+
+        ],200);
     }
 
     public function details()
     {
         $user = User::findOrFail(auth()->id());
-        return new UserDetailResource($user);
+        return response()->json([
+            "profileDetails"=> new UserDetailResource($user)
+        ],200);
     }
+
+
 }

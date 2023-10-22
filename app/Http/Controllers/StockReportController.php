@@ -40,7 +40,9 @@ class StockReportController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return ProductStockLevelResource::collection($productStocks);
+        return response()->json([
+            "stockLvlTable"=>ProductStockLevelResource::collection($productStocks)
+        ],200);
     }
 
     public function stockLvlBar()
@@ -63,8 +65,7 @@ class StockReportController extends Controller
                     "low_stock" => [$lowStock, round($lowStock / $totalProduct, 4) * 100 . "%"],
                     "out_of_stock" => [$outOfStock, round($outOfStock / $totalProduct, 4) * 100 . "%"],
                 ]
-            ]
-        );
+            ],200);
     }
 
     public function bestSellerBrands()
@@ -109,7 +110,6 @@ class StockReportController extends Controller
             [
                 "weekly_best_seller_brands" => $weeklyBestSellerBrands,
                 "weekly_total_cost" => $weeklyBestSellerTotalCost,
-            ]
-        );
+            ],200);
     }
 }

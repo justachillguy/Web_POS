@@ -18,19 +18,22 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        $photos = Photo::latest("id")->get();
+        $photos = Photo::latest("id")->paginate(5)
+        ->withQueryString();
 
         // Checking if there are stored files or not.
         // If not, this message will be returned.
         if ($photos->isEmpty()) {
             return response()->json([
                 "message" => "There is no file yet."
-            ]);
+            ],404);
         }
 
         // If there is, resource will be returned.
         $data = PhotoResource::collection($photos);
-        return $data->resource;
+        return response()->json([
+            "photos"=> $data->resource
+        ],200);
     }
 
     /**
@@ -38,6 +41,7 @@ class PhotoController extends Controller
      */
     public function store(StorePhotoRequest $request)
     {
+
         /*
         Checking if files are passed along with request
         */
@@ -92,7 +96,7 @@ class PhotoController extends Controller
 
         return response()->json([
             "message" => "Photos uploaded successful"
-        ]);
+        ],201);
     }
 
 
@@ -136,7 +140,7 @@ class PhotoController extends Controller
         $photo->delete();
         return response()->json([
             "message" => "A photo has been deleted",
-        ]);
+        ],204);
     }
 
     /*
@@ -155,6 +159,7 @@ class PhotoController extends Controller
         }
         $idsToDelete = $request->id;
         $photos = Photo::where("user_id", auth()->id())->whereIn("id", $idsToDelete)->get();
+        // return $photos;
 
         $filePaths = [];
         /*
@@ -164,6 +169,7 @@ class PhotoController extends Controller
             // if (Storage::exists($photo->url)) {
             // }
             $filePaths[] = $photo->url;
+
         }
 
         /*
@@ -172,6 +178,8 @@ class PhotoController extends Controller
         $filePathsToDelete = array_filter($filePaths, function ($f) {
             return Storage::exists($f);
         });
+
+        // return $filePathsToDelete;
 
         /*
         I don't want Storage::delete() to operate if any of file's paths doesn't exist.
@@ -182,7 +190,7 @@ class PhotoController extends Controller
         Photo::destroy(collect($idsToDelete));
 
         return response()->json([
-            "message" => "successful"
-        ]);
+            "message" => "Multiple photos delete successful"
+        ],204);
     }
 }

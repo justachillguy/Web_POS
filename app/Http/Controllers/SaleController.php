@@ -45,22 +45,22 @@ class SaleController extends Controller
                 $sortType = request()->id ?? "desc";
                 $query->orderBy("id", $sortType);
             })
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         $isSaleClose = DB::table("sale_close")->first()->sale_close;
 
         if ($products->isEmpty()) {
             return response()->json([
                 "message" => "There is no product to sell yet."
-            ]);
+            ],404);
         }
 
         return response()->json(
             [
-                "products" => ProductResource::collection($products),
+                "products" => ProductResource::collection($products)->resource,
                 "is_sale_close" => $isSaleClose,
-            ]
-        );
+            ],200);
     }
 
     public function checkout(Request $request)
@@ -131,9 +131,7 @@ class SaleController extends Controller
             return response()->json(
                 [
                     "message" => "Caught Exception: " . $th->getMessage() . "on " . $th->getLine(),
-                ],
-                500
-            );
+                ],500);
         }
     }
 
@@ -155,7 +153,9 @@ class SaleController extends Controller
             ->withQueryString();
         // return $vouchers;
         $data = VoucherResource::collection($vouchers);
-        return $data->resource;
+        return response()->json([
+            "vouchers"=> $data->resource
+        ],200);
     }
 
     public function saleClose()
@@ -207,8 +207,7 @@ class SaleController extends Controller
             return response()->json(
                 [
                     "message" => "ရက်ချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
-                ]
-            );
+                ],200);
         }
     }
 
@@ -240,8 +239,7 @@ class SaleController extends Controller
         return response()->json(
             [
                 "message" => "လချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
-            ]
-        );
+            ],200);
     }
 
     public function createYearlySale()
@@ -269,7 +267,6 @@ class SaleController extends Controller
         return response()->json(
             [
                 "message" => "နှစ်ချုပ်လို့ ပြီးပါပြီခင်ဗျ။"
-            ]
-        );
+            ],200);
     }
 }

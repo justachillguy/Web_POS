@@ -38,8 +38,7 @@ class OverViewController extends BaseController
                 "total_cash" => $totalCash,
                 "total_tax" => $totalTax,
                 "total_net" => $totalNet,
-            ]
-        );
+            ],200);
     }
 
     public function weeklySaleOverview()
@@ -92,7 +91,7 @@ class OverViewController extends BaseController
             'totalProfit' => $totalProfit,
             'totalIncome' => $totalIncome,
             'totalExpenses' => $totalExpenses
-        ]);
+        ],200);
     }
 
     public function monthlySaleOverview()
@@ -149,7 +148,7 @@ class OverViewController extends BaseController
             'totalProfit' => $totalProfit,
             'totalIncome' => $totalIncome,
             'totalExpenses' => $totalExpenses
-        ]);
+        ],200);
     }
 
     public function yearlySaleOverview()
@@ -205,6 +204,6 @@ class OverViewController extends BaseController
             'totalProfit' => $totalProfit,
             'totalIncome' => $totalIncome,
             'totalExpenses' => $totalExpenses
-        ]);
+        ],200);
     }
 }

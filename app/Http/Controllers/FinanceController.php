@@ -48,8 +48,7 @@ class FinanceController extends Controller
                 "total_cash" => $total_cash,
                 "total_tax" => $total_tax,
                 "total" => $total,
-            ]
-        );
+            ],200);
     }
 
     public function thisMonthSales()
@@ -65,7 +64,6 @@ class FinanceController extends Controller
             })
             ->paginate(5)
             ->withQueryString();
-
 
         $thisMonthSales2 = DailySale::where(function ($query) {
             $date = request()->date;
@@ -87,8 +85,7 @@ class FinanceController extends Controller
                 "total_cash" => $total_cash,
                 "total_tax" => $total_tax,
                 "total" => $total,
-            ]
-        );
+            ],200);
     }
 
     public function thisYearSales()
@@ -125,8 +122,7 @@ class FinanceController extends Controller
                 "total_cash" => $total_cash,
                 "total_tax" => $total_tax,
                 "total" => $total,
-            ]
-        );
+            ],200);
     }
 
     public function customSalesList()
@@ -160,7 +156,6 @@ class FinanceController extends Controller
                 "total_cash" => $total_cash,
                 "total_tax" => $total_tax,
                 "total" => $total,
-            ]
-        );
+            ],200);
     }
 }

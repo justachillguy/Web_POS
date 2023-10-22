@@ -35,20 +35,24 @@ class UserController extends Controller
         if ($users->isEmpty()) {
             return response()->json([
                 "message" => "There is no user records yet."
-            ]);
+            ],404);
         }
 
         // return response()->json([
         //     "users" => $users,
         // ]);
         $data = UserResource::collection($users);
-        return $data->resource;
+        return response()->json([
+            "users"=>$data->resource
+        ],200);
     }
 
     public function details($id)
     {
         $user = User::findOrFail($id);
-        return new UserDetailResource($user);
+        return response()->json([
+            "user" => new UserDetailResource($user)
+        ],200);
     }
 
     public function create(Request $request){
@@ -66,10 +70,6 @@ class UserController extends Controller
             "photo" => ["required", "string"],
         ]);
 
-        // return response()->json([
-        //     "message" => $request,
-        // ]);
-
         User::create([
             "name" => $request->name,
             "phone_number" => $request->phone_number,
@@ -83,8 +83,8 @@ class UserController extends Controller
         ]);
 
         return response()->json([
-            "message" => "User register successful",
-        ]);
+            "message" => "User register successful"
+        ],201);
 
     }
 
@@ -109,8 +109,7 @@ class UserController extends Controller
             [
                 "message" => "A staff has been promoted",
                 "user" => $user,
-            ]
-        );
+            ],200);
     }
 
     public function ban($id)
@@ -121,8 +120,7 @@ class UserController extends Controller
         return response()->json(
             [
                 "message" => "You have been banned for being a really bad boy"
-            ]
-        );
+            ],200);
 
     }
 
@@ -142,8 +140,7 @@ class UserController extends Controller
         return response()->json(
             [
                 "message" => "You have been unbanned.Be a good boy now."
-            ]
-        );
+            ],200);
 
     }
 
@@ -151,7 +148,9 @@ class UserController extends Controller
     {
         $bannedUsers = User::where("ban_status", "true")->get();
         $data = UserResource::collection($bannedUsers);
-        return $data->resource;
+        return response()->json([
+            "bannedUsers"=>$data->resource
+        ],200);
     }
 
 }

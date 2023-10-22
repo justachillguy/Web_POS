@@ -30,13 +30,13 @@ class StockController extends Controller
 
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
-        })->get();
+        })->paginate(10)->withQueryString();
 
         /* If the products we get by the keyword value is empty, we're gonna return them
         empty state.
         */
         if (empty($products)) {
-            return response()->json(["message" => "There is no result."]);
+            return response()->json(["message" => "There is no result."],404);
         }
 
         $stocks = Stock::when(request()->has("keyword"), function ($query) use ($products) {
@@ -53,10 +53,12 @@ class StockController extends Controller
         if ($stocks->isEmpty()) {
             return response()->json([
                 "message" => "There is no stock records yet."
-            ]);
+            ],404);
         }
         $data = StockResource::collection($stocks);
-        return $data->resource;
+        return response()->json([
+            "stocks"=>$data->resource
+        ],200);
     }
 
     /**
@@ -73,6 +75,7 @@ class StockController extends Controller
                 "user_id" => auth()->id(),
                 "product_id" => $product->id,
                 "quantity" => $request->quantity,
+                "more"=>$request->more
             ]
         );
 
@@ -81,9 +84,8 @@ class StockController extends Controller
 
         return response()->json(
             [
-                "message" => $request->quantity . " " . $product->name . " are added to the inventory."
-            ]
-        );
+                "message" => "$request->quantity quantities are added to product $product->name."
+            ],201);
     }
 
     /**
@@ -93,7 +95,9 @@ class StockController extends Controller
     {
         Gate::authorize("view", $stock);
 
-        return new StockDetailResource($stock);
+        return response()->json([
+            "stock"=>new StockDetailResource($stock)
+        ],200);
     }
 
     /**
@@ -135,9 +139,8 @@ class StockController extends Controller
 
         return response()->json(
             [
-                "message" => $stock
-            ]
-        );
+                "updatedStock"=>$stock
+            ],200);
     }
 
     /**

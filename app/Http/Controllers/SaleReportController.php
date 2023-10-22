@@ -53,14 +53,16 @@ class SaleReportController extends BaseController
 
         return response()->json([
             'brandsInfo' => $brandInfo
-        ]);
+        ],200);
     }
 
     public function productReport()
     {
-        $product = Product::paginate(4)->withQueryString();
+        $product = Product::paginate(5)->withQueryString();
         $data = ProductReportResource::collection($product);
-        return $data->resource;
+        return response()->json([
+            "productReport" => $data->resource
+        ],200);
     }
 
     public function todaySaleReport()
@@ -103,24 +105,30 @@ class SaleReportController extends BaseController
             'todayAverageSales' => $averageAmount,
             'todayMaxSales' => $max,
             'todayMinSales' => $min
-        ]);
+        ],200);
     }
 
     public function weeklySaleReport()
     {
 
-       return $this->weeklySale();
+       return response()->json([
+            "weeklySaleReport"=> $this->weeklySale()
+       ],200);
 
     }
 
     public function monthlySaleReport()
     {
-       return $this->monthlySale();
+        return response()->json([
+           "monthlySaleReport" =>  $this->monthlySale()
+       ],200);
     }
 
     public function yearlySaleReport()
     {
-       return $this->yearlySale();
+       return response()->json([
+           "yearlySaleReport" => $this->yearlySale()
+       ],200);
 
     }
 

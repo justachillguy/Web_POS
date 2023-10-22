@@ -53,9 +53,7 @@ class VoucherController extends Controller
                 // "tax" => $tax,
                 // "net_total" => $netTotal,
                 "voucher" => new VoucherResource($voucher),
-            ]
-        );
-
+            ],200);
     }
 
     /**

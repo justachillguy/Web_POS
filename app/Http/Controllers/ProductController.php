@@ -30,8 +30,13 @@ class ProductController extends Controller
                 $query->orderBy("id", $sortType);
             })
             ->latest("id")
-            ->paginate(4)
+            ->paginate(10)
             ->withQueryString();
+
+            // $product = Product::when(request()->has('keyword'),function($query){
+            //     $keyword = request()->keyword;
+            //     $query->where('name','like','%'.$keyword,'%');
+            // })->latest('id')->paginate(4)->withQueryString();
 
         if ($products->isEmpty()) {
             return response()->json([
@@ -39,7 +44,9 @@ class ProductController extends Controller
             ]);
         }
         $data = ProductResource::collection($products);
-        return $data->resource;
+        return response()->json([
+            "products"=> $data->resource
+        ]);
     }
 
     /**
@@ -55,13 +62,17 @@ class ProductController extends Controller
         // $product->total_stock = $request->total_stock;
         $product->actual_price = $request->actual_price;
         $product->sale_price = $request->sale_price;
+        $product->total_stock = $request->total_stock;
         $product->unit = $request->unit;
         $product->more_information = $request->more_information;
         $product->photo = $request->photo;
         $product->user_id = auth()->id();
         $product->save();
 
-        return new ProductDetailResource($product);
+        return response()->json([
+            "message"=> "New product $product->name is created",
+            "product"=> new ProductDetailResource($product)
+        ],201);
     }
 
     /**
@@ -69,7 +80,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return new ProductDetailResource($product);
+        return response()->json([
+            "product"=> new ProductDetailResource($product)
+        ],200);
     }
 
     /**
@@ -115,9 +128,9 @@ class ProductController extends Controller
 
         return response()->json(
             [
-                "message" => "Product " . "'" . $product->name . "'" . " has been edited."
-            ]
-        );
+                "message" => "Product $product->name is updated.",
+                "updatedProduct"=> $product
+            ],200);
     }
     /**
      * Remove the specified resource from storage.
@@ -130,7 +143,6 @@ class ProductController extends Controller
         return response()->json(
             [
                 "message" => "A product has been deleted."
-            ]
-        );
+            ],204);
     }
 }
