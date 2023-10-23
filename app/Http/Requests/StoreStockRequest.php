@@ -11,7 +11,9 @@ class StoreStockRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        return true;
+
     }
 
     /**
@@ -22,7 +24,12 @@ class StoreStockRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            "user_id" => ["exists:users,id"],
+            // "product_id" => ["exists:products,id"],
+            "quantity" => ["required", "numeric", "min:1"],
+            "more" => ["nullable", "string", "max:225"],
+
         ];
     }
 }

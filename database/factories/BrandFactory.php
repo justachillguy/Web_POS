@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Factories;
+use Illuminate\Support\Str;
+
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,7 +19,15 @@ class BrandFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+
+            "name" => fake()->domainWord(),
+            "company" => fake()->word(),
+            "information" => fake()->sentence(10),
+            "agent" => fake()->name(),
+            "phone_number" => fake()->phoneNumber(),
+            "user_id" => 1,
+            // "photo" => fake()->sentence(),
+
         ];
     }
 }

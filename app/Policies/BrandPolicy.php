@@ -29,7 +29,9 @@ class BrandPolicy
      */
     public function create(User $user): bool
     {
-        //
+
+        return $user->position === "admin";
+
     }
 
     /**
@@ -37,15 +39,18 @@ class BrandPolicy
      */
     public function update(User $user, Brand $brand): bool
     {
-        //
+        return $user->position === "admin";
     }
+
 
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Brand $brand): bool
     {
-        //
+
+        return $user->position === "admin";
+
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\VoucherRecord;
 use App\Http\Requests\StoreVoucherRecordRequest;
 use App\Http\Requests\UpdateVoucherRecordRequest;
+use App\Models\Voucher;
+
 
 class VoucherRecordController extends Controller
 {
@@ -29,7 +31,9 @@ class VoucherRecordController extends Controller
      */
     public function show(VoucherRecord $voucherRecord)
     {
-        //
+
+
+
     }
 
     /**

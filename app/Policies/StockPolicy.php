@@ -8,12 +8,20 @@ use Illuminate\Auth\Access\Response;
 
 class StockPolicy
 {
+
+    // public function before(User $user)
+    // {
+    //     return $user->position === "admin";
+    // }
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+
+        return $user->position === "admin";
+
     }
 
     /**
@@ -21,7 +29,9 @@ class StockPolicy
      */
     public function view(User $user, Stock $stock): bool
     {
-        //
+
+        return $user->position === "admin";
+
     }
 
     /**
@@ -29,7 +39,9 @@ class StockPolicy
      */
     public function create(User $user): bool
     {
-        //
+
+        return $user->position === "admin";
+
     }
 
     /**
@@ -37,7 +49,9 @@ class StockPolicy
      */
     public function update(User $user, Stock $stock): bool
     {
-        //
+
+        return $user->position === "admin";
+
     }
 
     /**
@@ -45,7 +59,9 @@ class StockPolicy
      */
     public function delete(User $user, Stock $stock): bool
     {
-        //
+
+        return $user->position === "admin";
+
     }
 
     /**
@@ -53,7 +69,9 @@ class StockPolicy
      */
     public function restore(User $user, Stock $stock): bool
     {
-        //
+
+        // return $user->position === "admin";
+
     }
 
     /**
@@ -61,6 +79,8 @@ class StockPolicy
      */
     public function forceDelete(User $user, Stock $stock): bool
     {
-        //
+
+        // return $user->position === "admin";
+
     }
 }

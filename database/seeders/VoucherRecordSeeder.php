@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+
+use App\Models\VoucherRecord;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,5 +16,8 @@ class VoucherRecordSeeder extends Seeder
     public function run(): void
     {
         //
+
+        // VoucherRecord::factory()->count(20)->create();
+
     }
 }

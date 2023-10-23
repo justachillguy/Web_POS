@@ -2,6 +2,11 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IsSaleClose;
+use App\Http\Middleware\IsUserBanned;
+use App\Http\Middleware\OnlyAdmin;
+use App\Http\Middleware\SetAppJsonAceeptHeader;
+use Illuminate\Foundation\Bootstrap\SetRequestForConsole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -42,6 +47,7 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // SetAppJsonAceeptHeader::class,
         ],
     ];
 
@@ -64,5 +70,9 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        "adminOnly" => OnlyAdmin::class,
+        "isUserBanned" => IsUserBanned::class,
+        "setHeaderAppJson" => SetAppJsonAceeptHeader::class,
+        "isSaleClose" => IsSaleClose::class,
     ];
 }

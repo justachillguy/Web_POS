@@ -18,6 +18,12 @@ class VoucherRecordFactory extends Factory
     {
         return [
             //
+
+            'voucher_id'=>rand(1,20),
+            'product_id'=>rand(1,20),
+            'quantity'=>rand(1,20),
+            'cost'=>rand(50,10000)
+
         ];
     }
 }
