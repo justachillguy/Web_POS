@@ -31,12 +31,6 @@ class SaleController extends Controller
                 $builder->where("name", "LIKE", "%" . $keyword . "%");
             });
         })
-            // ->when(request()->has("brandID"), function (Builder $query) {
-            //     $query->whereHas("brand", function (Builder $builder) {
-            //         $brandID = request()->brand_id;
-            //         $builder->where("id", $brandID);
-            //     });
-            // })
             ->when(request()->has("brandID"), function ($query) {
                 $brandID = request()->brandID;
                 $query->where("brand_id", $brandID);

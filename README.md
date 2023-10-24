@@ -192,7 +192,7 @@
 ###### Note : You can search the record in the list by passing "keyword" parameter in route URL. Example below.
 
 ```http
-  https://f.mmsdev.site/api/v1/brand&keyword=pepsi
+  https://f.mmsdev.site/api/v1/brand?keyword=pepsi
 ```
 
 ###### Note : By default the list will be shown from the latest to earliest records. You can make it show from the earliest by passing just "id" parameter in route URL.
@@ -251,7 +251,7 @@
 ###### Note : You can search the record in the list by passing "keyword" parameter in route URL. Example below.
 
 ```http
-  https://f.mmsdev.site/api/v1/product&keyword=drink
+  https://f.mmsdev.site/api/v1/product?keyword=drink
 ```
 
 ###### Note : By default the list will be shown from the latest to earliest records. You can make it show from the earliest by passing just "id" parameter in route URL.
@@ -315,7 +315,7 @@
 ###### Note : You can search the record in the list by passing "keyword" parameter in route URL. Example below.
 
 ```http
-  https://f.mmsdev.site/api/v1/stock&keyword=chocolate
+  https://f.mmsdev.site/api/v1/stock?keyword=chocolate
 ```
 
 ###### Note : By default the list will be shown from the latest to earliest records. You can make it show from the earliest by passing just "id" parameter in route URL.

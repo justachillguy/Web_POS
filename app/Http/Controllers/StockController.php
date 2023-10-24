@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use PhpParser\Node\Stmt\TryCatch;
->>>>>>> dev
+
 
 class StockController extends Controller
 {
@@ -23,8 +23,36 @@ class StockController extends Controller
      */
     public function index()
     {
-
         Gate::authorize("viewAny", App\Models\Stock::class);
+  /*
+            When searching stock records, the only keyword we're gonna use is
+            the name of the product. So, we have to find the products
+            by the product's name we pass thru parameter.
+            */
+        $ids = [];
+        if (request()->has("keyword")) {
+            $keyword = request()->keyword;
+            $prodIDs = Product::where("name", "LIKE", "%" . $keyword . "%")
+            ->orWhere(function ($query) {
+                $query->whereHas("brand", function ($query) {
+                    $query->where("name", "LIKE", request()->keyword);
+                });
+            })
+            ->get()
+            ->pluck("id")
+            ->toArray();
+
+            $ids = $prodIDs;
+            if (empty($ids)) {
+                return response()->json(["message" => "There is no result."]);
+            }
+
+        }
+
+        /*
+        If the products we get by the keyword value is empty,
+        we're gonna return them the empty state.
+        */
 
         $stocks = Stock::when(request()->has("keyword"), function ($query) use ($ids) {
             $query->whereIn("product_id", $ids);
@@ -39,15 +67,6 @@ class StockController extends Controller
             ->withQueryString();
 
 
-        // $stocks = Stock::when(request()->has("id"), function ($query) {
-        //     $sortType = request()->id ?? "asc";
-        //     $query->orderBy("id", $sortType);
-        // })
-        //     ->latest("id")
-        //     ->paginate(10)
-        //     ->withQueryString();
-
-
         if ($stocks->isEmpty()) {
             return response()->json([
                 "message" => "There is no stock records yet."
@@ -57,7 +76,6 @@ class StockController extends Controller
         return response()->json([
             "stocks"=>$data->resource
         ],200);
-
     }
 
     /**

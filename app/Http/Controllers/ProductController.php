@@ -23,7 +23,7 @@ class ProductController extends Controller
         $products = Product::when(request()->has("keyword"), function ($query) {
             $query->where(function ($query) {
                 $keyword = request()->keyword;
-                $query->where("name", "LIKE", "%" . $keyword . "%")->Orwhere(function ($query) {
+                $query->where("name", "LIKE", "%" . $keyword . "%")->orWhere(function ($query) {
                     $query->whereHas("brand", function ($query) {
                         $query->where("name", "LIKE",  "%" . request()->keyword . "%");
                     });
