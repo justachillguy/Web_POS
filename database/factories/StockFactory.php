@@ -22,5 +22,6 @@ class StockFactory extends Factory
         //     "quantity" => rand(1,100),
         //     "more" => fake()->sentence(),
         // ];
+        return [];
     }
 }
