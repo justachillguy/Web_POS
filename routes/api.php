@@ -81,16 +81,13 @@ Route::prefix("v1")->group(function () {
 
         Route::apiResource("brand", BrandController::class);
         Route::apiResource("product", ProductController::class);
-<<<<<<< HEAD
-        Route::apiResource("stock", StockController::class)->except("destroy", "store");
-        Route::post("stock/{prodID}", [StockController::class, "store"])->name("stock.store");
-=======
+
         // Route::apiResource("stock", StockController::class)->except("destroy", "store", "update");
         Route::prefix("stock")->controller(StockController::class)->group(function () {
             Route::get("/", "index")->name("stock.index");
             Route::post("{prodID}", "store")->name("stock.store");
         });
->>>>>>> a2a76d045a9d518544805d5e81cccf40cdce2675
+
 
         Route::prefix("sale")->controller(SaleController::class)->group(function () {
             Route::post("checkout", "checkout")->name('sale.checkout')->middleware("isSaleClose");
@@ -127,17 +124,15 @@ Route::prefix("v1")->group(function () {
 
         Route::get('voucher/{voucher_number}', [VoucherController::class, 'show'])->name('voucher.show');
 
-        Route::controller(OverviewController::class)->group(function(){
-            Route::get('overview-page','overViewPage')->name('overview.todaySales');
-            Route::get('weekly-overview','weeklySaleOverview')->name('overview.weekly');
-            Route::get('monthly-overview','monthlySaleOverview')->name('overview.monthly');
-            Route::get('yearly-overview','yearlySaleOverview')->name('overview.yearly');
+        Route::controller(OverviewController::class)->group(function () {
+            Route::get('overview-page', 'overViewPage')->name('overview.todaySales');
+            Route::get('weekly-overview', 'weeklySaleOverview')->name('overview.weekly');
+            Route::get('monthly-overview', 'monthlySaleOverview')->name('overview.monthly');
+            Route::get('yearly-overview', 'yearlySaleOverview')->name('overview.yearly');
         });
-
     });
 
     Route::controller(TestController::class)->group(function () {
         Route::post("test", "test");
-
     });
 });
