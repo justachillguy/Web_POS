@@ -41,15 +41,16 @@ class BrandController extends Controller
         if ($brands->isEmpty()) {
             return response()->json([
                 "message" => "There is no brand records yet."
-            ],404);
+            ], 404);
         }
         $data = BrandResource::collection($brands);
         return response()->json(
             [
                 "brands" => $data->resource,
                 "with_no_pagi" => $noPagi,
-            ],200);
-
+            ],
+            200
+        );
     }
 
     /**
@@ -97,10 +98,11 @@ class BrandController extends Controller
             $brand->photo = $request->photo;
         }
 
+        $brand->save();
+
         return response()->json([
             "message" => "Brand $brand->name is created successfully"
-        ],200);
-
+        ], 201);
     }
 
     /**
@@ -116,9 +118,8 @@ class BrandController extends Controller
         }
 
         return response()->json([
-            "brand"=> new BrandDetailResource($brand)
-        ],200);
-
+            "brand" => new BrandDetailResource($brand)
+        ], 200);
     }
 
     /**
@@ -162,9 +163,8 @@ class BrandController extends Controller
         $brand->update();
         return response()->json([
             "message" => "Brand $brand->name is updated",
-            "updatedBrand"=>$brand
-        ],200);
-
+            "updatedBrand" => $brand
+        ], 200);
     }
 
     /**
@@ -179,7 +179,6 @@ class BrandController extends Controller
 
         return response()->json([
             "message" => "A brand has been deleted."
-        ],204);
-
+        ], 204);
     }
 }
