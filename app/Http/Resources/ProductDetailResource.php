@@ -24,10 +24,9 @@ class ProductDetailResource extends JsonResource
             "stocks" => $this->total_stock,
             "unit" => $this->unit,
             "more_information" => $this->more_information,
-<<<<<<< HEAD
-=======
+
             "photo" => $this->photo,
->>>>>>> a2a76d045a9d518544805d5e81cccf40cdce2675
+
             "stock_history" => $this->stocks,
         ];
     }

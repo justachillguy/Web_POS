@@ -24,18 +24,7 @@ class StockController extends Controller
     {
         Gate::authorize("viewAny", App\Models\Stock::class);
 
-<<<<<<< HEAD
-                $builder->where("name", "LIKE", "%" . $keyword . "%");
-            });
-        })->paginate(10)->withQueryString();
-
-        /* If the products we get by the keyword value is empty, we're gonna return them
-        empty state.
-        */
-        if (empty($products)) {
-            return response()->json(["message" => "There is no result."],404);
-=======
-            /*
+        /*
             When searching stock records, the only keyword we're gonna use is
             the name of the product. So, we have to find the products
             by the product's name we pass thru parameter.
@@ -44,20 +33,19 @@ class StockController extends Controller
         if (request()->has("keyword")) {
             $keyword = request()->keyword;
             $prodIDs = Product::where("name", "LIKE", "%" . $keyword . "%")
-            ->Orwhere(function ($query) {
-                $query->whereHas("brand", function ($query) {
-                    $query->where("name", "LIKE", request()->keyword);
-                });
-            })
-            ->get()
-            ->pluck("id")
-            ->toArray();
+                ->orWhere(function ($query) {
+                    $query->whereHas("brand", function ($query) {
+                        $query->where("name", "LIKE", request()->keyword);
+                    });
+                })
+                ->get()
+                ->pluck("id")
+                ->toArray();
 
             $ids = $prodIDs;
             if (empty($ids)) {
                 return response()->json(["message" => "There is no result."]);
             }
->>>>>>> a2a76d045a9d518544805d5e81cccf40cdce2675
         }
 
         /*
@@ -67,7 +55,6 @@ class StockController extends Controller
 
         $stocks = Stock::when(request()->has("keyword"), function ($query) use ($ids) {
             $query->whereIn("product_id", $ids);
-
         })
             ->when(request()->has("id"), function ($query) {
                 $sortType = request()->id ?? "asc";
@@ -90,12 +77,12 @@ class StockController extends Controller
         if ($stocks->isEmpty()) {
             return response()->json([
                 "message" => "There is no stock records yet."
-            ],404);
+            ], 404);
         }
         $data = StockResource::collection($stocks);
         return response()->json([
-            "stocks"=>$data->resource
-        ],200);
+            "stocks" => $data->resource
+        ], 200);
     }
 
     /**
@@ -112,7 +99,7 @@ class StockController extends Controller
                 "user_id" => auth()->id(),
                 "product_id" => $product->id,
                 "quantity" => $request->quantity,
-                "more"=>$request->more
+                "more" => $request->more
             ]
         );
 
@@ -122,7 +109,9 @@ class StockController extends Controller
         return response()->json(
             [
                 "message" => "$request->quantity quantities are added to product $product->name."
-            ],201);
+            ],
+            201
+        );
     }
 
     /**
@@ -133,8 +122,8 @@ class StockController extends Controller
         Gate::authorize("view", $stock);
 
         return response()->json([
-            "stock"=>new StockDetailResource($stock)
-        ],200);
+            "stock" => new StockDetailResource($stock)
+        ], 200);
     }
 
     /**
@@ -176,8 +165,10 @@ class StockController extends Controller
 
         return response()->json(
             [
-                "updatedStock"=>$stock
-            ],200);
+                "updatedStock" => $stock
+            ],
+            200
+        );
     }
 
     /**

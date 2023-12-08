@@ -22,7 +22,7 @@ class ProductController extends Controller
         $products = Product::when(request()->has("keyword"), function ($query) {
             $query->where(function ($query) {
                 $keyword = request()->keyword;
-                $query->where("name", "LIKE", "%" . $keyword . "%")->Orwhere(function ($query) {
+                $query->where("name", "LIKE", "%" . $keyword . "%")->orWhere(function ($query) {
                     $query->whereHas("brand", function ($query) {
                         $query->where("name", "LIKE",  "%" . request()->keyword . "%");
                     });
@@ -37,10 +37,10 @@ class ProductController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-            // $product = Product::when(request()->has('keyword'),function($query){
-            //     $keyword = request()->keyword;
-            //     $query->where('name','like','%'.$keyword,'%');
-            // })->latest('id')->paginate(4)->withQueryString();
+        // $product = Product::when(request()->has('keyword'),function($query){
+        //     $keyword = request()->keyword;
+        //     $query->where('name','like','%'.$keyword,'%');
+        // })->latest('id')->paginate(4)->withQueryString();
 
         if ($products->isEmpty()) {
             return response()->json([
@@ -49,7 +49,7 @@ class ProductController extends Controller
         }
         $data = ProductResource::collection($products);
         return response()->json([
-            "products"=> $data->resource
+            "products" => $data->resource
         ]);
     }
 
@@ -74,9 +74,9 @@ class ProductController extends Controller
         $product->save();
 
         return response()->json([
-            "message"=> "New product $product->name is created",
-            "product"=> new ProductDetailResource($product)
-        ],201);
+            "message" => "New product $product->name is created",
+            "product" => new ProductDetailResource($product)
+        ], 201);
     }
 
     /**
@@ -85,8 +85,8 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return response()->json([
-            "product"=> new ProductDetailResource($product)
-        ],200);
+            "product" => new ProductDetailResource($product)
+        ], 200);
     }
 
     /**
@@ -133,8 +133,10 @@ class ProductController extends Controller
         return response()->json(
             [
                 "message" => "Product $product->name is updated.",
-                "updatedProduct"=> $product
-            ],200);
+                "updatedProduct" => $product
+            ],
+            200
+        );
     }
     /**
      * Remove the specified resource from storage.
@@ -147,6 +149,8 @@ class ProductController extends Controller
         return response()->json(
             [
                 "message" => "A product has been deleted."
-            ],204);
+            ],
+            204
+        );
     }
 }
